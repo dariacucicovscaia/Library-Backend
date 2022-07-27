@@ -1,4 +1,7 @@
 package com.stefanini.librarybackend.service;
 
-public class UserServiceImpl implements UserService{
+import com.stefanini.librarybackend.domain.Author;
+import com.stefanini.librarybackend.service.UserService;
+
+public class UserServiceImpl implements UserService {
 }
