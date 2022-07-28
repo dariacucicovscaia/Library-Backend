@@ -6,4 +6,7 @@ import com.stefanini.librarybackend.domain.Category;
 
 public class CategoryDAOImpl extends DAOAbstractImpl<Category> implements CategoryDAO<Category> {
 
+    public CategoryDAOImpl() {
+        setClazz(Category.class);
+    }
 }
