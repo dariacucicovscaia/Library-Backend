@@ -26,22 +26,22 @@ public class Category implements Serializable {
     private List<Book> books;
 
     public Category(int id, String title, List<Book> books) {
-        this.id = id;
-        this.title = title;
-        this.books = books;
+        setId(id);
+        setTitle(title);
+        setBooks(books);
     }
 
     public Category(int id, String title) {
-        this.id = id;
-        this.title = title;
+        setId(id);
+        setTitle(title);
     }
 
     public Category(String title, List<Book> books) {
-        this.title = title;
-        this.books = books;
+        setTitle(title);
+        setBooks(books);
     }
 
     public Category(String title) {
-        this.title = title;
+        setTitle(title);
     }
 }
