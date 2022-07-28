@@ -4,23 +4,32 @@ import com.stefanini.librarybackend.domain.Category;
 import com.stefanini.librarybackend.service.CategoryService;
 import com.stefanini.librarybackend.service.impl.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class CategoryController {
 
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
 
     public CategoryController(CategoryServiceImpl categoryService) {
         this.categoryService = categoryService;
     }
 
+    @PostMapping("/addCategory")
     public void addCategory(String title) {
         categoryService.addCategory(new Category(title));
     }
 
+    @PostMapping("/deleteCategory")
     public void deleteCategory(int id) {
         categoryService.deleteCategory(id);
+    }
+
+    public List<Category> getAllCategories() {
+        return categoryService.getAllCategories();
     }
 }
