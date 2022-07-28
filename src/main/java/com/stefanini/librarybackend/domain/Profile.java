@@ -14,10 +14,13 @@ public class Profile {
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
+
     @Column(name = "firstName")
     private String firstName;
+
     @Column(name = "lastName")
     private String lastName ;
+
     @Column(name = "phoneNumber")
     private String  phoneNumber;
 
@@ -37,6 +40,5 @@ public class Profile {
 
     public void setId(Long id) {
         this.id = id;
-
     }
 }

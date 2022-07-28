@@ -6,9 +6,11 @@ import java.util.Set;
 @Entity
 @Table(name = "user_role")
 public class UserRole {
+
     public enum Role {
     USER, LIBRARIAN, ADMIN;
-}
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

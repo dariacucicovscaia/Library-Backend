@@ -1,6 +1,8 @@
 package com.stefanini.librarybackend;
 
 
+import com.stefanini.librarybackend.dao.DAOAbstractImpl;
+import com.stefanini.librarybackend.dao.IGenericDao;
 import com.stefanini.librarybackend.dao.UserDAO;
 import com.stefanini.librarybackend.domain.Book;
 import com.stefanini.librarybackend.domain.User;
@@ -14,6 +16,8 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
 
 
 @SpringBootApplication
