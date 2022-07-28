@@ -16,7 +16,7 @@ public abstract class DAOAbstractImpl<T extends Serializable>  implements IGener
 
 
    @PersistenceContext
-  EntityManager entityManager;
+   EntityManager entityManager;
 
 
 

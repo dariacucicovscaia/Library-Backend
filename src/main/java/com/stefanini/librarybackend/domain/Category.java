@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "category")
@@ -24,25 +25,23 @@ public class Category implements Serializable {
     @ManyToMany(mappedBy = "categories")
     private List<Book> books;
 
-    public Category(int id, String title, String description, List<Book> books) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.books = books;
+    public Category(int id, String title, List<Book> books) {
+        setId(id);
+        setTitle(title);
+        setBooks(books);
     }
 
     public Category(int id, String title) {
-        this.id = id;
-        this.title = title;
+        setId(id);
+        setTitle(title);
     }
 
     public Category(String title, List<Book> books) {
-        this.title = title;
-        this.description = description;
-        this.books = books;
+        setTitle(title);
+        setBooks(books);
     }
 
-    public Category(String title, String description) {
-        this.title = title;
+    public Category(String title) {
+        setTitle(title);
     }
 }

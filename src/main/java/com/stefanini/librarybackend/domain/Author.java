@@ -36,34 +36,34 @@ public class Author implements Serializable {
     private List<Book> books;
 
     public Author(int id, String firstName, String lastName, Date birthDate, String biography, List<Book> books) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthDate = birthDate;
-        this.biography = biography;
-        this.books = books;
+        setId(id);
+        setFirstName(firstName);
+        setLastName(lastName);
+        setBirthDate(birthDate);
+        setBiography(biography);
+        setBooks(books);
     }
 
     public Author(int id, String firstName, String lastName, Date birthDate, String biography) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthDate = birthDate;
-        this.biography = biography;
+        setId(id);
+        setFirstName(firstName);
+        setLastName(lastName);
+        setBirthDate(birthDate);
+        setBiography(biography);
     }
 
     public Author(String firstName, String lastName, Date birthDate, String biography, List<Book> books) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthDate = birthDate;
-        this.biography = biography;
-        this.books = books;
+        setFirstName(firstName);
+        setLastName(lastName);
+        setBirthDate(birthDate);
+        setBiography(biography);
+        setBooks(books);
     }
 
     public Author(String firstName, String lastName, Date birthDate, String biography) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthDate = birthDate;
-        this.biography = biography;
+        setFirstName(firstName);
+        setLastName(lastName);
+        setBirthDate(birthDate);
+        setBiography(biography);
     }
 }

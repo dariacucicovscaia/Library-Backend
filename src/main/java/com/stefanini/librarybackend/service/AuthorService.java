@@ -1,11 +1,20 @@
 package com.stefanini.librarybackend.service;
 
+import com.stefanini.librarybackend.domain.Author;
+
+import java.util.List;
+
+/**
+ * @author dcuciuc
+ */
 public interface AuthorService {
 
-    void addAuthor();
+    void addAuthor(Author author);
 
-    void updateAuthor();
+    void update(Author author);
 
-    void deleteAuthor();
+    void deleteAuthor(int id);
+
+    List<Author> getAllAuthors();
 
 }
