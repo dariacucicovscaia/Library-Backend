@@ -1,11 +1,12 @@
-package com.stefanini.librarybackend.dao;
+package com.stefanini.librarybackend.dao.impl;
 
+import com.stefanini.librarybackend.dao.BookDAO;
 import com.stefanini.librarybackend.dao.impl.DAOAbstractImpl;
 import com.stefanini.librarybackend.domain.Book;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class BookDAOImpl extends DAOAbstractImpl<Book> implements BookDAO<Book>{
+public class BookDAOImpl extends DAOAbstractImpl<Book> implements BookDAO<Book> {
     public BookDAOImpl(){
             setClazz(Book.class);
         }
