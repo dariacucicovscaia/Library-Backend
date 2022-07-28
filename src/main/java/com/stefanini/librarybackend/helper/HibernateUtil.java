@@ -55,12 +55,12 @@ public class HibernateUtil {
 
 
         jpaProperties.put("hibernate.hbm2ddl.auto",
-                enviroment.getRequiredProperty("spring.jpa.hibernate.ddl-auto")
+                environment.getRequiredProperty("spring.jpa.hibernate.ddl-auto")
         );
 
 
       jpaProperties.put("hibernate.ejb.naming_strategy",
-               enviroment.getRequiredProperty("hibernate.ejb.naming_strategy")
+              environment.getRequiredProperty("hibernate.ejb.naming_strategy")
       );
 
 
