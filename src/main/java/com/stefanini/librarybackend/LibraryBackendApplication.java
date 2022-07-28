@@ -2,6 +2,14 @@ package com.stefanini.librarybackend;
 
 
 
+import com.stefanini.librarybackend.dao.DAOAbstractImpl;
+import com.stefanini.librarybackend.dao.IGenericDao;
+import com.stefanini.librarybackend.dao.UserDAOImpl;
+import com.stefanini.librarybackend.domain.Book;
+import com.stefanini.librarybackend.domain.User;
+import com.stefanini.librarybackend.helper.HibernateUtil;
+import com.stefanini.librarybackend.service.BookServiceImpl;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,7 +27,7 @@ import java.util.List;
 public class LibraryBackendApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(LibraryBackendApplication.class, args);
+       SpringApplication.run(LibraryBackendApplication.class, args);
 
     }
 

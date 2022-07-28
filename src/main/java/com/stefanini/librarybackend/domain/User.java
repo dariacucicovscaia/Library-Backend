@@ -19,6 +19,7 @@ import java.util.List;
 @Entity
 @Table(name = "user")
 public class User implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userId_generator")
     @SequenceGenerator(name = "userId_generator", allocationSize = 1)
@@ -27,26 +28,9 @@ public class User implements Serializable {
 
     @Column(unique = true, name = "email", nullable = false)
     private String email;
+
     @Column(name = "password", nullable = false)
     private String password;
-
-
-    public User(int id, String email, String password) {
-        setId(id);
-        setEmail(email);
-        setPassword(password);
-    }
-    public User( String email, String password, Profile profile) {
-        setId(id);
-        setEmail(email);
-        setPassword(password);
-        setProfile(profile);
-    }
-
-    public User(String email, String password) {
-        setEmail(email);
-        setPassword(password);
-    }
 
     @Transient
     @OneToMany
@@ -63,6 +47,27 @@ public class User implements Serializable {
     @UpdateTimestamp
     @Column(name = "last_update")
     private LocalDateTime lastUpdate;
+
+    @OneToMany
+    private List<Book> book;
+
+    public User(int id, String email, String password) {
+        setId(id);
+        setEmail(email);
+        setPassword(password);
+    }
+
+    public User(String email, String password, Profile profile) {
+        setId(id);
+        setEmail(email);
+        setPassword(password);
+        setProfile(profile);
+    }
+
+    public User(String email, String password) {
+        setEmail(email);
+        setPassword(password);
+    }
 
 
 }

@@ -1,5 +1,6 @@
 package com.stefanini.librarybackend.service;
 
+
 import com.stefanini.librarybackend.dao.UserDAOImpl;
 import com.stefanini.librarybackend.domain.User;
 import org.springframework.stereotype.Service;
@@ -47,4 +48,5 @@ public class UserServiceImpl implements UserService {
     public void deleteById(int id) {
         userDao.remove(id);
     }
+
 }

@@ -14,8 +14,10 @@ import java.util.List;
 public abstract class DAOAbstractImpl<T extends Serializable>  implements IGenericDao<T> {
     private Class<T> clazz;
 
-    @PersistenceContext
-    EntityManager entityManager;
+
+   @PersistenceContext
+  EntityManager entityManager;
+
 
 
     private EntityTransaction transaction = null;
@@ -43,9 +45,11 @@ public abstract class DAOAbstractImpl<T extends Serializable>  implements IGener
         } catch (Exception e) {
             if (transaction != null)
                 transaction.rollback();
-            logger.error(e.getMessage());
-            //  } finally {
-            //      shutdown();
+
+           logger.error(e.getMessage());
+      //  } finally {
+      //      shutdown();
+
         }
     }
 
@@ -61,7 +65,9 @@ public abstract class DAOAbstractImpl<T extends Serializable>  implements IGener
         } catch (Exception e) {
             if (transaction != null)
                 transaction.rollback();
-            logger.error(e.getMessage());
+
+           logger.error(e.getMessage());
+
 
         } finally {
             //  shutdown();
@@ -85,7 +91,9 @@ public abstract class DAOAbstractImpl<T extends Serializable>  implements IGener
         } catch (Exception e) {
             if (transaction != null)
                 transaction.rollback();
-            logger.error(e.getMessage());
+
+          logger.error(e.getMessage());
+
         } finally {
         }
     }
