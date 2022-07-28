@@ -32,17 +32,17 @@ public class Author implements Serializable {
     @Column(name = "biography")
     private String biography;
 
-   /* @ManyToMany(mappedBy = "authors")
-    private List<Book> books;*/
+    @ManyToMany(mappedBy = "authors")
+    private List<Book> books;
 
-    /*public Author(int id, String firstName, String lastName, Date birthDate, String biography, List<Book> books) {
+    public Author(int id, String firstName, String lastName, Date birthDate, String biography, List<Book> books) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
         this.biography = biography;
         this.books = books;
-    }*/
+    }
 
     public Author(int id, String firstName, String lastName, Date birthDate, String biography) {
         this.id = id;
@@ -52,13 +52,13 @@ public class Author implements Serializable {
         this.biography = biography;
     }
 
-   /* public Author(String firstName, String lastName, Date birthDate, String biography, List<Book> books) {
+    public Author(String firstName, String lastName, Date birthDate, String biography, List<Book> books) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
         this.biography = biography;
         this.books = books;
-    }*/
+    }
 
     public Author(String firstName, String lastName, Date birthDate, String biography) {
         this.firstName = firstName;

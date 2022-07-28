@@ -5,11 +5,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "category")
 @Getter @Setter @NoArgsConstructor
-public class Category {
+public class Category implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "categoryId_generator")
@@ -20,33 +21,28 @@ public class Category {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "description")
-    private String description;
+    @ManyToMany(mappedBy = "categories")
+    private List<Book> books;
 
-   /* @ManyToMany(mappedBy = "categories")
-    private List<Book> books;*/
-
-  /*  public Category(int id, String title, String description, List<Book> books) {
+    public Category(int id, String title, String description, List<Book> books) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.books = books;
-    }*/
-
-    public Category(int id, String title, String description) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
     }
 
-   /* public Category(String title, String description, List<Book> books) {
+    public Category(int id, String title) {
+        this.id = id;
+        this.title = title;
+    }
+
+    public Category(String title, List<Book> books) {
         this.title = title;
         this.description = description;
         this.books = books;
-    }*/
+    }
 
     public Category(String title, String description) {
         this.title = title;
-        this.description = description;
     }
 }
