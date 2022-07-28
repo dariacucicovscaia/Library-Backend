@@ -1,18 +1,29 @@
 package com.stefanini.librarybackend.domain;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 @Entity
 @Table(name = "user_role")
-public class UserRole {
+public class UserRole implements Serializable {
     public enum Role {
-    USER, LIBRARIAN, ADMIN;
-}
+        USER, LIBRARIAN, ADMIN;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -22,20 +33,5 @@ public class UserRole {
     @Enumerated(EnumType.ORDINAL)
     private Role role;
 
-    public User getUsers() {
-        return user;
-    }
 
-    public void setUsers(User users) {
-        this.user = user;
-    }
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }
