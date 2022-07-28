@@ -15,7 +15,7 @@ public abstract class DAOAbstractImpl<T extends Serializable>  implements IGener
     private Class<T> clazz;
 
    @PersistenceContext
-  EntityManager entityManager;
+   EntityManager entityManager;
 
 
     private EntityTransaction transaction = null;

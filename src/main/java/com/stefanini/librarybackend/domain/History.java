@@ -1,74 +1,46 @@
 package com.stefanini.librarybackend.domain;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "history")
+@Getter
+@Setter
+@NoArgsConstructor
 public class History {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "historyId_generator")
     @SequenceGenerator(name = "historyId_generator", allocationSize = 1)
     @Column(name = "id")
     private int id;
+
     @Column(name = "actionName")
     private String actionName;
+
     @Column(name = "date")
     private Date date;
-     @ManyToOne
+
+    @ManyToOne
     @JoinColumn(name = "user_id")
-     private User user;
+    private User user;
+
     @ManyToOne
     @JoinColumn(name = "book_id")
     private Book book;
 
-    History(){
-
-    };
-    History(int id, String actionName, Date date ){
-        this.id=id;
-        this.actionName = actionName;
-        this.date = date;
-    }
-    History(String actionName, Date date ){
-        this.actionName = actionName;
-        this.date = date;
-    }
-
-    public String getActionName() {
-        return actionName;
-    }
-
-    public void setActionName(String actionName) {
-        this.actionName = actionName;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-    public Book getBook() {
-        return book;
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
+    History(int id, String actionName, Date date) {
         this.id = id;
-    }
-    public User getUser() {
-        return user;
+        this.actionName = actionName;
+        this.date = date;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    History(String actionName, Date date) {
+        this.actionName = actionName;
+        this.date = date;
     }
 }
