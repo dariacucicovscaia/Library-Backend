@@ -1,14 +1,12 @@
-package com.stefanini.librarybackend.dao;
+package com.stefanini.librarybackend.dao.impl;
 
-import com.stefanini.librarybackend.dao.DAOAbstractImpl;
-import com.stefanini.librarybackend.dao.IProfileDAO;
+import com.stefanini.librarybackend.dao.ProfileDAO;
 import com.stefanini.librarybackend.domain.Profile;
-import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.UserRole;
 
 import javax.persistence.TypedQuery;
 
-public class ProfileDAOImpl extends DAOAbstractImpl<Profile> implements IProfileDAO {
+public class ProfileDAOImpl extends DAOAbstractImpl<Profile> implements ProfileDAO {
     public ProfileDAOImpl() {
         setClazz(Profile.class);
     }

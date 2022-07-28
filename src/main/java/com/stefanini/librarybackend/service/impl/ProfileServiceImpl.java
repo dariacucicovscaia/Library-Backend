@@ -1,7 +1,8 @@
-package com.stefanini.librarybackend.service;
+package com.stefanini.librarybackend.service.impl;
 
-import com.stefanini.librarybackend.dao.ProfileDAOImpl;
+import com.stefanini.librarybackend.dao.impl.ProfileDAOImpl;
 import com.stefanini.librarybackend.domain.Profile;
+import com.stefanini.librarybackend.service.ProfileService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

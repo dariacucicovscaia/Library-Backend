@@ -1,5 +1,6 @@
-package com.stefanini.librarybackend.dao;
+package com.stefanini.librarybackend.dao.impl;
 import com.google.common.base.Preconditions;
+import com.stefanini.librarybackend.dao.IGenericDao;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

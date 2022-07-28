@@ -1,12 +1,11 @@
-package com.stefanini.librarybackend.dao;
+package com.stefanini.librarybackend.dao.impl;
 
-import com.stefanini.librarybackend.dao.DAOAbstractImpl;
-import com.stefanini.librarybackend.dao.IUserDAO;
+import com.stefanini.librarybackend.dao.UserDAO;
 import com.stefanini.librarybackend.domain.User;
 
 import javax.persistence.TypedQuery;
 
-public class UserDAOImpl extends DAOAbstractImpl<User> implements IUserDAO {
+public class UserDAOImpl extends DAOAbstractImpl<User> implements UserDAO {
     public UserDAOImpl() {
         setClazz(User.class);
     }

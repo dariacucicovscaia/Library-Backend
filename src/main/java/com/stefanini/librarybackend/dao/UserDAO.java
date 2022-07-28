@@ -2,6 +2,6 @@ package com.stefanini.librarybackend.dao;
 
 import com.stefanini.librarybackend.domain.User;
 
-public interface IUserDAO {
+public interface UserDAO {
      User findUserByEmail(String userName);
 }
