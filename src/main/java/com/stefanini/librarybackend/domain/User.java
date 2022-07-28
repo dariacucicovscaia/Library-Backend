@@ -1,8 +1,21 @@
 package com.stefanini.librarybackend.domain;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.List;
 
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 @Entity
 @Table(name = "user")
 public class User implements Serializable {
@@ -11,50 +24,49 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userId_generator")
     @SequenceGenerator(name = "userId_generator", allocationSize = 1)
     @Column(unique = true, name = "id", nullable = false)
-    private Long id;
+    private int id;
 
     @Column(unique = true, name = "email", nullable = false)
     private String email;
 
+
     @Column( name = "password", nullable = false)
+
     private String password;
 
-    public User() {
-    }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "email='" + email + "\'" + "password='" + password + "\'" +
-                '}';
+    public User(int id, String email, String password) {
+        setId(id);
+        setEmail(email);
+        setPassword(password);
+    }
+    public User( String email, String password, Profile profile) {
+        setId(id);
+        setEmail(email);
+        setPassword(password);
+        setProfile(profile);
     }
 
     public User(String email, String password) {
-        this.email = email;
-        this.password = password;
+        setEmail(email);
+        setPassword(password);
     }
 
-    /**
-     *
+    @Transient
+    @OneToMany
+    private List<UserRole> userRole;
 
     @Transient
-    private UserRole userRole;
-    @Transient
+    @OneToOne
     private Profile profile;
 
-    public UserRole getUserRole() {
-        return userRole;
-    }
+    @CreationTimestamp
+    @Column(name = "created")
+    private LocalDateTime created;
 
-    public Profile getProfile() {
-        return profile;
-    }
+    @UpdateTimestamp
+    @Column(name = "last_update")
+    private LocalDateTime lastUpdate;
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }  */
 }

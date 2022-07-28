@@ -32,9 +32,11 @@ public class HibernateUtil {
     @Bean
     public DataSource dataSource() {
         MysqlDataSource dataSource = new MysqlDataSource();
+
         dataSource.setPassword(environment.getProperty("jdbc.password"));
         dataSource.setUser(environment.getProperty("jdbc.root"));
         dataSource.setUrl(environment.getProperty("jdbc.url"));
+
 
         return dataSource;
     }
@@ -56,9 +58,11 @@ public class HibernateUtil {
                 environment.getRequiredProperty("spring.jpa.hibernate.ddl-auto")
         );
 
+
       jpaProperties.put("hibernate.ejb.naming_strategy",
               environment.getRequiredProperty("hibernate.ejb.naming_strategy")
       );
+
 
         jpaProperties.put("hibernate.show_sql",
                 environment.getRequiredProperty("hibernate.show_sql")
