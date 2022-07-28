@@ -1,15 +1,25 @@
 package com.stefanini.librarybackend.domain;
 
+import lombok.*;
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
+
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 
 @Entity
 @Table(name = "profile")
-public class Profile {
+public class Profile implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "profileId_generator")
     @SequenceGenerator(name = "profileId_generator", allocationSize = 1)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private int id;
+
+
 
     @OneToOne
     @JoinColumn(name = "user_id")
@@ -24,21 +34,15 @@ public class Profile {
     @Column(name = "phoneNumber")
     private String  phoneNumber;
 
-
-    public User getUser() {
-        return user;
+    public Profile(String firstName, String lastName, String phoneNumber){
+        setFirstName(firstName);
+        setLastName(lastName);
+        setPhoneNumber(phoneNumber);
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+    @OneToMany
+    private List<UserRole> userRole;
 
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 }
