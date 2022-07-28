@@ -1,5 +1,6 @@
-package com.stefanini.librarybackend.dao;
+package com.stefanini.librarybackend.dao.impl;
 import com.google.common.base.Preconditions;
+import com.stefanini.librarybackend.dao.IGenericDao;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,15 +14,13 @@ import java.util.List;
 @Transactional
 public abstract class DAOAbstractImpl<T extends Serializable>  implements IGenericDao<T> {
     private Class<T> clazz;
-
    @PersistenceContext
-  EntityManager entityManager;
-
+   EntityManager entityManager;
 
     private EntityTransaction transaction = null;
     private Logger logger = Logger.getLogger(DAOAbstractImpl.class);
     public void setClazz(final Class<T> clazzToSet) {
-       // System.out.println( Preconditions.checkNotNull(clazzToSet));
+        // System.out.println( Preconditions.checkNotNull(clazzToSet));
         clazz = Preconditions.checkNotNull(clazzToSet);
     }
     // API
@@ -46,6 +45,7 @@ public abstract class DAOAbstractImpl<T extends Serializable>  implements IGener
            logger.error(e.getMessage());
       //  } finally {
       //      shutdown();
+
         }
     }
 
@@ -64,7 +64,7 @@ public abstract class DAOAbstractImpl<T extends Serializable>  implements IGener
            logger.error(e.getMessage());
 
         } finally {
-          //  shutdown();
+            //  shutdown();
         }
     }
 
@@ -86,6 +86,7 @@ public abstract class DAOAbstractImpl<T extends Serializable>  implements IGener
             if (transaction != null)
                 transaction.rollback();
           logger.error(e.getMessage());
+
         } finally {
         }
     }
