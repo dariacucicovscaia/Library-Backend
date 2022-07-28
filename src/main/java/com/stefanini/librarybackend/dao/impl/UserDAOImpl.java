@@ -5,6 +5,7 @@ import com.stefanini.librarybackend.domain.User;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
+
 @Repository
 public class UserDAOImpl extends DAOAbstractImpl<User> implements UserDAO {
     public UserDAOImpl() {
