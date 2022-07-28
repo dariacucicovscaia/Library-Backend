@@ -1,25 +1,29 @@
 package com.stefanini.librarybackend.dao;
 import com.google.common.base.Preconditions;
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.PersistenceContext;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-import java.util.logging.Logger;
 
+@Repository
+@Transactional
 public abstract class DAOAbstractImpl<T extends Serializable>  implements IGenericDao<T> {
     private Class<T> clazz;
-    @PersistenceContext
-    protected EntityManager entityManager;
+
+   @PersistenceContext
+  EntityManager entityManager;
+
+
     private EntityTransaction transaction = null;
-    private Logger logger = Logger.getLogger(String.valueOf(DAOAbstractImpl.class));
+    private Logger logger = Logger.getLogger(DAOAbstractImpl.class);
     public void setClazz(final Class<T> clazzToSet) {
        // System.out.println( Preconditions.checkNotNull(clazzToSet));
         clazz = Preconditions.checkNotNull(clazzToSet);
     }
-
     // API
     @Override
     public List<T> getAll() {
@@ -39,9 +43,9 @@ public abstract class DAOAbstractImpl<T extends Serializable>  implements IGener
         } catch (Exception e) {
             if (transaction != null)
                 transaction.rollback();
-          //  logger.error(e.getMessage());
-        } finally {
-          //  shutdown();
+           logger.error(e.getMessage());
+      //  } finally {
+      //      shutdown();
         }
     }
 
@@ -57,7 +61,7 @@ public abstract class DAOAbstractImpl<T extends Serializable>  implements IGener
         } catch (Exception e) {
             if (transaction != null)
                 transaction.rollback();
-          //  logger.error(e.getMessage());
+           logger.error(e.getMessage());
 
         } finally {
           //  shutdown();
@@ -81,7 +85,7 @@ public abstract class DAOAbstractImpl<T extends Serializable>  implements IGener
         } catch (Exception e) {
             if (transaction != null)
                 transaction.rollback();
-         //  logger.error(e.getMessage());
+          logger.error(e.getMessage());
         } finally {
         }
     }
