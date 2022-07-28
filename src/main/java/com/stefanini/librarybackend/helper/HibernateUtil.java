@@ -2,18 +2,24 @@ package com.stefanini.librarybackend.helper;
 
 
 import com.mysql.cj.jdbc.MysqlDataSource;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.persistence.*;
+import javax.persistence.spi.PersistenceProvider;
 import javax.sql.DataSource;
+import java.util.HashMap;
 import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
+@ComponentScan({"com.stefanini.librarybackend.service","com.stefanini.librarybackend.dao"})
 public class HibernateUtil {
 
 
@@ -38,7 +44,7 @@ public class HibernateUtil {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource);
         entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-        entityManagerFactoryBean.setPackagesToScan("com.stefanini.library");
+        entityManagerFactoryBean.setPackagesToScan("com.stefanini.librarybackend.domain");
         entityManagerFactoryBean.setDataSource(dataSource());
         Properties jpaProperties = new Properties();
 
@@ -47,13 +53,12 @@ public class HibernateUtil {
 
 
         jpaProperties.put("hibernate.hbm2ddl.auto",
-                environment.getRequiredProperty("hibernate.hbm2ddl.auto")
+                enviroment.getRequiredProperty("spring.jpa.hibernate.ddl-auto")
         );
 
-
-//        jpaProperties.put("hibernate.ejb.naming_strategy",
-//                enviroment.getRequiredProperty("hibernate.ejb.naming_strategy")
-//        );
+      jpaProperties.put("hibernate.ejb.naming_strategy",
+               enviroment.getRequiredProperty("hibernate.ejb.naming_strategy")
+      );
 
         jpaProperties.put("hibernate.show_sql",
                 environment.getRequiredProperty("hibernate.show_sql")
@@ -67,6 +72,5 @@ public class HibernateUtil {
 
         return entityManagerFactoryBean;
     }
-
 
 }
