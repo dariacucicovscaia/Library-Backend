@@ -16,7 +16,7 @@ import java.util.Set;
 @Entity
 @Table(name = "user_role")
 
-public class UserRole {
+public class UserRole implements Serializable {
 
     public enum Role {
     USER, LIBRARIAN, ADMIN;

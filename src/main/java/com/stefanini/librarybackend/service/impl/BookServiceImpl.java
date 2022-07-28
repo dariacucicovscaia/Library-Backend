@@ -1,19 +1,17 @@
-package com.stefanini.librarybackend.service;
+package com.stefanini.librarybackend.service.impl;
 
 import com.stefanini.librarybackend.dao.BookDAO;
-import com.stefanini.librarybackend.dao.BookDAOImpl;
+import com.stefanini.librarybackend.dao.impl.BookDAOImpl;
 import com.stefanini.librarybackend.domain.Book;
+import com.stefanini.librarybackend.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 @Service
 
-public class BookServiceImpl implements BookService{
+public class BookServiceImpl implements BookService {
 @Autowired
     private BookDAO<Book> bookDAOImpl ;
 
@@ -25,8 +23,8 @@ public class BookServiceImpl implements BookService{
 
 @Transactional
     @Override
-    public void addBook(String bookTitle, String bookDescription, String shelfNumber) {
-        bookDAOImpl.create(new Book(bookTitle, bookDescription, shelfNumber));
+    public void addBook(Book book) {
+        bookDAOImpl.create(book);
     }
 
 @Transactional

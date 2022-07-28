@@ -2,7 +2,7 @@ package com.stefanini.librarybackend.controller;
 
 import com.stefanini.librarybackend.domain.Book;
 import com.stefanini.librarybackend.service.BookService;
-import com.stefanini.librarybackend.service.BookServiceImpl;
+import com.stefanini.librarybackend.service.impl.BookServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,4 +23,8 @@ public class BookController {
         return impl.showAllBooks();
 
     }
+@PostMapping("/addNewBook")
+    public void addNewBook(@RequestBody Book book){
+    impl.addBook(book);
+}
 }

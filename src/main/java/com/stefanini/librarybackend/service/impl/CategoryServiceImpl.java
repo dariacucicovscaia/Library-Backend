@@ -5,7 +5,9 @@ import com.stefanini.librarybackend.dao.impl.CategoryDAOImpl;
 import com.stefanini.librarybackend.domain.Category;
 import com.stefanini.librarybackend.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CategoryServiceImpl implements CategoryService {
 
     @Autowired

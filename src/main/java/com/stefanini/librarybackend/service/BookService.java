@@ -6,6 +6,6 @@ import com.stefanini.librarybackend.domain.Book;
 import java.util.List;
 
 public interface BookService {
-    public void addBook(String bookTitle, String bookDescription, String shelfNumber);
+    public void addBook(Book book);
     public List<Book> showAllBooks();
 }
