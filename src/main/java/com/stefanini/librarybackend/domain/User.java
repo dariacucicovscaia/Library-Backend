@@ -19,6 +19,7 @@ import java.util.List;
 @Entity
 @Table(name = "user")
 public class User implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userId_generator")
     @SequenceGenerator(name = "userId_generator", allocationSize = 1)
@@ -27,7 +28,10 @@ public class User implements Serializable {
 
     @Column(unique = true, name = "email", nullable = false)
     private String email;
-    @Column(name = "password", nullable = false)
+
+
+    @Column( name = "password", nullable = false)
+
     private String password;
 
 

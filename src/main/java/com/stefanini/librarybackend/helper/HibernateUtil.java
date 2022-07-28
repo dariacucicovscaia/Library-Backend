@@ -7,11 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.*;
@@ -26,19 +23,20 @@ import java.util.Properties;
 public class HibernateUtil {
 
 
-    private Environment enviroment;
+    private Environment environment;
 
-    public HibernateUtil(Environment enviroment) {
-        this.enviroment = enviroment;
+    public HibernateUtil(Environment environment) {
+        this.environment = environment;
     }
 
     @Bean
     public DataSource dataSource() {
         MysqlDataSource dataSource = new MysqlDataSource();
-        //dataSource.setPassword(enviroment.getProperty("db.driver"));
-        dataSource.setPassword(enviroment.getProperty("jdbc.password"));
-        dataSource.setUser(enviroment.getProperty("jdbc.root"));
-        dataSource.setUrl(enviroment.getProperty("jdbc.url"));
+
+        dataSource.setPassword(environment.getProperty("jdbc.password"));
+        dataSource.setUser(environment.getProperty("jdbc.root"));
+        dataSource.setUrl(environment.getProperty("jdbc.url"));
+
 
         return dataSource;
     }
@@ -53,23 +51,25 @@ public class HibernateUtil {
         Properties jpaProperties = new Properties();
 
 
-        jpaProperties.put("hibernate.dialect", enviroment.getRequiredProperty("hibernate.dialect"));
+        jpaProperties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
 
 
         jpaProperties.put("hibernate.hbm2ddl.auto",
                 enviroment.getRequiredProperty("spring.jpa.hibernate.ddl-auto")
         );
 
-        jpaProperties.put("hibernate.ejb.naming_strategy",
-                enviroment.getRequiredProperty("hibernate.ejb.naming_strategy")
-        );
+
+      jpaProperties.put("hibernate.ejb.naming_strategy",
+               enviroment.getRequiredProperty("hibernate.ejb.naming_strategy")
+      );
+
 
         jpaProperties.put("hibernate.show_sql",
-                enviroment.getRequiredProperty("hibernate.show_sql")
+                environment.getRequiredProperty("hibernate.show_sql")
         );
 
         jpaProperties.put("hibernate.format_sql",
-                enviroment.getRequiredProperty("hibernate.format_sql")
+                environment.getRequiredProperty("hibernate.format_sql")
         );
 
         entityManagerFactoryBean.setJpaProperties(jpaProperties);

@@ -20,10 +20,17 @@ public class Profile implements Serializable {
     private int id;
 
 
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Column(name = "firstName")
     private String firstName;
+
     @Column(name = "lastName")
     private String lastName ;
+
     @Column(name = "phoneNumber")
     private String  phoneNumber;
 
@@ -36,8 +43,6 @@ public class Profile implements Serializable {
     @OneToMany
     private List<UserRole> userRole;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+
 
 }

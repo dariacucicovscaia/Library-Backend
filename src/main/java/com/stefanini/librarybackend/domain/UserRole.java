@@ -15,9 +15,12 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "user_role")
-public class UserRole implements Serializable {
+
+public class UserRole {
+
     public enum Role {
-        USER, LIBRARIAN, ADMIN;
+    USER, LIBRARIAN, ADMIN;
+
     }
 
     @Id
