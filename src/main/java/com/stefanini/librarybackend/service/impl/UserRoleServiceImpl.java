@@ -1,7 +1,8 @@
-package com.stefanini.librarybackend.service;
+package com.stefanini.librarybackend.service.impl;
 
-import com.stefanini.librarybackend.dao.UserRoleDAOImpl;
+import com.stefanini.librarybackend.dao.impl.UserRoleDAOImpl;
 import com.stefanini.librarybackend.domain.UserRole;
+import com.stefanini.librarybackend.service.UserRoleService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

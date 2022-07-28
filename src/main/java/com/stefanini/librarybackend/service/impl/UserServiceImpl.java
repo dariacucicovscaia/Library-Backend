@@ -1,8 +1,9 @@
-package com.stefanini.librarybackend.service;
+package com.stefanini.librarybackend.service.impl;
 
 
-import com.stefanini.librarybackend.dao.UserDAOImpl;
+import com.stefanini.librarybackend.dao.impl.UserDAOImpl;
 import com.stefanini.librarybackend.domain.User;
+import com.stefanini.librarybackend.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

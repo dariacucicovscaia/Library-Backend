@@ -1,6 +1,6 @@
 package com.stefanini.librarybackend.controller;
 
-import com.stefanini.librarybackend.service.UserServiceImpl;
+import com.stefanini.librarybackend.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

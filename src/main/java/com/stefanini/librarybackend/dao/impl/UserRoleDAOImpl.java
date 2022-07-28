@@ -1,13 +1,11 @@
-package com.stefanini.librarybackend.dao;
+package com.stefanini.librarybackend.dao.impl;
 
-import com.stefanini.librarybackend.dao.DAOAbstractImpl;
-import com.stefanini.librarybackend.dao.IUserRoleDAO;
-import com.stefanini.librarybackend.domain.User;
+import com.stefanini.librarybackend.dao.UserRoleDAO;
 import com.stefanini.librarybackend.domain.UserRole;
 
 import javax.persistence.TypedQuery;
 
-public class UserRoleDAOImpl  extends DAOAbstractImpl<UserRole> implements IUserRoleDAO {
+public class UserRoleDAOImpl  extends DAOAbstractImpl<UserRole> implements UserRoleDAO {
 
     public UserRoleDAOImpl() {
         setClazz(UserRole.class);
