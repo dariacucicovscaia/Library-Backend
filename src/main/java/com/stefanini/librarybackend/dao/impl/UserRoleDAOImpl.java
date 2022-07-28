@@ -2,9 +2,11 @@ package com.stefanini.librarybackend.dao.impl;
 
 import com.stefanini.librarybackend.dao.UserRoleDAO;
 import com.stefanini.librarybackend.domain.UserRole;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
 
+@Repository
 public class UserRoleDAOImpl  extends DAOAbstractImpl<UserRole> implements UserRoleDAO {
 
     public UserRoleDAOImpl() {
