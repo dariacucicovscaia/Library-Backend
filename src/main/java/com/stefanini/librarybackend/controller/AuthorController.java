@@ -4,9 +4,7 @@ import com.stefanini.librarybackend.domain.Author;
 import com.stefanini.librarybackend.service.AuthorService;
 import com.stefanini.librarybackend.service.impl.AuthorServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -22,17 +20,22 @@ public class AuthorController {
     }
 
     @PostMapping("/addAuthor")
-    public void addAuthor(String firstName, String lastName, Date birthDate, String biography) {
-        authorService.addAuthor(new Author(firstName, lastName, birthDate, biography));
+    public void addAuthor(@RequestBody Author author) {
+        authorService.addAuthor(author);
     }
 
-    @PostMapping("/updateAuthor")
-    public void updateAuthor(String firstName, String lastName, Date birthDate, String biography) {
-        authorService.update(new Author(firstName, lastName, birthDate, biography));
+    @PutMapping("/updateAuthor/{id}")
+    public void updateAuthor(@PathVariable int id, @RequestBody Author author) {
+        Author updatedAuthor = authorService.findById(id);
+        updatedAuthor.setFirstName(author.getFirstName());
+        updatedAuthor.setLastName(author.getLastName());
+        updatedAuthor.setBirthDate(author.getBirthDate());
+        updatedAuthor.setBiography(author.getBiography());
+        authorService.update(updatedAuthor);
     }
 
-    @PostMapping("/deleteAuthor")
-    public void deleteAuthor(int id) {
+    @DeleteMapping("/deleteAuthor/{id}")
+    public void deleteAuthor(@PathVariable int id) {
         authorService.deleteAuthor(id);
     }
 
