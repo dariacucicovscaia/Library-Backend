@@ -1,18 +1,21 @@
 package com.stefanini.librarybackend.service.impl;
 
 
+import com.stefanini.librarybackend.dao.UserDAO;
 import com.stefanini.librarybackend.dao.impl.UserDAOImpl;
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
-    private UserDAOImpl userDao;
+    @Autowired
+    private UserDAO<User> userDao;
 
-    public UserServiceImpl() {
-        userDao = new UserDAOImpl();
+    public UserServiceImpl(UserDAOImpl userDao) {
+        this.userDao = userDao;
     }
 
     @Override

@@ -17,4 +17,5 @@ public interface AuthorService {
 
     List<Author> getAllAuthors();
 
+    Author findById(int id);
 }

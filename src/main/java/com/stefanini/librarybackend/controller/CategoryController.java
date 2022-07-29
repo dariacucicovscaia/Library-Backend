@@ -4,8 +4,7 @@ import com.stefanini.librarybackend.domain.Category;
 import com.stefanini.librarybackend.service.CategoryService;
 import com.stefanini.librarybackend.service.impl.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,15 +19,16 @@ public class CategoryController {
     }
 
     @PostMapping("/addCategory")
-    public void addCategory(String title) {
-        categoryService.addCategory(new Category(title));
+    public void addCategory(@RequestBody Category category) {
+        categoryService.addCategory(category);
     }
 
-    @PostMapping("/deleteCategory")
-    public void deleteCategory(int id) {
+    @DeleteMapping("/deleteCategory/{id}")
+    public void deleteCategory(@PathVariable int id) {
         categoryService.deleteCategory(id);
     }
 
+    @GetMapping("/getAllCategories")
     public List<Category> getAllCategories() {
         return categoryService.getAllCategories();
     }

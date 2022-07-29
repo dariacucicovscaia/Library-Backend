@@ -17,8 +17,8 @@ public class BookServiceImpl implements BookService {
     private BookDAO<Book> bookDAOImpl;
 
 
-    public BookServiceImpl(BookDAOImpl bookDAOImpl) {
 
+    public BookServiceImpl(BookDAOImpl bookDAOImpl) {
         this.bookDAOImpl = bookDAOImpl;
     }
 
@@ -50,5 +50,6 @@ public class BookServiceImpl implements BookService {
     @Override
     public void deleteBook(int id) {
         bookDAOImpl.remove(id);
+
     }
 }

@@ -14,8 +14,7 @@ import java.util.List;
 @Table(name = "profile")
 public class Profile implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "profileId_generator")
-    @SequenceGenerator(name = "profileId_generator", allocationSize = 1)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private int id;
 
@@ -40,8 +39,6 @@ public class Profile implements Serializable {
         setPhoneNumber(phoneNumber);
     }
 
-    @OneToMany
-    private List<UserRole> userRole;
 
 
 
