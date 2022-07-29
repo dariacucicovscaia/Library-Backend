@@ -2,6 +2,7 @@ package com.stefanini.librarybackend.helper;
 
 
 import com.mysql.cj.jdbc.MysqlDataSource;
+import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -39,40 +40,14 @@ public class HibernateUtil {
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-        entityManagerFactoryBean.setDataSource(dataSource);
-        entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-        entityManagerFactoryBean.setPackagesToScan("com.stefanini.librarybackend.domain");
         entityManagerFactoryBean.setDataSource(dataSource());
+        entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
         Properties jpaProperties = new Properties();
-
-
-        jpaProperties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
-
-
-        jpaProperties.put("hibernate.hbm2ddl.auto",
-
-                environment.getRequiredProperty("hibernate.hbm2ddl.auto")
-        );
-
-
-        jpaProperties.put("hibernate.ejb.naming_strategy",
-                environment.getRequiredProperty("hibernate.ejb.naming_strategy")
-        );
-
-
-        jpaProperties.put("hibernate.show_sql",
-                environment.getRequiredProperty("hibernate.show_sql")
-        );
-
-        jpaProperties.put("hibernate.format_sql",
-                environment.getRequiredProperty("hibernate.format_sql")
-        );
-
+        jpaProperties.setProperty("javax.persistence.schema-generation.database.action", environment.getProperty("spring.jpa.hibernate.ddl-auto"));
+        jpaProperties.setProperty("hibernate.show_sql", environment.getProperty("spring.jpa.show_sql"));
         entityManagerFactoryBean.setJpaProperties(jpaProperties);
-
         return entityManagerFactoryBean;
     }
-
 }

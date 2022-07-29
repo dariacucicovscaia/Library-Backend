@@ -1,4 +1,5 @@
 package com.stefanini.librarybackend.domain;
+import com.stefanini.librarybackend.domain.enums.BookStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
