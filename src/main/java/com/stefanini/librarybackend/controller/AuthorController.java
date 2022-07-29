@@ -20,17 +20,22 @@ public class AuthorController {
     }
 
     @PostMapping("/addAuthor")
-    public void addAuthor(String firstName, String lastName, Date birthDate, String biography) {
-        authorService.addAuthor(new Author(firstName, lastName, birthDate, biography));
+    public void addAuthor(@RequestBody Author author) {
+        authorService.addAuthor(author);
     }
 
-    @PutMapping("/updateAuthor")
-    public void updateAuthor(String firstName, String lastName, Date birthDate, String biography) {
-        authorService.update(new Author(firstName, lastName, birthDate, biography));
+    @PutMapping("/updateAuthor/{id}")
+    public void updateAuthor(@PathVariable int id, @RequestBody Author author) {
+        Author updatedAuthor = authorService.findById(id);
+        updatedAuthor.setFirstName(author.getFirstName());
+        updatedAuthor.setLastName(author.getLastName());
+        updatedAuthor.setBirthDate(author.getBirthDate());
+        updatedAuthor.setBiography(author.getBiography());
+        authorService.update(updatedAuthor);
     }
 
-    @DeleteMapping("/deleteAuthor")
-    public void deleteAuthor(int id) {
+    @DeleteMapping("/deleteAuthor/{id}")
+    public void deleteAuthor(@PathVariable int id) {
         authorService.deleteAuthor(id);
     }
 
