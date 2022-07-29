@@ -1,4 +1,5 @@
 package com.stefanini.librarybackend.dao.impl;
+
 import com.google.common.base.Preconditions;
 import com.stefanini.librarybackend.dao.IGenericDao;
 import org.apache.log4j.Logger;
@@ -12,21 +13,17 @@ import java.util.List;
 
 @Repository
 @Transactional
-public abstract class DAOAbstractImpl<T extends Serializable>  implements IGenericDao<T> {
+public abstract class DAOAbstractImpl<T extends Serializable> implements IGenericDao<T> {
     private Class<T> clazz;
+    @PersistenceContext
+    EntityManager entityManager;
 
-
-   @PersistenceContext
-   EntityManager entityManager;
-
-
-
-    private EntityTransaction transaction = null;
     private Logger logger = Logger.getLogger(DAOAbstractImpl.class);
+
     public void setClazz(final Class<T> clazzToSet) {
-        // System.out.println( Preconditions.checkNotNull(clazzToSet));
         clazz = Preconditions.checkNotNull(clazzToSet);
     }
+
     // API
     @Override
     public List<T> getAll() {
@@ -35,44 +32,12 @@ public abstract class DAOAbstractImpl<T extends Serializable>  implements IGener
 
     @Override
     public void update(T entity) {
-        try {
-
-            transaction = entityManager.getTransaction();
-
-            transaction.begin();
-            entityManager.merge(entity);
-            transaction.commit();
-
-        } catch (Exception e) {
-            if (transaction != null)
-                transaction.rollback();
-
-           logger.error(e.getMessage());
-      //  } finally {
-      //      shutdown();
-
-        }
+        entityManager.merge(entity);
     }
 
     @Override
     public void create(T entity) {
-        try {
-            transaction = entityManager.getTransaction();
-
-            transaction.begin();
-            entityManager.persist(entity);
-            transaction.commit();
-
-        } catch (Exception e) {
-            if (transaction != null)
-                transaction.rollback();
-
-           logger.error(e.getMessage());
-
-
-        } finally {
-            //  shutdown();
-        }
+        entityManager.persist(entity);
     }
 
     @Override
@@ -82,20 +47,6 @@ public abstract class DAOAbstractImpl<T extends Serializable>  implements IGener
 
     @Override
     public void remove(int id) {
-        try {
-            transaction = entityManager.getTransaction();
-
-            transaction.begin();
-            entityManager.remove(get(id));
-            transaction.commit();
-
-        } catch (Exception e) {
-            if (transaction != null)
-                transaction.rollback();
-
-          logger.error(e.getMessage());
-
-        } finally {
-        }
+        entityManager.remove(get(id));
     }
 }

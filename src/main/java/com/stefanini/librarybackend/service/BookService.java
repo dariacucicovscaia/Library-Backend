@@ -6,6 +6,9 @@ import com.stefanini.librarybackend.domain.Book;
 import java.util.List;
 
 public interface BookService {
-    public void addBook(String bookTitle, String bookDescription, String shelfNumber);
-    public List<Book> showAllBooks();
+    void addBook(Book book);
+    List<Book> showAllBooks();
+    void update(Book book);
+    Book findById(int id);
+    void deleteBook(int id);
 }

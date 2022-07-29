@@ -3,9 +3,10 @@ package com.stefanini.librarybackend.dao.impl;
 import com.stefanini.librarybackend.dao.ProfileDAO;
 import com.stefanini.librarybackend.domain.Profile;
 import com.stefanini.librarybackend.domain.UserRole;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
-
+@Repository
 public class ProfileDAOImpl extends DAOAbstractImpl<Profile> implements ProfileDAO {
     public ProfileDAOImpl() {
         setClazz(Profile.class);
