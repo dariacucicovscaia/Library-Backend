@@ -11,14 +11,13 @@ import java.util.List;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
-
-    @Autowired
+    
     private AuthorDAO<Author> authorDAO;
 
     public AuthorServiceImpl(AuthorDAOImpl authorDAOImpl) {
-
         this.authorDAO = authorDAOImpl;
     }
+
 
     @Override
     public void addAuthor(Author author) {

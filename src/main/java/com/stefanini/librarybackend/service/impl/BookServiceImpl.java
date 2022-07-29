@@ -12,11 +12,9 @@ import java.util.List;
 
 
 @Service
-
 public class BookServiceImpl implements BookService {
     @Autowired
     private BookDAO<Book> bookDAOImpl;
-
 
 
     public BookServiceImpl(BookDAOImpl bookDAOImpl) {
