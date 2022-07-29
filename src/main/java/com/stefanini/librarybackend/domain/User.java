@@ -1,5 +1,6 @@
 package com.stefanini.librarybackend.domain;
 
+import com.stefanini.librarybackend.domain.enums.Role;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -21,23 +23,26 @@ import java.util.List;
 public class User implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userId_generator")
-    @SequenceGenerator(name = "userId_generator", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, name = "id", nullable = false)
     private int id;
 
-    @Column(unique = true, name = "email", nullable = false)
+    @Column(unique = true, name = "email")
     private String email;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password")
     private String password;
 
     @Transient
-    @OneToMany
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "user_role", inverseJoinColumns = @JoinColumn(name = "role_id"), joinColumns = @JoinColumn(name = "user_id"))
     private List<UserRole> userRole;
 
     @Transient
-    @OneToOne
+    @OneToMany(mappedBy = "user")
+    private List<Book> book;
+
+    @OneToOne(cascade = CascadeType.ALL)
     private Profile profile;
 
     @CreationTimestamp
@@ -47,9 +52,6 @@ public class User implements Serializable {
     @UpdateTimestamp
     @Column(name = "last_update")
     private LocalDateTime lastUpdate;
-
-    @OneToMany
-    private List<Book> book;
 
     public User(int id, String email, String password) {
         setId(id);
@@ -68,6 +70,5 @@ public class User implements Serializable {
         setEmail(email);
         setPassword(password);
     }
-
 
 }
