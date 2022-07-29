@@ -1,4 +1,5 @@
 package com.stefanini.librarybackend.dao.impl;
+
 import com.google.common.base.Preconditions;
 import com.stefanini.librarybackend.dao.IGenericDao;
 import org.apache.log4j.Logger;
@@ -12,21 +13,17 @@ import java.util.List;
 
 @Repository
 @Transactional
-public abstract class DAOAbstractImpl<T extends Serializable>  implements IGenericDao<T> {
+public abstract class DAOAbstractImpl<T extends Serializable> implements IGenericDao<T> {
     private Class<T> clazz;
+    @PersistenceContext
+    EntityManager entityManager;
 
-
-   @PersistenceContext
-   EntityManager entityManager;
-
-
-
-    private EntityTransaction transaction = null;
     private Logger logger = Logger.getLogger(DAOAbstractImpl.class);
+
     public void setClazz(final Class<T> clazzToSet) {
-        // System.out.println( Preconditions.checkNotNull(clazzToSet));
         clazz = Preconditions.checkNotNull(clazzToSet);
     }
+
     // API
     @Override
     public List<T> getAll() {
@@ -50,6 +47,6 @@ public abstract class DAOAbstractImpl<T extends Serializable>  implements IGener
 
     @Override
     public void remove(int id) {
-        entityManager.remove(id);
+        entityManager.remove(get(id));
     }
 }
