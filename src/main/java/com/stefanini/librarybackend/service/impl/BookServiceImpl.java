@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+
 @Service
 
 public class BookServiceImpl implements BookService {
@@ -17,7 +18,9 @@ public class BookServiceImpl implements BookService {
     private BookDAO<Book> bookDAOImpl;
 
 
+
     public BookServiceImpl(BookDAOImpl bookDAOImpl) {
+
 
         this.bookDAOImpl = bookDAOImpl;
     }
@@ -50,5 +53,6 @@ public class BookServiceImpl implements BookService {
     @Override
     public void deleteBook(int id) {
         bookDAOImpl.remove(id);
+
     }
 }

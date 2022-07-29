@@ -57,9 +57,9 @@ public class HibernateUtil {
         );
 
 
-      jpaProperties.put("hibernate.ejb.naming_strategy",
-              environment.getRequiredProperty("hibernate.ejb.naming_strategy")
-      );
+        jpaProperties.put("hibernate.ejb.naming_strategy",
+                environment.getRequiredProperty("hibernate.ejb.naming_strategy")
+        );
 
 
         jpaProperties.put("hibernate.show_sql",
