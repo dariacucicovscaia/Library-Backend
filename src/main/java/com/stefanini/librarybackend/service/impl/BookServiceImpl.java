@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-
 @Service
 
 public class BookServiceImpl implements BookService {
@@ -20,8 +19,6 @@ public class BookServiceImpl implements BookService {
 
 
     public BookServiceImpl(BookDAOImpl bookDAOImpl) {
-
-
         this.bookDAOImpl = bookDAOImpl;
     }
 

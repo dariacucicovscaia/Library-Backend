@@ -70,5 +70,4 @@ public class User implements Serializable {
         setEmail(email);
         setPassword(password);
     }
-
 }

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
 @Repository
-
 public class ProfileDAOImpl extends DAOAbstractImpl<Profile> implements ProfileDAO<Profile> {
 
     public ProfileDAOImpl() {

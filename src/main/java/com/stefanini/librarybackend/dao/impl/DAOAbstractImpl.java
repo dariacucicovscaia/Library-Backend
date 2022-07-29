@@ -18,7 +18,6 @@ public abstract class DAOAbstractImpl<T extends Serializable> implements IGeneri
     @PersistenceContext
     EntityManager entityManager;
 
-
     private Logger logger = Logger.getLogger(DAOAbstractImpl.class);
 
     public void setClazz(final Class<T> clazzToSet) {
