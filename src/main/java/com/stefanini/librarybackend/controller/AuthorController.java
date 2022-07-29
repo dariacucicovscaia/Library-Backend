@@ -4,9 +4,7 @@ import com.stefanini.librarybackend.domain.Author;
 import com.stefanini.librarybackend.service.AuthorService;
 import com.stefanini.librarybackend.service.impl.AuthorServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -26,12 +24,12 @@ public class AuthorController {
         authorService.addAuthor(new Author(firstName, lastName, birthDate, biography));
     }
 
-    @PostMapping("/updateAuthor")
+    @PutMapping("/updateAuthor")
     public void updateAuthor(String firstName, String lastName, Date birthDate, String biography) {
         authorService.update(new Author(firstName, lastName, birthDate, biography));
     }
 
-    @PostMapping("/deleteAuthor")
+    @DeleteMapping("/deleteAuthor")
     public void deleteAuthor(int id) {
         authorService.deleteAuthor(id);
     }

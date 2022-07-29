@@ -35,44 +35,12 @@ public abstract class DAOAbstractImpl<T extends Serializable>  implements IGener
 
     @Override
     public void update(T entity) {
-        try {
-
-            transaction = entityManager.getTransaction();
-
-            transaction.begin();
-            entityManager.merge(entity);
-            transaction.commit();
-
-        } catch (Exception e) {
-            if (transaction != null)
-                transaction.rollback();
-
-           logger.error(e.getMessage());
-      //  } finally {
-      //      shutdown();
-
-        }
+        entityManager.merge(entity);
     }
 
     @Override
     public void create(T entity) {
-        try {
-            transaction = entityManager.getTransaction();
-
-            transaction.begin();
-            entityManager.persist(entity);
-            transaction.commit();
-
-        } catch (Exception e) {
-            if (transaction != null)
-                transaction.rollback();
-
-           logger.error(e.getMessage());
-
-
-        } finally {
-            //  shutdown();
-        }
+        entityManager.persist(entity);
     }
 
     @Override
@@ -82,20 +50,6 @@ public abstract class DAOAbstractImpl<T extends Serializable>  implements IGener
 
     @Override
     public void remove(int id) {
-        try {
-            transaction = entityManager.getTransaction();
-
-            transaction.begin();
-            entityManager.remove(get(id));
-            transaction.commit();
-
-        } catch (Exception e) {
-            if (transaction != null)
-                transaction.rollback();
-
-          logger.error(e.getMessage());
-
-        } finally {
-        }
+        entityManager.remove(id);
     }
 }

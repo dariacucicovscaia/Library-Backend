@@ -15,8 +15,7 @@ import java.util.List;
 public class Author implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "authorId_generator")
-    @SequenceGenerator(name = "authorId_generator", sequenceName = "authorId_generator", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private int id;
 
