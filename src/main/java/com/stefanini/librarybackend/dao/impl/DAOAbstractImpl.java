@@ -15,9 +15,9 @@ import java.util.List;
 @Transactional
 public abstract class DAOAbstractImpl<T extends Serializable> implements IGenericDao<T> {
     private Class<T> clazz;
-
     @PersistenceContext
     EntityManager entityManager;
+
 
     private Logger logger = Logger.getLogger(DAOAbstractImpl.class);
 

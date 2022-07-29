@@ -19,6 +19,7 @@ import java.util.List;
 
 public class UserRole implements Serializable {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

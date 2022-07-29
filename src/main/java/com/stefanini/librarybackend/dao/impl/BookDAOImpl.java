@@ -13,17 +13,23 @@ public class BookDAOImpl extends DAOAbstractImpl<Book> implements BookDAO<Book> 
 
 
     @Override
-    public void updateStatusBook(String bookTitle, String bookStatus, String userId) {
+
+    public void updateStatusToBooked(String bookTitle, String bookStatus, String userId) {
+
 
     }
 
     @Override
-    public void updateStatusHandAut(String bookTitle, String bookStatus, String userId) {
+
+    public void updateStatusToTaken(String bookTitle, String bookStatus, String userId) {
+
 
     }
 
     @Override
-    public void updateStatusReturn(String bookTitle) {
+
+    public void updateStatusWhenReturned(String bookTitle) {
+
 
     }
 }

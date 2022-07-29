@@ -7,7 +7,9 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.TypedQuery;
 
 @Repository
+
 public class UserDAOImpl extends DAOAbstractImpl<User> implements UserDAO<User> {
+
     public UserDAOImpl() {
         setClazz(User.class);
     }
