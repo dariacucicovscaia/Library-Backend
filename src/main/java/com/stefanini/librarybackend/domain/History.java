@@ -3,6 +3,8 @@ package com.stefanini.librarybackend.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -13,13 +15,13 @@ import java.util.Date;
 @NoArgsConstructor
 public class History {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "historyId_generator")
-    @SequenceGenerator(name = "historyId_generator", allocationSize = 1)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
     @Column(name = "actionName")
     private String actionName;
 
+    @CreationTimestamp
     @Column(name = "date")
     private Date date;
 

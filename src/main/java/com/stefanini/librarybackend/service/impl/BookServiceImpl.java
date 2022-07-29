@@ -9,27 +9,46 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
 @Service
 
 public class BookServiceImpl implements BookService {
-@Autowired
-    private BookDAO<Book> bookDAOImpl ;
+    @Autowired
+    private BookDAO<Book> bookDAOImpl;
 
 
     public BookServiceImpl(BookDAOImpl bookDAOImpl) {
 
-        this.bookDAOImpl=bookDAOImpl;
+        this.bookDAOImpl = bookDAOImpl;
     }
 
-@Transactional
+    @Transactional
     @Override
     public void addBook(Book book) {
         bookDAOImpl.create(book);
     }
 
-@Transactional
+    @Transactional
     @Override
     public List<Book> showAllBooks() {
-       return bookDAOImpl.getAll();
+        return bookDAOImpl.getAll();
+    }
+
+    @Transactional
+    @Override
+    public void update(Book book) {
+        bookDAOImpl.update(book);
+    }
+
+    @Transactional
+    @Override
+    public Book findById(int id) {
+        return bookDAOImpl.get(id);
+    }
+
+    @Transactional
+    @Override
+    public void deleteBook(int id) {
+        bookDAOImpl.remove(id);
     }
 }

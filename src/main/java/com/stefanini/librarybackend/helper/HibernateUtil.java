@@ -53,7 +53,7 @@ public class HibernateUtil {
 
         jpaProperties.put("hibernate.hbm2ddl.auto",
 
-                environment.getRequiredProperty("spring.jpa.hibernate.ddl-auto")
+                environment.getRequiredProperty("hibernate.hbm2ddl.auto")
         );
 
 
