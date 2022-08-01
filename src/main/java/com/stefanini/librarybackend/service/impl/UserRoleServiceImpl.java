@@ -14,7 +14,7 @@ import java.util.List;
 
 @Service
 public class UserRoleServiceImpl implements UserRoleService {
-    @Autowired
+
     private UserRoleDAO<UserRole> userDao;
 
     public UserRoleServiceImpl(UserRoleDAOImpl userDao) {

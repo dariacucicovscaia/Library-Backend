@@ -12,7 +12,6 @@ import java.util.List;
 @Service
 public class ProfileServiceImpl implements ProfileService {
 
-    @Autowired
     private ProfileDAO<Profile> profileDao;
 
     public ProfileServiceImpl(ProfileDAOImpl profileDao) {

@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 public class UserRoleController {
-    @Autowired
+
     UserRoleServiceImpl userroleservice;
 
     public UserRoleController(UserRoleServiceImpl userroleservice) {

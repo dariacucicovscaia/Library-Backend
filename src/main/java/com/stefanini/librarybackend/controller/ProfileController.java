@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ProfileController {
-    @Autowired
+
     ProfileServiceImpl profileService;
 
     public ProfileController(ProfileServiceImpl profileService) {

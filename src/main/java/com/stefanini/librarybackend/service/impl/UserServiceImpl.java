@@ -11,12 +11,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
-    @Autowired
     private UserDAO<User> userDao;
 
-//    public UserServiceImpl(UserDAOImpl userDao) {
-//        this.userDao = userDao;
-//    }
+    public UserServiceImpl(UserDAOImpl userDao) {
+        this.userDao = userDao;
+    }
 
     @Override
     public void createUser(User user) {
