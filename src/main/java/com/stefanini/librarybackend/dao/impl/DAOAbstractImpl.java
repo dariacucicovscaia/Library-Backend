@@ -12,7 +12,6 @@ import java.io.Serializable;
 import java.util.List;
 
 @Repository
-@Transactional
 public abstract class DAOAbstractImpl<T extends Serializable> implements IGenericDao<T> {
     private Class<T> clazz;
     @PersistenceContext
@@ -31,22 +30,28 @@ public abstract class DAOAbstractImpl<T extends Serializable> implements IGeneri
     }
 
     @Override
-    public void update(T entity) {
+    @Transactional
+    public T update(T entity) {
         entityManager.merge(entity);
+        return entity;
     }
 
     @Override
-    public void create(T entity) {
-        entityManager.persist(entity);
+    @Transactional
+    public T create(T entity) {
+       entityManager.persist(entity);
+       return entity;
     }
 
     @Override
-    public T get(int id) {
+    public T getById(int id) {
         return entityManager.find(clazz, id);
     }
 
     @Override
-    public void remove(int id) {
-        entityManager.remove(get(id));
+    @Transactional
+    public int removeById(int id) {
+        entityManager.remove(getById(id));
+        return id;
     }
 }

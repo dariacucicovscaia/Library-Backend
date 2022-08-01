@@ -33,10 +33,9 @@ public class User implements Serializable {
     @Column(name = "password")
     private String password;
 
-    @Transient
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "user_role", inverseJoinColumns = @JoinColumn(name = "role_id"), joinColumns = @JoinColumn(name = "user_id"))
-    private List<UserRole> userRole;
+    private List<UserRole> role;
 
     @Transient
     @OneToMany(mappedBy = "user")

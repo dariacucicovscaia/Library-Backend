@@ -32,7 +32,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public void deleteAuthor(int id) {
-        authorDAO.remove(id);
+        authorDAO.removeById(id);
     }
 
     @Override
@@ -42,6 +42,6 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Author findById(int id) {
-        return authorDAO.get(id);
+        return authorDAO.getById(id);
     }
 }

@@ -4,7 +4,6 @@ import com.stefanini.librarybackend.dao.ProfileDAO;
 import com.stefanini.librarybackend.dao.impl.ProfileDAOImpl;
 import com.stefanini.librarybackend.domain.Profile;
 import com.stefanini.librarybackend.service.ProfileService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,20 +11,20 @@ import java.util.List;
 @Service
 public class ProfileServiceImpl implements ProfileService {
 
-    @Autowired
     private ProfileDAO<Profile> profileDao;
 
     public ProfileServiceImpl(ProfileDAOImpl profileDao) {
-        this.profileDao =profileDao;
-    }
-    @Override
-    public void createProfile(Profile user) {
-        profileDao.create(user);
+        this.profileDao = profileDao;
     }
 
     @Override
-    public void updateProfile(Profile user) {
-        profileDao.update(user);
+    public Profile createProfile(Profile user) {
+        return profileDao.create(user);
+    }
+
+    @Override
+    public Profile updateProfile(Profile user) {
+        return profileDao.update(user);
     }
 
     @Override
@@ -35,7 +34,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public Profile findById(int id) {
-        return profileDao.get(id);
+        return profileDao.getById(id);
     }
 
     @Override
@@ -44,12 +43,12 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public void deleteByEmail(String email) {
-        profileDao.remove(profileDao.findProfileByEmail(email).getId());
+    public int deleteByEmail(String email) {
+        return profileDao.removeById(profileDao.findProfileByEmail(email).getId());
     }
 
     @Override
-    public void deleteById(int id) {
-        profileDao.remove(id);
+    public int deleteById(int id) {
+        return profileDao.removeById(id);
     }
 }
