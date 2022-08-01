@@ -22,31 +22,30 @@ public class BookServiceImpl implements BookService {
         this.bookDAOImpl = bookDAOImpl;
     }
 
-    @Transactional
+
     @Override
     public void addBook(Book book) {
         bookDAOImpl.create(book);
     }
 
-    @Transactional
     @Override
     public List<Book> showAllBooks() {
         return bookDAOImpl.getAll();
     }
 
-    @Transactional
+
     @Override
     public void update(Book book) {
         bookDAOImpl.update(book);
     }
 
-    @Transactional
+
     @Override
     public Book findById(int id) {
         return bookDAOImpl.get(id);
     }
 
-    @Transactional
+
     @Override
     public void deleteBook(int id) {
         bookDAOImpl.remove(id);

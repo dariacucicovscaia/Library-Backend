@@ -15,9 +15,9 @@ public class UserController {
     @Autowired
     UserServiceImpl userService;
 
-    public UserController(UserServiceImpl userService) {
-        this.userService = userService;
-    }
+//    public UserController(UserServiceImpl userService) {
+//        this.userService = userService;
+//    }
 
     @GetMapping("allUsers")
     public List<User> getAllUsers() {
