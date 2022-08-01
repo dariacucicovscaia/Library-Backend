@@ -8,13 +8,13 @@ public interface IGenericDao<T> {
 
     List<T> getAll() ;
 
-    void update(T entity);
+    T update(T entity);
 
-    void create(T entity);
+    T create(T entity);
 
-    T get(int id) ;
+    T getById(int id) ;
 
-    void remove(int id);
+    T remove(int id);
 
 
 

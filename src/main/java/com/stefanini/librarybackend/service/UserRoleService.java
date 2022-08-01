@@ -5,11 +5,11 @@ import com.stefanini.librarybackend.domain.UserRole;
 import java.util.List;
 
 public interface UserRoleService {
-    void createUserRole(UserRole user);
-    void updateUserRole(UserRole user);
+    UserRole createUserRole(UserRole user);
+    UserRole updateUserRole(UserRole user);
     List<UserRole> showAllUserRoles();
     UserRole findById(int id);
     UserRole findByEmail(String email);
-    void deleteByEmail(String email);
-    void deleteById(int id);
+    UserRole deleteByEmail(String email);
+    UserRole deleteById(int id);
 }

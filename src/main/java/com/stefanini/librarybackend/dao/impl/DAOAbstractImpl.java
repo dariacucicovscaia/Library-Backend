@@ -31,24 +31,27 @@ public abstract class DAOAbstractImpl<T extends Serializable> implements IGeneri
 
     @Override
     @Transactional
-    public void update(T entity) {
+    public T update(T entity) {
         entityManager.merge(entity);
+        return entity;
     }
 
     @Override
     @Transactional
-    public void create(T entity) {
-        entityManager.persist(entity);
+    public T create(T entity) {
+       entityManager.persist(entity);
+       return entity;
     }
 
     @Override
-    public T get(int id) {
+    public T getById(int id) {
         return entityManager.find(clazz, id);
     }
 
     @Override
     @Transactional
-    public void remove(int id) {
-        entityManager.remove(get(id));
+    public T remove(int id) {
+        entityManager.remove(getById(id));
+        return getById(id);
     }
 }

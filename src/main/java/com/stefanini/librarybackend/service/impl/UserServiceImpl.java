@@ -5,7 +5,6 @@ import com.stefanini.librarybackend.dao.UserDAO;
 import com.stefanini.librarybackend.dao.impl.UserDAOImpl;
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,13 +17,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createUser(User user) {
-        userDao.create(user);
+    public User createUser(User user) {
+       return userDao.create(user);
     }
 
     @Override
-    public void updateUser(User user) {
-        userDao.update(user);
+    public User updateUser(User user) {
+      return  userDao.update(user);
     }
 
     @Override
@@ -34,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(int id) {
-        return userDao.get(id);
+        return userDao.getById(id);
     }
 
     @Override
@@ -43,13 +42,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteByEmail(String email) {
-        userDao.remove(findByEmail(email).getId());
+    public User deleteByEmail(String email) {
+       return userDao.remove(findByEmail(email).getId());
     }
 
     @Override
-    public void deleteById(int id) {
-        userDao.remove(id);
+    public User deleteById(int id) {
+       return userDao.remove(id);
     }
 
 }
