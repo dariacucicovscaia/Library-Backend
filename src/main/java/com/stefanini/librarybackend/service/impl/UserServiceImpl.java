@@ -23,9 +23,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
-    if(user.getRoles() == null){
-        user.setRoles(new HashSet<>(Arrays.asList(Role.USER)));
-    }
+        if (user.getRoles() == null) {
+            user.setRoles(new HashSet<>(Arrays.asList(Role.USER)));
+        }
         return userDao.create(user);
     }
 
@@ -62,4 +62,9 @@ public class UserServiceImpl implements UserService {
         return userDao.removeById(id);
     }
 
+    public User assignRole(int id, Role role) {
+        User u = findById(id);
+        u.getRoles().add(role);
+        return userDao.update(u);
+    }
 }

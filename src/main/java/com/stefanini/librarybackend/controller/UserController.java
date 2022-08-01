@@ -43,6 +43,10 @@ public class UserController {
         return userService.updateUser(id, user);
     }
 
+    @PutMapping("admin/assignRole/{id}/{role}")
+    public User assignRole(@PathVariable int id, @PathVariable Role role) {
+        return userService.assignRole(id, role);
+    }
 
     @DeleteMapping("delete/{id}")
     public int deleteById(@PathVariable int id) {
