@@ -10,7 +10,7 @@ public interface ProfileService {
     List<Profile> showAllProfiles();
     Profile findById(int id);
     Profile findByEmail(String email);
-    Profile deleteByEmail(String email);
-    Profile deleteById(int id);
+    int deleteByEmail(String email);
+    int deleteById(int id);
 
 }

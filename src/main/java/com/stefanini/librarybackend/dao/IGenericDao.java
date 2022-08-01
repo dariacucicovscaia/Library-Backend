@@ -14,7 +14,7 @@ public interface IGenericDao<T> {
 
     T getById(int id) ;
 
-    T remove(int id);
+    int removeById(int id);
 
 
 

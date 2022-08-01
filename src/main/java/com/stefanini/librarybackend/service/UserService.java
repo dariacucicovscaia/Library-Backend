@@ -10,6 +10,6 @@ public interface UserService {
     List<User> showAllUsers();
     public User findById(int id);
     User findByEmail(String email);
-    User deleteByEmail(String email);
-    User deleteById(int id);
+    int deleteByEmail(String email);
+    int deleteById(int id);
 }

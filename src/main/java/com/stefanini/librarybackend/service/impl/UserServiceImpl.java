@@ -18,6 +18,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
+
        return userDao.create(user);
     }
 
@@ -42,13 +43,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User deleteByEmail(String email) {
-       return userDao.remove(findByEmail(email).getId());
+    public int deleteByEmail(String email) {
+       return userDao.removeById(findByEmail(email).getId());
     }
 
     @Override
-    public User deleteById(int id) {
-       return userDao.remove(id);
+    public int deleteById(int id) {
+       return userDao.removeById(id);
     }
 
 }

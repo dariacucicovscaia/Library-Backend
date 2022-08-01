@@ -43,12 +43,12 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public Profile deleteByEmail(String email) {
-        return profileDao.remove(profileDao.findProfileByEmail(email).getId());
+    public int deleteByEmail(String email) {
+        return profileDao.removeById(profileDao.findProfileByEmail(email).getId());
     }
 
     @Override
-    public Profile deleteById(int id) {
-        return profileDao.remove(id);
+    public int deleteById(int id) {
+        return profileDao.removeById(id);
     }
 }

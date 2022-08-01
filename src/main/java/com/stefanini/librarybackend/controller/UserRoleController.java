@@ -13,12 +13,16 @@ import java.util.List;
 @RestController
 public class UserRoleController {
 
-    UserRoleServiceImpl userroleservice;
+    UserRoleServiceImpl userRoleService;
 
-    public UserRoleController(UserRoleServiceImpl userroleservice) {
-        this.userroleservice = userroleservice;
+    public UserRoleController(UserRoleServiceImpl userRoleService) {
+        this.userRoleService = userRoleService;
     }
 
+    @PostMapping("addUserRole")
+    public UserRole createNewRole(@RequestBody UserRole role) {
+        return userRoleService.createUserRole(role);
+    }
 //    @PostMapping("addUserRole/{role}")
 //    public void addUserRole(@PathVariable Role role, @RequestBody User user){
 //        user.getUserRole().add(role);

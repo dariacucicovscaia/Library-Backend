@@ -43,12 +43,12 @@ public class UserRoleServiceImpl implements UserRoleService {
     }
 
     @Override
-    public UserRole deleteByEmail(String email) {
-        return userDao.remove(userDao.findUserRoleByEmail(email).getId());
+    public int deleteByEmail(String email) {
+        return userDao.removeById(userDao.findUserRoleByEmail(email).getId());
     }
 
     @Override
-    public UserRole deleteById(int id) {
-        return userDao.remove(id);
+    public int deleteById(int id) {
+        return userDao.removeById(id);
     }
 }

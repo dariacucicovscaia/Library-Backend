@@ -50,8 +50,8 @@ public abstract class DAOAbstractImpl<T extends Serializable> implements IGeneri
 
     @Override
     @Transactional
-    public T remove(int id) {
+    public int removeById(int id) {
         entityManager.remove(getById(id));
-        return getById(id);
+        return id;
     }
 }

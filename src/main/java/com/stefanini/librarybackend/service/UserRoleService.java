@@ -10,6 +10,6 @@ public interface UserRoleService {
     List<UserRole> showAllUserRoles();
     UserRole findById(int id);
     UserRole findByEmail(String email);
-    UserRole deleteByEmail(String email);
-    UserRole deleteById(int id);
+    int deleteByEmail(String email);
+    int deleteById(int id);
 }
