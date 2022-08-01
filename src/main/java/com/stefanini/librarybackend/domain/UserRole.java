@@ -25,10 +25,7 @@ public class UserRole implements Serializable {
     @Column(name = "id", nullable = false)
     private int id;
 
-
-    @Transient
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_role", inverseJoinColumns = @JoinColumn(name = "user_id"), joinColumns = @JoinColumn(name = "role_id"))
+    @ManyToMany(mappedBy = "role")
     private List<User> users;
 
     @Column(name = "role")

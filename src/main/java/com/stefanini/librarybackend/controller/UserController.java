@@ -12,11 +12,15 @@ import java.util.List;
 
 @RestController
 public class UserController {
-    @Autowired
     UserServiceImpl userService;
 
     public UserController(UserServiceImpl userService) {
         this.userService = userService;
+    }
+
+    @GetMapping("/")
+    public String home() {
+        return ("<h1>Hi</h1>");
     }
 
     @GetMapping("allUsers")
@@ -25,8 +29,8 @@ public class UserController {
     }
 
     @PostMapping("addUser")
-    public void addUser(@RequestBody User user) {
-        userService.createUser(user);
+    public User addUser(@RequestBody User user) {
+        return userService.createUser(user);
     }
 
     @GetMapping("findUserById/{id}")
@@ -35,17 +39,17 @@ public class UserController {
     }
 
     @PutMapping("updateUser/{id}")
-    public void updateUser(@PathVariable int id, @RequestBody User user) {
+    public User updateUser(@PathVariable int id, @RequestBody User user) {
         User u = userService.findById(id);
         u.setEmail(user.getEmail());
         u.setPassword(user.getPassword());
-        userService.updateUser(u);
+        return userService.updateUser(u);
     }
 
 
     @DeleteMapping("delete/{id}")
-    public void deleteById(@PathVariable int id) {
-        userService.deleteById(id);
+    public int deleteById(@PathVariable int id) {
+        return userService.deleteById(id);
     }
 
 
