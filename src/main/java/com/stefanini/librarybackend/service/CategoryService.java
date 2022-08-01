@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface CategoryService {
 
-    void addCategory(Category category);
+    Category addCategory(Category category);
 
-    void deleteCategory(int id);
+    int deleteCategory(int id);
 
     List<Category> getAllCategories();
 }
