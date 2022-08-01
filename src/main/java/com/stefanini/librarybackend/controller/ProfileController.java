@@ -21,10 +21,6 @@ public class ProfileController {
 
     @PutMapping("updateProfile/{id}")
     public Profile updateProfile(@PathVariable int id, @RequestBody Profile user) {
-        Profile u = profileService.findById(id);
-        u.setFirstName(user.getFirstName());
-        u.setLastName(user.getLastName());
-        u.setPhoneNumber(user.getPhoneNumber());
-        return profileService.updateProfile(u);
+        return profileService.updateProfile(id, user);
     }
 }

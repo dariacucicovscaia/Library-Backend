@@ -4,10 +4,15 @@ package com.stefanini.librarybackend.service.impl;
 import com.stefanini.librarybackend.dao.UserDAO;
 import com.stefanini.librarybackend.dao.impl.UserDAOImpl;
 import com.stefanini.librarybackend.domain.User;
+import com.stefanini.librarybackend.domain.enums.Role;
 import com.stefanini.librarybackend.service.UserService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
     private UserDAO<User> userDao;
@@ -18,13 +23,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
-
-       return userDao.create(user);
+    if(user.getRoles() == null){
+        user.setRoles(new HashSet<>(Arrays.asList(Role.USER)));
+    }
+        return userDao.create(user);
     }
 
     @Override
-    public User updateUser(User user) {
-      return  userDao.update(user);
+    public User updateUser(int id, User user) {
+        User u = findById(id);
+        u.setEmail(user.getEmail());
+        u.setPassword(user.getPassword());
+        return userDao.update(u);
     }
 
     @Override
@@ -44,12 +54,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int deleteByEmail(String email) {
-       return userDao.removeById(findByEmail(email).getId());
+        return userDao.removeById(findByEmail(email).getId());
     }
 
     @Override
     public int deleteById(int id) {
-       return userDao.removeById(id);
+        return userDao.removeById(id);
     }
 
 }
