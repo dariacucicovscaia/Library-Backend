@@ -1,8 +1,11 @@
 package com.stefanini.librarybackend.service.impl;
 
 import com.stefanini.librarybackend.dao.AuthorDAO;
+import com.stefanini.librarybackend.dao.BookDAO;
 import com.stefanini.librarybackend.dao.impl.AuthorDAOImpl;
+import com.stefanini.librarybackend.dao.impl.BookDAOImpl;
 import com.stefanini.librarybackend.domain.Author;
+import com.stefanini.librarybackend.domain.Book;
 import com.stefanini.librarybackend.service.AuthorService;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +16,11 @@ public class AuthorServiceImpl implements AuthorService {
 
 
     private AuthorDAO<Author> authorDAO;
+    private BookDAO<Book> bookDAO;
 
-    public AuthorServiceImpl(AuthorDAOImpl authorDAOImpl) {
+    public AuthorServiceImpl(AuthorDAOImpl authorDAOImpl, BookDAOImpl bookDAOImpl) {
         this.authorDAO = authorDAOImpl;
+        this.bookDAO = bookDAOImpl;
     }
 
     @Override
@@ -45,10 +50,22 @@ public class AuthorServiceImpl implements AuthorService {
         return authorDAO.getById(id);
     }
 
+    @Override
+    public Author addBookToAuthor(int bookId, int id) {
+        Book book = bookDAO.getById(bookId);
+        Author author = authorDAO.getById(id);
+        setBookToAuthor(book, author);
+        return authorDAO.update(author);
+    }
+
     private void setUpdatedAuthorData(Author updatedAuthor, Author author) {
         updatedAuthor.setFirstName(author.getFirstName());
         updatedAuthor.setLastName(author.getLastName());
         updatedAuthor.setBirthDate(author.getBirthDate());
         updatedAuthor.setBiography(author.getBiography());
+    }
+
+    private void setBookToAuthor(Book book, Author author) {
+        author.getBooks().add(book);
     }
 }

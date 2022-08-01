@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 public class AuthorController {
 
-    @Autowired
+
     private AuthorService authorService;
 
     public AuthorController(AuthorServiceImpl authorService) {
@@ -28,9 +28,9 @@ public class AuthorController {
         return authorService.update(id, author);
     }
 
-    @PutMapping("/addBookToAuthor/{bookId}/{authorId}")
-    public Author addBookToAuthor(@PathVariable int bookId, @PathVariable int authorId) {
-
+    @PutMapping("/addBookToAuthor/{bookId}/{id}")
+    public Author addBookToAuthor(@PathVariable int bookId, @PathVariable int id) {
+        return authorService.addBookToAuthor(bookId, id);
     }
 
     @DeleteMapping("/deleteAuthor/{id}")
