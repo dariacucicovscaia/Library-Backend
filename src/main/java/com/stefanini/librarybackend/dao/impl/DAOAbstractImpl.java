@@ -30,14 +30,12 @@ public abstract class DAOAbstractImpl<T extends Serializable> implements IGeneri
     }
 
     @Override
-    @Transactional
     public T update(T entity) {
         entityManager.merge(entity);
         return entity;
     }
 
     @Override
-    @Transactional
     public T create(T entity) {
        entityManager.persist(entity);
        return entity;
@@ -49,7 +47,6 @@ public abstract class DAOAbstractImpl<T extends Serializable> implements IGeneri
     }
 
     @Override
-    @Transactional
     public int removeById(int id) {
         entityManager.remove(getById(id));
         return id;

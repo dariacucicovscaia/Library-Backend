@@ -8,6 +8,7 @@ import com.stefanini.librarybackend.domain.enums.Role;
 import com.stefanini.librarybackend.service.UserService;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -22,6 +23,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public User createUser(User user) {
         if (user.getRoles() == null) {
             user.setRoles(new HashSet<>(Arrays.asList(Role.USER)));
@@ -30,6 +32,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public User updateUser(int id, User user) {
         User u = findById(id);
         u.setEmail(user.getEmail());
@@ -53,15 +56,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public int deleteByEmail(String email) {
         return userDao.removeById(findByEmail(email).getId());
     }
 
     @Override
+    @Transactional
     public int deleteById(int id) {
         return userDao.removeById(id);
     }
-
+    @Override
+    @Transactional
     public User assignRole(int id, Role role) {
         User u = findById(id);
         u.getRoles().add(role);

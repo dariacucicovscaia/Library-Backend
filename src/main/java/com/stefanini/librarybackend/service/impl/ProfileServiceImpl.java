@@ -6,6 +6,7 @@ import com.stefanini.librarybackend.domain.Profile;
 import com.stefanini.librarybackend.service.ProfileService;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -18,11 +19,13 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
+    @Transactional
     public Profile createProfile(Profile user) {
         return profileDao.create(user);
     }
 
     @Override
+    @Transactional
     public Profile updateProfile(int id, Profile user) {
         Profile u = findById(id);
         u.setFirstName(user.getFirstName());
@@ -47,11 +50,13 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
+    @Transactional
     public int deleteByEmail(String email) {
         return profileDao.removeById(profileDao.findProfileByEmail(email).getId());
     }
 
     @Override
+    @Transactional
     public int deleteById(int id) {
         return profileDao.removeById(id);
     }
