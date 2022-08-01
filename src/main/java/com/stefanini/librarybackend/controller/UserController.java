@@ -40,10 +40,7 @@ public class UserController {
 
     @PutMapping("updateUser/{id}")
     public User updateUser(@PathVariable int id, @RequestBody User user) {
-        User u = userService.findById(id);
-        u.setEmail(user.getEmail());
-        u.setPassword(user.getPassword());
-        return userService.updateUser(u);
+        return userService.updateUser(id, user);
     }
 
 

@@ -23,8 +23,12 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public Profile updateProfile(Profile user) {
-        return profileDao.update(user);
+    public Profile updateProfile(int id, Profile user) {
+        Profile u = findById(id);
+        u.setFirstName(user.getFirstName());
+        u.setLastName(user.getLastName());
+        u.setPhoneNumber(user.getPhoneNumber());
+        return profileDao.update(u);
     }
 
     @Override
