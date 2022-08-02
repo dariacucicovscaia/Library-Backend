@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,8 +32,8 @@ public class Author implements Serializable {
     @Column(name = "biography")
     private String biography;
 
-    @ManyToMany(mappedBy = "authors")
-    private List<Book> books;
+    @ManyToMany(mappedBy = "authors", fetch = FetchType.EAGER)
+    private List<Book> books = new ArrayList<>();
 
     public Author(int id, String firstName, String lastName, Date birthDate, String biography, List<Book> books) {
         setId(id);
@@ -64,5 +65,10 @@ public class Author implements Serializable {
         setLastName(lastName);
         setBirthDate(birthDate);
         setBiography(biography);
+    }
+
+    public void addBook(Book book) {
+        this.books.add(book);
+        book.getAuthors().add(this);
     }
 }

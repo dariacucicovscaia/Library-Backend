@@ -6,13 +6,12 @@ import com.stefanini.librarybackend.service.impl.AuthorServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
 public class AuthorController {
 
-    @Autowired
+
     private AuthorService authorService;
 
     public AuthorController(AuthorServiceImpl authorService) {
@@ -20,23 +19,23 @@ public class AuthorController {
     }
 
     @PostMapping("/addAuthor")
-    public void addAuthor(@RequestBody Author author) {
-        authorService.addAuthor(author);
+    public Author addAuthor(@RequestBody Author author) {
+        return authorService.addAuthor(author);
     }
 
     @PutMapping("/updateAuthor/{id}")
-    public void updateAuthor(@PathVariable int id, @RequestBody Author author) {
-        Author updatedAuthor = authorService.findById(id);
-        updatedAuthor.setFirstName(author.getFirstName());
-        updatedAuthor.setLastName(author.getLastName());
-        updatedAuthor.setBirthDate(author.getBirthDate());
-        updatedAuthor.setBiography(author.getBiography());
-        authorService.update(updatedAuthor);
+    public Author updateAuthor(@PathVariable int id, @RequestBody Author author) {
+        return authorService.update(id, author);
+    }
+
+    @PutMapping("/addBookToAuthor/{bookId}/{id}")
+    public Author addBookToAuthor(@PathVariable int bookId, @PathVariable int id) {
+        return authorService.addBookToAuthor(bookId, id);
     }
 
     @DeleteMapping("/deleteAuthor/{id}")
-    public void deleteAuthor(@PathVariable int id) {
-        authorService.deleteAuthor(id);
+    public int deleteAuthor(@PathVariable int id) {
+        return authorService.deleteAuthor(id);
     }
 
     @GetMapping("/getAllAuthors")

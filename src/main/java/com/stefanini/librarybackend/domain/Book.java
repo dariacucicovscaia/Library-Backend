@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class Book implements Serializable {
 
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "book_author", inverseJoinColumns = @JoinColumn(name = "author_id"), joinColumns = @JoinColumn(name = "book_id"))
-    private List<Author> authors;
+    private List<Author> authors = new ArrayList<>();
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     private List<History> history;
