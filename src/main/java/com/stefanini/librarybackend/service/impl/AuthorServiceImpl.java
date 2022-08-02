@@ -54,7 +54,7 @@ public class AuthorServiceImpl implements AuthorService {
     public Author addBookToAuthor(int bookId, int id) {
         Book book = bookDAO.getById(bookId);
         Author author = authorDAO.getById(id);
-        setBookToAuthor(book, author);
+        author.addBook(book);
         return authorDAO.update(author);
     }
 
@@ -63,9 +63,5 @@ public class AuthorServiceImpl implements AuthorService {
         updatedAuthor.setLastName(author.getLastName());
         updatedAuthor.setBirthDate(author.getBirthDate());
         updatedAuthor.setBiography(author.getBiography());
-    }
-
-    private void setBookToAuthor(Book book, Author author) {
-        author.getBooks().add(book);
     }
 }

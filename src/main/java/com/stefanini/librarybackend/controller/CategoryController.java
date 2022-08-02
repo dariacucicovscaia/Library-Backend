@@ -22,6 +22,11 @@ public class CategoryController {
         categoryService.addCategory(category);
     }
 
+    @PutMapping("/addBookToCategory/{bookId}/{id}")
+    public Category addBookToCategory(@PathVariable int bookId, @PathVariable int id) {
+        return categoryService.addBookToCategory(bookId, id);
+    }
+
     @DeleteMapping("/deleteCategory/{id}")
     public int deleteCategory(@PathVariable int id) {
         return categoryService.deleteCategory(id);

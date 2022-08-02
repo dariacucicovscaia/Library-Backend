@@ -11,4 +11,6 @@ public interface CategoryService {
     int deleteCategory(int id);
 
     List<Category> getAllCategories();
+
+    Category addBookToCategory(int bookId, int id);
 }
