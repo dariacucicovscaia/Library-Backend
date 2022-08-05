@@ -6,21 +6,37 @@ import com.stefanini.librarybackend.dao.impl.UserDAOImpl;
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
 import com.stefanini.librarybackend.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 @Service
-public class UserServiceImpl implements UserService {
+@RequiredArgsConstructor
+public class UserServiceImpl implements UserService, UserDetailsService {
+    @Autowired
     private UserDAO<User> userDao;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserDAOImpl userDao) {
-        this.userDao = userDao;
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userDao.findUserByEmail(email);
+        if (user == null) {
+            throw new UsernameNotFoundException("Email not found");
+        }
+        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        user.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.name())));
+
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
     }
+
 
     @Override
     @Transactional
@@ -28,6 +44,7 @@ public class UserServiceImpl implements UserService {
         if (user.getRoles() == null) {
             user.setRoles(new HashSet<>(Arrays.asList(Role.USER)));
         }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userDao.create(user);
     }
 
@@ -36,7 +53,7 @@ public class UserServiceImpl implements UserService {
     public User updateUser(int id, User user) {
         User u = findById(id);
         u.setEmail(user.getEmail());
-        u.setPassword(user.getPassword());
+        u.setPassword(passwordEncoder.encode(user.getPassword()));
         return userDao.update(u);
     }
 
@@ -66,6 +83,7 @@ public class UserServiceImpl implements UserService {
     public int deleteById(int id) {
         return userDao.removeById(id);
     }
+
     @Override
     @Transactional
     public User assignRole(int id, Role role) {
@@ -73,4 +91,6 @@ public class UserServiceImpl implements UserService {
         u.getRoles().add(role);
         return userDao.update(u);
     }
+
+
 }
