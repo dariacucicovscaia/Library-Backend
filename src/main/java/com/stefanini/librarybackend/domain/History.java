@@ -12,7 +12,6 @@ import java.util.Date;
 
 @Entity
 @Table(name = "history")
-@Data
 @Getter
 @Setter
 @NoArgsConstructor

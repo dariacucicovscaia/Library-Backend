@@ -14,7 +14,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "user")
-@Data
 @Getter
 @Setter
 @ToString

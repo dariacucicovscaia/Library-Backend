@@ -16,7 +16,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "book")
-@Data
 @Getter
 @Setter
 @NoArgsConstructor
