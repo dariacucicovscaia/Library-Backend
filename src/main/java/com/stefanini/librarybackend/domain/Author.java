@@ -74,4 +74,8 @@ public class Author implements Serializable {
         this.books.add(book);
         book.getAuthors().add(this);
     }
+
+    public String getFullName() {
+        return this.firstName + " " + this.lastName;
+    }
 }
