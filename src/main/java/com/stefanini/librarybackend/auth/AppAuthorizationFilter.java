@@ -1,4 +1,4 @@
-package com.stefanini.librarybackend.security.filter;
+package com.stefanini.librarybackend.auth;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
