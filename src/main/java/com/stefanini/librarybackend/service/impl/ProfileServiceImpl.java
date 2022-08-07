@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class ProfileServiceImpl implements ProfileService {
 
-    private ProfileDAO<Profile> profileDao;
+    private final ProfileDAO<Profile> profileDao;
 
     public ProfileServiceImpl(ProfileDAOImpl profileDao) {
         this.profileDao = profileDao;

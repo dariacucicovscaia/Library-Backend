@@ -16,8 +16,8 @@ import java.util.List;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    private CategoryDAO<Category> categoryDAO;
-    private BookDAO<Book> bookDAO;
+    private final CategoryDAO<Category> categoryDAO;
+    private final BookDAO<Book> bookDAO;
 
     public CategoryServiceImpl(CategoryDAOImpl categoryDAOImpl, BookDAOImpl bookDAOImpl) {
         this.categoryDAO = categoryDAOImpl;
