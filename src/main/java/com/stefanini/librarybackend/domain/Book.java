@@ -1,5 +1,7 @@
 package com.stefanini.librarybackend.domain;
+
 import com.stefanini.librarybackend.domain.enums.BookStatus;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,10 +16,13 @@ import java.util.List;
 
 @Entity
 @Table(name = "book")
-@Getter @Setter @NoArgsConstructor
+@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class Book implements Serializable {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
@@ -31,7 +36,7 @@ public class Book implements Serializable {
     private String shelfNumber;
 
     @Column(name = "bookStatus")
-   @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private BookStatus status;
 
     @CreationTimestamp

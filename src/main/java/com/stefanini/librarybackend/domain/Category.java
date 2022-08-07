@@ -1,5 +1,6 @@
 package com.stefanini.librarybackend.domain;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,7 +12,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "category")
-@Getter @Setter @NoArgsConstructor
+@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class Category implements Serializable {
 
     @Id
