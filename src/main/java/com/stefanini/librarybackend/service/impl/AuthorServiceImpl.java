@@ -14,9 +14,8 @@ import java.util.List;
 @Service
 public class AuthorServiceImpl implements AuthorService {
 
-
-    private AuthorDAO<Author> authorDAO;
-    private BookDAO<Book> bookDAO;
+    private final AuthorDAO<Author> authorDAO;
+    private final BookDAO<Book> bookDAO;
 
     public AuthorServiceImpl(AuthorDAOImpl authorDAOImpl, BookDAOImpl bookDAOImpl) {
         this.authorDAO = authorDAOImpl;
