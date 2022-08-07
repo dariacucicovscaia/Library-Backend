@@ -1,8 +1,8 @@
 package com.stefanini.librarybackend.security;
 
 
-import com.stefanini.librarybackend.security.filter.AppAuthenticationFilter;
-import com.stefanini.librarybackend.security.filter.AppAuthorizationFilter;
+import com.stefanini.librarybackend.auth.AppAuthenticationFilter;
+import com.stefanini.librarybackend.auth.AppAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,7 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "index", "/css/*", "/js/*", "/login", "/api/user/token/refresh").permitAll()
+                .antMatchers("/", "index", "/css/*", "/js/*", "/login").permitAll()
+                .antMatchers("/api/user/token/refresh", "/api/registration/**").permitAll()
                 .and()
                 .authorizeRequests().anyRequest().authenticated()
                 .and()
