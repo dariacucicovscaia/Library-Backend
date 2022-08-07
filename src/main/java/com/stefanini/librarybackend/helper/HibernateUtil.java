@@ -23,7 +23,7 @@ import java.util.Properties;
 public class HibernateUtil {
 
 
-    private Environment environment;
+    private final Environment environment;
 
     public HibernateUtil(Environment environment) {
         this.environment = environment;
