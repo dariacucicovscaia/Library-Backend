@@ -91,6 +91,7 @@ public class UserServiceImpl implements UserService {
     public User assignRole(int id, Role role) {
         User user = findById(id);
         user.getRoles().add(role);
+        log.info("Role {} was assigned to user with id {}", role.name(), user.getId());
         return userDao.update(user);
     }
 
@@ -108,16 +109,20 @@ public class UserServiceImpl implements UserService {
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT = verifier.verify(refresh_token);
 
+                log.info("JWT token was decoded");
+
                 // Taking email and roles from decoded token
                 String email = decodedJWT.getSubject();
                 User user = findByEmail(email);
 
                 String access_token = JWT.create()
-                        .withSubject(user.getEmail()) // TODO: change from userName to email after creating AppUserDetails
+                        .withSubject(user.getEmail())
                         .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
                         .withIssuer(request.getRequestURL().toString())
                         .withClaim("roles", user.getRoles().stream().map(Role::name).collect(Collectors.toList()))
                         .sign(algorithm);
+
+                log.info("new access_token was created");
 
                 // Output access_token and refresh_token in header
                 response.setHeader("access_token", access_token);
