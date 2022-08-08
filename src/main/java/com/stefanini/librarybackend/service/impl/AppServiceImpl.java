@@ -1,5 +1,6 @@
 package com.stefanini.librarybackend.service.impl;
 
+import com.stefanini.librarybackend.auth.AppUser;
 import com.stefanini.librarybackend.dao.UserDAO;
 import com.stefanini.librarybackend.dao.impl.UserDAOImpl;
 import com.stefanini.librarybackend.domain.User;
@@ -17,10 +18,10 @@ import java.util.Set;
 
 @Service
 @Slf4j
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class AppServiceImpl implements UserDetailsService {
     private final UserDAO<User> userDAO;
 
-    public UserDetailsServiceImpl(UserDAOImpl userDAOImpl) {
+    public AppServiceImpl(UserDAOImpl userDAOImpl) {
         this.userDAO = userDAOImpl;
     }
 
@@ -36,14 +37,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             log.info("User with such email found: {}", email);
         }
 
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), getUserAuthorities(user.getRoles()));
-    }
-
-    private Collection<SimpleGrantedAuthority> getUserAuthorities(Set<Role> roles) {
-        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        roles.forEach(role -> {
-            authorities.add(new SimpleGrantedAuthority(role.name()));
-        });
-        return authorities;
+        return new AppUser(user);
     }
 }
