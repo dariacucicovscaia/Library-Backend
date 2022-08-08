@@ -37,7 +37,6 @@ public class CategoryController {
     }
 
     @GetMapping("/categories")
-    @PreAuthorize("hasAnyAuthority('USER', 'LIBRARIAN', 'ADMIN')")
     public List<Category> getAllCategories() {
         return categoryService.getAllCategories();
     }

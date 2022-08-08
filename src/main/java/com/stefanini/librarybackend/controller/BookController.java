@@ -45,7 +45,6 @@ public class BookController {
     }
 
     @GetMapping("/books")
-    @PreAuthorize("hasAnyAuthority('USER', 'LIBRARIAN', 'ADMIN')")
     public List<Book> getAllBooks() {
         return impl.showAllBooks();
     }

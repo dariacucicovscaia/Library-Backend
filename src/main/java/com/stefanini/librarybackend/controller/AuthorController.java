@@ -43,7 +43,6 @@ public class AuthorController {
     }
 
     @GetMapping("/authors")
-    @PreAuthorize("hasAnyAuthority('USER', 'LIBRARIAN', 'ADMIN')")
     public List<Author> getAllAuthors() {
         return authorService.getAllAuthors();
     }
