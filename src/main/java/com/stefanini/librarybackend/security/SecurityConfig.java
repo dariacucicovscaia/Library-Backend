@@ -6,6 +6,7 @@ import com.stefanini.librarybackend.auth.AppAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -16,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static org.springframework.http.HttpMethod.*;
 import static org.springframework.security.config.http.SessionCreationPolicy.*;
 
 @Configuration
@@ -31,11 +33,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
+                .cors().and()
                 .sessionManagement().sessionCreationPolicy(STATELESS)
                 .and()
                 .authorizeRequests()
                 .antMatchers("/", "index", "/css/*", "/js/*", "/login").permitAll()
                 .antMatchers("/api/user/token/refresh", "/api/registration/**").permitAll()
+                .antMatchers(GET,"/api/author/**", "/api/book/**", "/api/category/**").permitAll()
                 .and()
                 .authorizeRequests().anyRequest().authenticated()
                 .and()
