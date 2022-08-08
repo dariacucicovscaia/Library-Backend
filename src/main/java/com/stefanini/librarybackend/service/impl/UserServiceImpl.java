@@ -1,17 +1,17 @@
 package com.stefanini.librarybackend.service.impl;
 
-
+import com.stefanini.librarybackend.dao.ProfileDAO;
 import com.stefanini.librarybackend.dao.UserDAO;
-import com.stefanini.librarybackend.dao.impl.UserDAOImpl;
+import com.stefanini.librarybackend.domain.Profile;
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
 import com.stefanini.librarybackend.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,16 +20,21 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     private UserDAO<User> userDao;
+    @Autowired
+    private ProfileDAO<Profile> profileDao;
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userDao.findUserByEmail(email);
-        if (user == null) {
-            throw new UsernameNotFoundException("Email not found");
+    public UserDetails loadUserByUsername(String email) {
+        User user = null;
+        try {
+            user = userDao.findUserByEmail(email);
+        } catch (Exception e) {
+            log.error(e.getMessage());
         }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         user.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.name())));
@@ -92,5 +97,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userDao.update(u);
     }
 
+    @Override
+    @Transactional
+    public User createUserProfile(User user, Profile profile) {
+        if (user.getRoles() == null) {
+            user.setRoles(new HashSet<>(Arrays.asList(Role.USER)));
+        }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        user.setProfile(profile);
+        return userDao.create(user);
+    }
 
 }

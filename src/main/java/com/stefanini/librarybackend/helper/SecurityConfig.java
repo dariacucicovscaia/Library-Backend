@@ -31,9 +31,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.authorizeRequests().antMatchers("/api/login/**", "/token/refresh/**", "/api/createUser/**").permitAll();
-        http.authorizeRequests().antMatchers("/api/admin/").hasRole("ADMIN");
-        http.authorizeRequests().antMatchers("/api/user/").hasAnyRole("USER", "ADMIN", "LIBRARIAN");
+        http.authorizeRequests().antMatchers("/api/login/**", "/token/refresh/**", "/api/createUser/**", "/api/createUserProfile").permitAll();
+        http.authorizeRequests().antMatchers("/api/admin/**").hasAuthority("ADMIN");
+        http.authorizeRequests().antMatchers("/api/user/**").hasAnyAuthority("USER", "ADMIN", "LIBRARIAN");
 
         http.authorizeRequests().anyRequest().authenticated();
 
@@ -51,5 +51,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+
 
 }

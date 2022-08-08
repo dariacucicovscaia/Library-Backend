@@ -5,18 +5,11 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.stefanini.librarybackend.domain.Book;
+import com.stefanini.librarybackend.domain.Profile;
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
 import com.stefanini.librarybackend.service.impl.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,6 +28,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class UserController {
     UserServiceImpl userService;
 
+
     public UserController(UserServiceImpl userService) {
         this.userService = userService;
     }
@@ -48,6 +42,12 @@ public class UserController {
     public User addUser(@RequestBody User user) {
         return userService.createUser(user);
     }
+    @PostMapping("/api/createUserProfile")
+    public User addUserProfile(@RequestBody User user,@RequestBody Profile profile) {
+
+        return userService.createUserProfile(user, profile);
+    }
+
 
     @GetMapping("api/admin/findUserById/{id}")
     public User findById(@PathVariable int id) {
@@ -101,7 +101,7 @@ public class UserController {
 
             } catch (Exception exception) {
                 log.error(exception.getMessage());
-                log.error("Error logging in: {} ",exception.getMessage() );
+                log.error("Error logging in: {} ", exception.getMessage());
 
                 Map<String, String> error = new HashMap<>();
                 error.put("error_message", exception.getMessage());
@@ -109,7 +109,7 @@ public class UserController {
                 response.setContentType(APPLICATION_JSON_VALUE);
                 new ObjectMapper().writeValue(response.getOutputStream(), error);
             }
-        }else if(authorizationHeader == null){
+        } else if (authorizationHeader == null) {
             Map<String, String> error = new HashMap<>();
             error.put("error_message", "Authorization header cant be null!");
 
@@ -117,9 +117,9 @@ public class UserController {
             new ObjectMapper().writeValue(response.getOutputStream(), error);
             log.error("Authorization header cant be null!");
         } else {
-           throw new RuntimeException("Refreshed token is missing");
+            throw new RuntimeException("Refreshed token is missing");
         }
-      }
+    }
 
 
 }

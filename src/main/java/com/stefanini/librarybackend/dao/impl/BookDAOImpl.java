@@ -1,7 +1,6 @@
 package com.stefanini.librarybackend.dao.impl;
 
 import com.stefanini.librarybackend.dao.BookDAO;
-import com.stefanini.librarybackend.dao.impl.DAOAbstractImpl;
 import com.stefanini.librarybackend.domain.Book;
 import org.springframework.stereotype.Repository;
 
