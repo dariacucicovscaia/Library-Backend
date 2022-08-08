@@ -1,6 +1,7 @@
 package com.stefanini.librarybackend.service;
 
 import com.stefanini.librarybackend.domain.User;
+import com.stefanini.librarybackend.domain.enums.Role;
 
 import java.util.List;
 
@@ -12,4 +13,5 @@ public interface UserService {
     User findByEmail(String email);
     int deleteByEmail(String email);
     int deleteById(int id);
+    public User assignRole(int id, Role role);
 }

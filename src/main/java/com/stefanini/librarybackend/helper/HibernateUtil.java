@@ -3,18 +3,13 @@ package com.stefanini.librarybackend.helper;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 import org.hibernate.jpa.HibernatePersistenceProvider;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import javax.persistence.*;
-import javax.persistence.spi.PersistenceProvider;
 import javax.sql.DataSource;
-import java.util.HashMap;
 import java.util.Properties;
 
 @Configuration

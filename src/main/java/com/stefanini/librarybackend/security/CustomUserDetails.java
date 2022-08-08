@@ -1,30 +1,45 @@
 package com.stefanini.librarybackend.security;
 
+import com.stefanini.librarybackend.domain.User;
+import com.stefanini.librarybackend.domain.enums.Role;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
-public class MyUserDetails implements UserDetails {
-    private String userName;
+public class CustomUserDetails implements UserDetails {
 
-    public MyUserDetails(String userName){this.userName=userName;}
+    private User user;
+
+
+    public CustomUserDetails(User user){
+        super();
+        this.user=user;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        for (Role role : user.getRoles()) {
+            GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(role.toString());
+            authorities.add(grantedAuthority);
+        }
+        return authorities;
     }
 
     @Override
     public String getPassword() {
-        return "daria";
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return userName;
+        return user.getEmail();
     }
 
     @Override
