@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 public class BookController {
     private Logger logger = Logger.getLogger(BookController.class);
-    @Autowired
+
     private BookService impl;
 
     public BookController(BookServiceImpl impl) {
@@ -25,22 +25,18 @@ public class BookController {
     }
 
     @PostMapping("/add-new-book")
-    public void addNewBook(@RequestBody Book book) {
-        impl.addBook(book);
+    public Book addNewBook(@RequestBody Book book) {
+        return impl.addBook(book);
     }
 
     @PutMapping("/update-book/{id}")
-    void updateBook(@PathVariable int id, @RequestBody Book book) {
-        Book updatedBook = impl.findById(id);
-        updatedBook.setTitle(book.getTitle());
-        updatedBook.setDescription(book.getDescription());
-        updatedBook.setShelfNumber(book.getShelfNumber());
-        updatedBook.setStatus(book.getStatus());
-        impl.update(updatedBook);
+    Book updateBook(@PathVariable int id, @RequestBody Book book) {
+
+       return impl.update(id, book);
     }
 
     @DeleteMapping("/delete-book/{id}")
-    public void deleteBook(@PathVariable int id) {
-        impl.deleteBook(id);
+    public int deleteBook(@PathVariable int id) {
+        return impl.deleteBook(id);
     }
 }

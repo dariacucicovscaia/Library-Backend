@@ -6,13 +6,14 @@ import com.stefanini.librarybackend.domain.Book;
 import com.stefanini.librarybackend.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 
 public class BookServiceImpl implements BookService {
-    @Autowired
+
     private BookDAO<Book> bookDAOImpl;
 
 
@@ -23,8 +24,8 @@ public class BookServiceImpl implements BookService {
 
 
     @Override
-    public void addBook(Book book) {
-        bookDAOImpl.create(book);
+    public Book addBook(Book book) {
+        return bookDAOImpl.create(book);
     }
 
     @Override
@@ -32,10 +33,16 @@ public class BookServiceImpl implements BookService {
         return bookDAOImpl.getAll();
     }
 
-
+    @Transactional
     @Override
-    public void update(Book book) {
-        bookDAOImpl.update(book);
+    public Book update(int id, Book book) {
+        Book updatedBook = bookDAOImpl.getById(id);
+        updatedBook.setTitle(book.getTitle());
+        updatedBook.setDescription(book.getDescription());
+        updatedBook.setShelfNumber(book.getShelfNumber());
+        updatedBook.setStatus(book.getStatus());
+       return bookDAOImpl.update(updatedBook);
+
     }
 
 
@@ -46,8 +53,8 @@ public class BookServiceImpl implements BookService {
 
 
     @Override
-    public void deleteBook(int id) {
-        bookDAOImpl.removeById(id);
+    public int deleteBook(int id) {
+       return bookDAOImpl.removeById(id);
 
     }
 }
