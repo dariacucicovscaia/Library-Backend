@@ -7,16 +7,17 @@ import com.stefanini.librarybackend.dao.impl.BookDAOImpl;
 import com.stefanini.librarybackend.domain.Author;
 import com.stefanini.librarybackend.domain.Book;
 import com.stefanini.librarybackend.service.AuthorService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class AuthorServiceImpl implements AuthorService {
 
-
-    private AuthorDAO<Author> authorDAO;
-    private BookDAO<Book> bookDAO;
+    private final AuthorDAO<Author> authorDAO;
+    private final BookDAO<Book> bookDAO;
 
     public AuthorServiceImpl(AuthorDAOImpl authorDAOImpl, BookDAOImpl bookDAOImpl) {
         this.authorDAO = authorDAOImpl;
@@ -55,6 +56,7 @@ public class AuthorServiceImpl implements AuthorService {
         Book book = bookDAO.getById(bookId);
         Author author = authorDAO.getById(id);
         author.addBook(book);
+        log.info("Book {} was added to Author {}", book.getTitle(), author.getFullName());
         return authorDAO.update(author);
     }
 
