@@ -65,10 +65,5 @@ public class UserController {
         return userService.showAllUsers();
     }
 
-    @GetMapping("/token/refresh")
-    public void refreshToken(HttpServletRequest request, HttpServletResponse response) {
-        userService.refreshToken(request, response);
-    }
-
 
 }
