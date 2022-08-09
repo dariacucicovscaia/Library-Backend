@@ -17,6 +17,4 @@ public interface UserService {
     int deleteById(int id);
 
     User assignRole(int id, Role role);
-
-    void refreshToken(HttpServletRequest request, HttpServletResponse response);
 }
