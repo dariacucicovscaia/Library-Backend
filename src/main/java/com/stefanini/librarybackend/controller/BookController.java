@@ -14,6 +14,7 @@ import java.util.List;
 @RequestMapping("/api/book")
 public class BookController {
     private final Logger logger = Logger.getLogger(BookController.class);
+    
     @Autowired
     private final BookService impl;
 
@@ -42,8 +43,7 @@ public class BookController {
     @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
     public void deleteBook(@PathVariable int id) {
         impl.deleteBook(id);
-    }
-
+        
     @GetMapping("/books")
     public List<Book> getAllBooks() {
         return impl.showAllBooks();
