@@ -3,6 +3,7 @@ package com.stefanini.librarybackend.security;
 
 import com.stefanini.librarybackend.auth.AppAuthenticationFilter;
 import com.stefanini.librarybackend.auth.AppAuthorizationFilter;
+import com.stefanini.librarybackend.service.impl.AppUserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +27,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.*;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserDetailsService userDetailsService;
+    private final AppUserServiceImpl appUserServiceImpl;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
@@ -37,8 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "index", "/css/*", "/js/*", "/login").permitAll()
-                .antMatchers("/api/user/token/refresh", "/api/registration/**").permitAll()
+                .antMatchers("/", "index", "/css/*", "/js/*", "/login", "/api/login").permitAll()
+                .antMatchers("/api/user/token/refresh", "/sign-up", "/api/sign-up").permitAll()
                 .antMatchers(GET,"/api/author/**", "/api/book/**", "/api/category/**").permitAll()
                 .and()
                 .authorizeRequests().anyRequest().authenticated()
@@ -49,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
+        auth.userDetailsService(appUserServiceImpl).passwordEncoder(bCryptPasswordEncoder);
     }
 
     @Bean
