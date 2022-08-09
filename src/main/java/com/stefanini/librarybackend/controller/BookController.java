@@ -13,39 +13,33 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/book")
 public class BookController {
-    private final Logger logger = Logger.getLogger(BookController.class);
-    
-    @Autowired
-    private final BookService impl;
 
-    public BookController(BookServiceImpl impl) {
-        this.impl = impl;
+    private final BookService bookService;
+
+    public BookController(BookServiceImpl bookServiceImpl) {
+        this.bookService = bookServiceImpl;
     }
 
     @PostMapping("/create")
     @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
-    public void addNewBook(@RequestBody Book book) {
-        impl.addBook(book);
+    public void createBook(@RequestBody Book book) {
+        bookService.addBook(book);
     }
 
     @PutMapping("/update/{id}")
     @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
-    void updateBook(@PathVariable int id, @RequestBody Book book) {
-        Book updatedBook = impl.findById(id);
-        updatedBook.setTitle(book.getTitle());
-        updatedBook.setDescription(book.getDescription());
-        updatedBook.setShelfNumber(book.getShelfNumber());
-        updatedBook.setStatus(book.getStatus());
-        impl.update(updatedBook);
+    public Book updateBook(@PathVariable int id, @RequestBody Book book) {
+        return bookService.update(id, book);
     }
 
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
     public void deleteBook(@PathVariable int id) {
-        impl.deleteBook(id);
+        bookService.deleteBook(id);
+    }
         
     @GetMapping("/books")
     public List<Book> getAllBooks() {
-        return impl.showAllBooks();
+        return bookService.showAllBooks();
     }
 }

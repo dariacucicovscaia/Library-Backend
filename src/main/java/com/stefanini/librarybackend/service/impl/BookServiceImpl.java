@@ -23,8 +23,8 @@ public class BookServiceImpl implements BookService {
 
 
     @Override
-    public void addBook(Book book) {
-        bookDAOImpl.create(book);
+    public Book addBook(Book book) {
+        return bookDAOImpl.create(book);
     }
 
     @Override
@@ -32,10 +32,14 @@ public class BookServiceImpl implements BookService {
         return bookDAOImpl.getAll();
     }
 
-
     @Override
-    public void update(Book book) {
-        bookDAOImpl.update(book);
+    public Book update(int id, Book book) {
+        Book updatedBook = bookDAOImpl.getById(id);
+        updatedBook.setTitle(book.getTitle());
+        updatedBook.setDescription(book.getDescription());
+        updatedBook.setShelfNumber(book.getShelfNumber());
+        updatedBook.setStatus(book.getStatus());
+        return bookDAOImpl.update(updatedBook);
     }
 
 
@@ -46,8 +50,8 @@ public class BookServiceImpl implements BookService {
 
 
     @Override
-    public void deleteBook(int id) {
-        bookDAOImpl.removeById(id);
+    public int deleteBook(int id) {
+        return bookDAOImpl.removeById(id);
 
     }
 }
