@@ -18,11 +18,8 @@ public class Profile implements Serializable {
     @Column(name = "id", nullable = false)
     private int id;
 
-
-
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+   /* @OneToOne(mappedBy = "profile")
+    private User user;*/
 
     @Column(name = "firstName")
     private String firstName;

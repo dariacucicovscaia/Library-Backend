@@ -45,6 +45,7 @@ public class User implements Serializable {
     private List<Book> book;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "profile_id", referencedColumnName = "id")
     private Profile profile;
 
     @CreationTimestamp

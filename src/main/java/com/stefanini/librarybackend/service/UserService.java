@@ -1,5 +1,6 @@
 package com.stefanini.librarybackend.service;
 
+import com.stefanini.librarybackend.domain.Profile;
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
 
@@ -14,4 +15,5 @@ public interface UserService {
     int deleteByEmail(String email);
     int deleteById(int id);
     public User assignRole(int id, Role role);
+    User registerUser(User user, Profile profile);
 }

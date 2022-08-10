@@ -1,8 +1,10 @@
 package com.stefanini.librarybackend.service.impl;
 
 
+import com.stefanini.librarybackend.dao.ProfileDAO;
 import com.stefanini.librarybackend.dao.UserDAO;
 import com.stefanini.librarybackend.dao.impl.UserDAOImpl;
+import com.stefanini.librarybackend.domain.Profile;
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
 import com.stefanini.librarybackend.service.UserService;
@@ -24,6 +26,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDAO<User> userDao;
+    private ProfileDAO<Profile> profileDAO;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -77,5 +80,9 @@ public class UserServiceImpl implements UserService {
         u.getRoles().add(role);
         return userDao.update(u);
     }
+    public User registerUser(User user, Profile profile){
+        user.setProfile(profile);
+        return createUser(user);
 
+    }
 }
