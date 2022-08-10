@@ -1,10 +1,7 @@
 package com.stefanini.librarybackend.domain;
 
 import com.stefanini.librarybackend.domain.enums.Role;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -15,12 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+@Entity
+@Table(name = "user")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-@Entity
-@Table(name = "user")
 public class User implements Serializable {
 
     @Id
@@ -36,7 +33,7 @@ public class User implements Serializable {
 
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    @CollectionTable(name="user_role", joinColumns = @JoinColumn(name = "user_id"))
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 

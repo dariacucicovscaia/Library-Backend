@@ -3,36 +3,40 @@ package com.stefanini.librarybackend.controller;
 import com.stefanini.librarybackend.domain.Category;
 import com.stefanini.librarybackend.service.CategoryService;
 import com.stefanini.librarybackend.service.impl.CategoryServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/category")
 public class CategoryController {
 
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
 
     public CategoryController(CategoryServiceImpl categoryService) {
         this.categoryService = categoryService;
     }
 
-    @PostMapping("/addCategory")
-    public void addCategory(@RequestBody Category category) {
-        categoryService.addCategory(category);
+    @PostMapping("/create")
+    @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
+    public Category createCategory(@RequestBody Category category) {
+        return categoryService.addCategory(category);
     }
 
-    @PutMapping("/addBookToCategory/{bookId}/{id}")
+    @PutMapping("/assignBook/{bookId}/{id}")
+    @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
     public Category addBookToCategory(@PathVariable int bookId, @PathVariable int id) {
         return categoryService.addBookToCategory(bookId, id);
     }
 
-    @DeleteMapping("/deleteCategory/{id}")
+    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
     public int deleteCategory(@PathVariable int id) {
         return categoryService.deleteCategory(id);
     }
 
-    @GetMapping("/getAllCategories")
+    @GetMapping("/categories")
     public List<Category> getAllCategories() {
         return categoryService.getAllCategories();
     }

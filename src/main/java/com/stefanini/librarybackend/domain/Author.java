@@ -1,5 +1,6 @@
 package com.stefanini.librarybackend.domain;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +13,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "author")
-@Getter @Setter @NoArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
 public class Author implements Serializable {
 
     @Id
@@ -70,5 +73,9 @@ public class Author implements Serializable {
     public void addBook(Book book) {
         this.books.add(book);
         book.getAuthors().add(this);
+    }
+
+    public String getFullName() {
+        return this.firstName + " " + this.lastName;
     }
 }

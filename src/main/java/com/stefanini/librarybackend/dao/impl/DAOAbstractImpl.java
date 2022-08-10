@@ -2,6 +2,7 @@ package com.stefanini.librarybackend.dao.impl;
 
 import com.google.common.base.Preconditions;
 import com.stefanini.librarybackend.dao.IGenericDao;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,12 +13,11 @@ import java.io.Serializable;
 import java.util.List;
 
 @Repository
+@Slf4j
 public abstract class DAOAbstractImpl<T extends Serializable> implements IGenericDao<T> {
     private Class<T> clazz;
     @PersistenceContext
     EntityManager entityManager;
-
-    private Logger logger = Logger.getLogger(DAOAbstractImpl.class);
 
     public void setClazz(final Class<T> clazzToSet) {
         clazz = Preconditions.checkNotNull(clazzToSet);
@@ -33,6 +33,7 @@ public abstract class DAOAbstractImpl<T extends Serializable> implements IGeneri
     @Transactional
     public T update(T entity) {
         entityManager.merge(entity);
+        log.info("Entity {} was updated", entity.getClass().getName());
         return entity;
     }
 
@@ -40,6 +41,7 @@ public abstract class DAOAbstractImpl<T extends Serializable> implements IGeneri
     @Transactional
     public T create(T entity) {
        entityManager.persist(entity);
+       log.info("Entity {} was created", entity.getClass().getName());
        return entity;
     }
 
@@ -52,6 +54,7 @@ public abstract class DAOAbstractImpl<T extends Serializable> implements IGeneri
     @Transactional
     public int removeById(int id) {
         entityManager.remove(getById(id));
+        log.info("Entity with id {} was removed", id);
         return id;
     }
 }

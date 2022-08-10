@@ -7,6 +7,7 @@ import com.stefanini.librarybackend.dao.impl.CategoryDAOImpl;
 import com.stefanini.librarybackend.domain.Book;
 import com.stefanini.librarybackend.domain.Category;
 import com.stefanini.librarybackend.service.CategoryService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 
@@ -14,10 +15,11 @@ import java.util.List;
 
 
 @Service
+@Slf4j
 public class CategoryServiceImpl implements CategoryService {
 
-    private CategoryDAO<Category> categoryDAO;
-    private BookDAO<Book> bookDAO;
+    private final CategoryDAO<Category> categoryDAO;
+    private final BookDAO<Book> bookDAO;
 
     public CategoryServiceImpl(CategoryDAOImpl categoryDAOImpl, BookDAOImpl bookDAOImpl) {
         this.categoryDAO = categoryDAOImpl;
@@ -44,6 +46,7 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryDAO.getById(id);
         Book book = bookDAO.getById(bookId);
         category.addBook(book);
+        log.info("Book {} was added to Category {}", book.getTitle(), category.getTitle());
         return categoryDAO.update(category);
     }
 }

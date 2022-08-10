@@ -5,38 +5,41 @@ import com.stefanini.librarybackend.service.BookService;
 import com.stefanini.librarybackend.service.impl.BookServiceImpl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/book")
 public class BookController {
-    private Logger logger = Logger.getLogger(BookController.class);
 
-    private BookService impl;
+    private final BookService bookService;
 
-    public BookController(BookServiceImpl impl) {
-        this.impl = impl;
+    public BookController(BookServiceImpl bookServiceImpl) {
+        this.bookService = bookServiceImpl;
     }
 
+    @PostMapping("/create")
+    @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
+    public void createBook(@RequestBody Book book) {
+        bookService.addBook(book);
+    }
+
+    @PutMapping("/update/{id}")
+    @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
+    public Book updateBook(@PathVariable int id, @RequestBody Book book) {
+        return bookService.update(id, book);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
+    public void deleteBook(@PathVariable int id) {
+        bookService.deleteBook(id);
+    }
+        
     @GetMapping("/books")
     public List<Book> getAllBooks() {
-        return impl.showAllBooks();
-    }
-
-    @PostMapping("/add-new-book")
-    public Book addNewBook(@RequestBody Book book) {
-        return impl.addBook(book);
-    }
-
-    @PutMapping("/update-book/{id}")
-    Book updateBook(@PathVariable int id, @RequestBody Book book) {
-
-       return impl.update(id, book);
-    }
-
-    @DeleteMapping("/delete-book/{id}")
-    public int deleteBook(@PathVariable int id) {
-        return impl.deleteBook(id);
+        return bookService.showAllBooks();
     }
 }
