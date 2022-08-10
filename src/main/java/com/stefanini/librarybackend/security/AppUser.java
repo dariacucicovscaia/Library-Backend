@@ -1,21 +1,15 @@
-package com.stefanini.librarybackend.auth;
+package com.stefanini.librarybackend.security;
 
 import com.stefanini.librarybackend.domain.User;
-<<<<<<<< HEAD:src/main/java/com/stefanini/librarybackend/security/CustomUserDetails.java
-import com.stefanini.librarybackend.domain.enums.Role;
-import org.springframework.context.annotation.Bean;
-========
+
 import lombok.Data;
->>>>>>>> develop:src/main/java/com/stefanini/librarybackend/auth/AppUser.java
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-<<<<<<<< HEAD:src/main/java/com/stefanini/librarybackend/security/CustomUserDetails.java
-========
 import java.util.ArrayList;
->>>>>>>> develop:src/main/java/com/stefanini/librarybackend/auth/AppUser.java
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
