@@ -1,5 +1,6 @@
 package com.stefanini.librarybackend.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.stefanini.librarybackend.domain.enums.BookStatus;
 import lombok.Data;
 import lombok.Getter;
@@ -55,6 +56,7 @@ public class Book implements Serializable {
     private List<Author> authors = new ArrayList<>();
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<History> history;
 
     public Book(int id, String title, String description, String shelfNumber, BookStatus status) {

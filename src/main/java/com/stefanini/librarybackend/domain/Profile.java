@@ -20,9 +20,9 @@ public class Profile implements Serializable {
     private int id;
 
 
-    @OneToOne
+  /*  @OneToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private User user;*/
 
     @Column(name = "firstName")
     private String firstName;
