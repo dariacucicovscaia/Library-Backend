@@ -42,4 +42,9 @@ public class BookController {
     public List<Book> getAllBooks() {
         return bookService.showAllBooks();
     }
+    @PutMapping("/bookTheBook/{bookId}/{userId}")
+  //  @PreAuthorize("hasAnyAuthority('USER','LIBRARIAN', 'ADMIN')")
+    public Book bookTheBook (@PathVariable int bookId, @PathVariable int userId) {
+        return bookService.bookTheBook(bookId, userId);
+    }
 }

@@ -1,5 +1,6 @@
 package com.stefanini.librarybackend.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.stefanini.librarybackend.domain.enums.Role;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -40,6 +41,10 @@ public class User implements Serializable {
     @Transient
     @OneToMany(mappedBy = "user")
     private List<Book> book;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference
+    private List<History> history;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Profile profile;

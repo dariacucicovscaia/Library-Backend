@@ -60,7 +60,7 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
+   // @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
     public List<User> getAllUsers() {
         return userService.showAllUsers();
     }
