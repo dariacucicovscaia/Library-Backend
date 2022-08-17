@@ -2,16 +2,20 @@ package com.stefanini.librarybackend.service.impl;
 
 import com.stefanini.librarybackend.dao.UserDAO;
 import com.stefanini.librarybackend.dao.impl.UserDAOImpl;
+import com.stefanini.librarybackend.domain.ConfirmationToken;
 import com.stefanini.librarybackend.domain.Profile;
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
 import com.stefanini.librarybackend.dto.RegistrationRequestDto;
+import com.stefanini.librarybackend.service.EmailConfirmationTokenService;
 import com.stefanini.librarybackend.service.RegistrationService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.UUID;
 
 @Service
 public class RegistrationServiceImpl implements RegistrationService {
@@ -20,10 +24,13 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserDAO<User> userDAO;
+    private final EmailConfirmationTokenService emailConfirmationTokenService;
 
-    public RegistrationServiceImpl(UserDAOImpl userDAOImpl, PasswordEncoder passwordEncoder) {
+    public RegistrationServiceImpl(UserDAOImpl userDAOImpl, PasswordEncoder passwordEncoder,
+                                   EmailConfirmationTokenServiceImpl emailConfirmationTokenServiceImpl) {
         this.userDAO = userDAOImpl;
         this.passwordEncoder = passwordEncoder;
+        this.emailConfirmationTokenService = emailConfirmationTokenServiceImpl;
     }
 
     @Override
@@ -42,5 +49,16 @@ public class RegistrationServiceImpl implements RegistrationService {
 
         userDAO.create(newUser);
 
+
+        String token = UUID.randomUUID().toString();
+
+        ConfirmationToken confirmationToken = new ConfirmationToken(
+                token,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusMinutes(15),
+                newUser
+        );
+
+        emailConfirmationTokenService.saveConfirmationToken(confirmationToken);
     }
 }

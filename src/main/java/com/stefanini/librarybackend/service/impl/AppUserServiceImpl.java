@@ -41,6 +41,7 @@ public class AppUserServiceImpl implements UserDetailsService {
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
 
+
         return JwtTokenFactory.generateAccessAndRefreshToken(authentication);
     }
 
