@@ -48,7 +48,7 @@ public class UserController {
     }
 
     @PutMapping("/assignRole/{id}/{role}")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+   @PreAuthorize("hasAnyAuthority('ADMIN')")
     public User assignRole(@PathVariable int id, @PathVariable Role role) {
         return userService.assignRole(id, role);
     }
