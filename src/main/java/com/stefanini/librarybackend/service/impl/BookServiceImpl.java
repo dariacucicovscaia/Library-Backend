@@ -71,11 +71,13 @@ public class BookServiceImpl implements BookService {
         History history = new History();
         history.setActionName(actionName);
         history.setBook(book);
-        history.setUser(user);
+       history.setUser(user);
         List<History> bookHistoryList = book.getHistory();
         bookHistoryList.add(history);
+        book.setHistory(bookHistoryList);
         List<History> userHistoryList = user.getHistory();
         userHistoryList.add(history);
+        user.setHistory(userHistoryList);
         userDAOImpl.update(user);
         return bookDAOImpl.update(book);
     }
