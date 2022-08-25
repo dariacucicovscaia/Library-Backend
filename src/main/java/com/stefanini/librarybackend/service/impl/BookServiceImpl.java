@@ -96,6 +96,7 @@ public class BookServiceImpl implements BookService {
         history.setActionName(actionName);
         history.setBook(book);
         history.setUser(user);
+
         List<History> bookHistoryList = book.getHistory();
         bookHistoryList.add(history);
         book.setHistory(bookHistoryList);
