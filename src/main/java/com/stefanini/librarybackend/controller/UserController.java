@@ -1,20 +1,17 @@
 package com.stefanini.librarybackend.controller;
 
-import com.stefanini.librarybackend.domain.Book;
+
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
 import com.stefanini.librarybackend.service.impl.UserServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+
 
 @RestController
 @RequestMapping("/api/user")
@@ -60,7 +57,7 @@ public class UserController {
     }
 
     @GetMapping("/users")
-   // @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
     public List<User> getAllUsers() {
         return userService.showAllUsers();
     }

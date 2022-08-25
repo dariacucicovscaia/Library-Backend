@@ -2,8 +2,11 @@ package com.stefanini.librarybackend.dao.impl;
 
 import com.stefanini.librarybackend.dao.BookDAO;
 import com.stefanini.librarybackend.dao.impl.DAOAbstractImpl;
+import com.stefanini.librarybackend.domain.Author;
 import com.stefanini.librarybackend.domain.Book;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class BookDAOImpl extends DAOAbstractImpl<Book> implements BookDAO<Book> {
@@ -13,15 +16,9 @@ public class BookDAOImpl extends DAOAbstractImpl<Book> implements BookDAO<Book> 
 
 
     @Override
-    public void updateStatusToBooked(String bookTitle, String bookStatus, String userId) {
-
+    public List<Book> getBooksByAnyCriteria(String criteria) {
+        return entityManager.createQuery("from Book" +  " WHERE title LIKE '%" + criteria +
+                "%' OR bookDescription LIKE '%" + criteria + "%'" ).getResultList();
     }
 
-    @Override
-    public void updateStatusToTaken(String bookTitle, String bookStatus, String userId) {
-    }
-
-    @Override
-    public void updateStatusWhenReturned(String bookTitle) {
-    }
 }
