@@ -64,7 +64,8 @@ public class AppAuthorizationFilter extends OncePerRequestFilter {
                     filterChain.doFilter(request, response);
                 } catch (Exception exception) {
                     log.error("Error logging in: {}", exception.getMessage());
-                    response.setHeader("Error", exception.getMessage());
+                    response.setHeader("Error", exception.getMessage());// Error logging in: The Token has expired
+
                     response.setStatus(FORBIDDEN.value());
                     Map<String, String> error = new HashMap<>();
                     error.put("error_message", exception.getMessage());
