@@ -1,12 +1,15 @@
 package com.stefanini.librarybackend.service.impl;
 
 import com.stefanini.librarybackend.dao.BookDAO;
+import com.stefanini.librarybackend.dao.CategoryDAO;
 import com.stefanini.librarybackend.dao.impl.BookDAOImpl;
 import com.stefanini.librarybackend.domain.Book;
+import com.stefanini.librarybackend.domain.Category;
 import com.stefanini.librarybackend.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,11 +17,13 @@ import java.util.List;
 public class BookServiceImpl implements BookService {
     @Autowired
     private final BookDAO<Book> bookDAOImpl;
+    @Autowired
+    private final CategoryDAO<Category> categoryDAOImpl;
 
 
-
-    public BookServiceImpl(BookDAOImpl bookDAOImpl) {
+    public BookServiceImpl(BookDAOImpl bookDAOImpl, CategoryDAO<Category> categoryDAOImpl) {
         this.bookDAOImpl = bookDAOImpl;
+        this.categoryDAOImpl = categoryDAOImpl;
     }
 
 
@@ -53,5 +58,10 @@ public class BookServiceImpl implements BookService {
     public int deleteBook(int id) {
         return bookDAOImpl.removeById(id);
 
+    }
+    @Override
+    public List<Book> getBookByCategory(int categoryId){
+        Category category = categoryDAOImpl.getById(categoryId);
+        return category.getBooks();
     }
 }

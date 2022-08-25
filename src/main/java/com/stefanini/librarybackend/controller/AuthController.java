@@ -31,4 +31,5 @@ public class AuthController {
                     .body("Invalid email or password");
         }
     }
+
 }

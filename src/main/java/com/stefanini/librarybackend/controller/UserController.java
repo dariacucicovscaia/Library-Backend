@@ -1,20 +1,12 @@
 package com.stefanini.librarybackend.controller;
 
-import com.stefanini.librarybackend.domain.Book;
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
 import com.stefanini.librarybackend.service.impl.UserServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @RestController
 @RequestMapping("/api/user")
@@ -25,10 +17,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/")
-    public String home() {
-        return ("<h1>Hi</h1>");
-    }
 
     @PostMapping("/create")
     @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
@@ -42,21 +30,21 @@ public class UserController {
     }
 
     @PutMapping("/update/{id}")
-    @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
+   // @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
     public User updateUser(@PathVariable int id, @RequestBody User user) {
         return userService.updateUser(id, user);
     }
 
     @PutMapping("/assignRole/{id}/{role}")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+  //  @PreAuthorize("hasAnyAuthority('ADMIN')")
     public User assignRole(@PathVariable int id, @PathVariable Role role) {
         return userService.assignRole(id, role);
     }
 
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
+ //   @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
     public int deleteById(@PathVariable int id) {
-        return userService.deleteById(id);
+        return  userService.deleteById(id);
     }
 
     @GetMapping("/users")
@@ -64,7 +52,6 @@ public class UserController {
     public List<User> getAllUsers() {
         return userService.showAllUsers();
     }
-
 
 }
 

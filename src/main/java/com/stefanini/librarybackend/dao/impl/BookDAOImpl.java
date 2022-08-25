@@ -3,7 +3,12 @@ package com.stefanini.librarybackend.dao.impl;
 import com.stefanini.librarybackend.dao.BookDAO;
 import com.stefanini.librarybackend.dao.impl.DAOAbstractImpl;
 import com.stefanini.librarybackend.domain.Book;
+import com.stefanini.librarybackend.domain.User;
 import org.springframework.stereotype.Repository;
+
+import javax.persistence.TypedQuery;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class BookDAOImpl extends DAOAbstractImpl<Book> implements BookDAO<Book> {
@@ -23,5 +28,10 @@ public class BookDAOImpl extends DAOAbstractImpl<Book> implements BookDAO<Book> 
 
     @Override
     public void updateStatusWhenReturned(String bookTitle) {
+
     }
+
+
+
+
 }

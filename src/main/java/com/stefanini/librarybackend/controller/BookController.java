@@ -22,8 +22,8 @@ public class BookController {
 
     @PostMapping("/create")
     @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
-    public void createBook(@RequestBody Book book) {
-        bookService.addBook(book);
+    public Book createBook(@RequestBody Book book) {
+       return bookService.addBook(book);
     }
 
     @PutMapping("/update/{id}")
@@ -41,5 +41,11 @@ public class BookController {
     @GetMapping("/books")
     public List<Book> getAllBooks() {
         return bookService.showAllBooks();
+    }
+
+    @GetMapping("/bookByCategory/{categoryId}")
+    @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
+    public List<Book> getBooksByCategory(@PathVariable int categoryId){
+        return bookService.getBookByCategory(categoryId);
     }
 }

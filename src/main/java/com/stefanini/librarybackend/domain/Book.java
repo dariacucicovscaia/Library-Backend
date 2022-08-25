@@ -1,5 +1,6 @@
 package com.stefanini.librarybackend.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.stefanini.librarybackend.domain.enums.BookStatus;
 import lombok.Data;
 import lombok.Getter;
@@ -45,7 +46,7 @@ public class Book implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
+    @JsonManagedReference
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "book_category", inverseJoinColumns = @JoinColumn(name = "category_id"), joinColumns = @JoinColumn(name = "book_id"))
     private List<Category> categories;
