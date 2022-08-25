@@ -1,5 +1,6 @@
 package com.stefanini.librarybackend.controller;
 
+<<<<<<< HEAD
 
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
@@ -12,6 +13,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
+=======
+import com.stefanini.librarybackend.domain.User;
+import com.stefanini.librarybackend.domain.enums.Role;
+import com.stefanini.librarybackend.service.impl.UserServiceImpl;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
+>>>>>>> 0eb17c67b02e8eccd12b20ab6f932f0296ce86ae
 
 @RestController
 @RequestMapping("/api/user")
@@ -22,10 +32,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/")
-    public String home() {
-        return ("<h1>Hi</h1>");
-    }
 
     @PostMapping("/create")
     @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
@@ -39,21 +45,25 @@ public class UserController {
     }
 
     @PutMapping("/update/{id}")
-    @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
+   // @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
     public User updateUser(@PathVariable int id, @RequestBody User user) {
         return userService.updateUser(id, user);
     }
 
     @PutMapping("/assignRole/{id}/{role}")
+<<<<<<< HEAD
    @PreAuthorize("hasAnyAuthority('ADMIN')")
+=======
+  //  @PreAuthorize("hasAnyAuthority('ADMIN')")
+>>>>>>> 0eb17c67b02e8eccd12b20ab6f932f0296ce86ae
     public User assignRole(@PathVariable int id, @PathVariable Role role) {
         return userService.assignRole(id, role);
     }
 
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
+ //   @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
     public int deleteById(@PathVariable int id) {
-        return userService.deleteById(id);
+        return  userService.deleteById(id);
     }
 
     @GetMapping("/users")
@@ -61,7 +71,6 @@ public class UserController {
     public List<User> getAllUsers() {
         return userService.showAllUsers();
     }
-
 
 }
 

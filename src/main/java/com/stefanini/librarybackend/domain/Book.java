@@ -1,7 +1,10 @@
 package com.stefanini.librarybackend.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0eb17c67b02e8eccd12b20ab6f932f0296ce86ae
 import com.stefanini.librarybackend.domain.enums.BookStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -46,7 +49,7 @@ public class Book implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
+    @JsonManagedReference
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "book_category", inverseJoinColumns = @JoinColumn(name = "category_id"), joinColumns = @JoinColumn(name = "book_id"))
     private List<Category> categories;
