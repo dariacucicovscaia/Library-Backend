@@ -63,8 +63,14 @@ public class BookController {
     public List<Book> findBooksByCriteria(@PathVariable String criteria) {
         return bookService.findBooksByAnyCriteria(criteria);
     }
-    @GetMapping("/find_books_by_author/{authorId}")
+    @GetMapping("/bookByAuthor/{authorId}")
     public List<Book> findBooksByAuthorId(@PathVariable int authorId) {
         return authorService.findBooksByAuthor(authorId);
+    }
+
+    @GetMapping("/bookByCategory/{categoryId}")
+    @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
+    public List<Book> getBooksByCategory(@PathVariable int categoryId){
+        return bookService.getBookByCategory(categoryId);
     }
 }

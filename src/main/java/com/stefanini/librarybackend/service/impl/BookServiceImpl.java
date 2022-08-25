@@ -1,10 +1,11 @@
 package com.stefanini.librarybackend.service.impl;
 
 import com.stefanini.librarybackend.dao.BookDAO;
-import com.stefanini.librarybackend.dao.HistoryDAO;
+import com.stefanini.librarybackend.dao.CategoryDAO;
 import com.stefanini.librarybackend.dao.UserDAO;
 import com.stefanini.librarybackend.dao.impl.BookDAOImpl;
 import com.stefanini.librarybackend.domain.Book;
+import com.stefanini.librarybackend.domain.Category;
 import com.stefanini.librarybackend.domain.History;
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.service.BookService;
@@ -21,11 +22,13 @@ public class BookServiceImpl implements BookService {
     @Autowired
     private final BookDAO<Book> bookDAOImpl;
     private final UserDAO<User> userDAOImpl;
+    private final CategoryDAO<Category> categoryDAOImpl;
 
 
-    public BookServiceImpl(BookDAOImpl bookDAOImpl, UserDAO<User> userDAOImpl) {
+    public BookServiceImpl(BookDAOImpl bookDAOImpl, UserDAO<User> userDAOImpl, CategoryDAO<Category> categoryDAOImpl) {
         this.bookDAOImpl = bookDAOImpl;
         this.userDAOImpl = userDAOImpl;
+        this.categoryDAOImpl = categoryDAOImpl;
     }
 
 
@@ -131,6 +134,11 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> findBooksByAnyCriteria(String criteria) {
         return bookDAOImpl.getBooksByAnyCriteria(criteria);
+    }
+    @Override
+    public List<Book> getBookByCategory(int categoryId){
+        Category category = categoryDAOImpl.getById(categoryId);
+        return category.getBooks();
     }
 
 }

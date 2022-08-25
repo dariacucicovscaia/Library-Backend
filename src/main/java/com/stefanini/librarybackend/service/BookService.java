@@ -16,4 +16,6 @@ public interface BookService {
     Book returnTheBook (int bookId);
     List<Book> findBooksByAnyCriteria(String criteria);
 
+    List<Book> getBookByCategory(int categoryId);
+
 }
