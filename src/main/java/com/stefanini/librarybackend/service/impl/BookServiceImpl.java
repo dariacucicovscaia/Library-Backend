@@ -2,18 +2,13 @@ package com.stefanini.librarybackend.service.impl;
 
 import com.stefanini.librarybackend.dao.BookDAO;
 import com.stefanini.librarybackend.dao.CategoryDAO;
-<<<<<<< HEAD
 import com.stefanini.librarybackend.dao.UserDAO;
 import com.stefanini.librarybackend.dao.impl.BookDAOImpl;
 import com.stefanini.librarybackend.domain.Book;
 import com.stefanini.librarybackend.domain.Category;
 import com.stefanini.librarybackend.domain.History;
 import com.stefanini.librarybackend.domain.User;
-=======
-import com.stefanini.librarybackend.dao.impl.BookDAOImpl;
-import com.stefanini.librarybackend.domain.Book;
-import com.stefanini.librarybackend.domain.Category;
->>>>>>> 0eb17c67b02e8eccd12b20ab6f932f0296ce86ae
+
 import com.stefanini.librarybackend.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +23,7 @@ import static com.stefanini.librarybackend.domain.enums.BookStatus.*;
 public class BookServiceImpl implements BookService {
     @Autowired
     private final BookDAO<Book> bookDAOImpl;
-<<<<<<< HEAD
+
     private final UserDAO<User> userDAOImpl;
     private final CategoryDAO<Category> categoryDAOImpl;
 
@@ -36,14 +31,7 @@ public class BookServiceImpl implements BookService {
     public BookServiceImpl(BookDAOImpl bookDAOImpl, UserDAO<User> userDAOImpl, CategoryDAO<Category> categoryDAOImpl) {
         this.bookDAOImpl = bookDAOImpl;
         this.userDAOImpl = userDAOImpl;
-=======
-    @Autowired
-    private final CategoryDAO<Category> categoryDAOImpl;
 
-
-    public BookServiceImpl(BookDAOImpl bookDAOImpl, CategoryDAO<Category> categoryDAOImpl) {
-        this.bookDAOImpl = bookDAOImpl;
->>>>>>> 0eb17c67b02e8eccd12b20ab6f932f0296ce86ae
         this.categoryDAOImpl = categoryDAOImpl;
     }
 
@@ -80,7 +68,7 @@ public class BookServiceImpl implements BookService {
         return bookDAOImpl.removeById(id);
 
     }
-<<<<<<< HEAD
+
 
     @Override
     public Book bookTheBook(int bookId, int userId) {
@@ -152,15 +140,11 @@ public class BookServiceImpl implements BookService {
     public List<Book> findBooksByAnyCriteria(String criteria) {
         return bookDAOImpl.getBooksByAnyCriteria(criteria);
     }
-=======
->>>>>>> 0eb17c67b02e8eccd12b20ab6f932f0296ce86ae
+
     @Override
     public List<Book> getBookByCategory(int categoryId){
         Category category = categoryDAOImpl.getById(categoryId);
         return category.getBooks();
     }
-<<<<<<< HEAD
 
-=======
->>>>>>> 0eb17c67b02e8eccd12b20ab6f932f0296ce86ae
 }
