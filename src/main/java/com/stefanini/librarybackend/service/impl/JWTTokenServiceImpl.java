@@ -9,7 +9,7 @@ import com.stefanini.librarybackend.dao.UserDAO;
 import com.stefanini.librarybackend.dao.impl.UserDAOImpl;
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
-import com.stefanini.librarybackend.service.AppTokenService;
+import com.stefanini.librarybackend.service.JWTTokenService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -27,11 +27,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Service
 @Slf4j
-public class AppTokenServiceImpl implements AppTokenService {
+public class JWTTokenServiceImpl implements JWTTokenService {
 
     private final UserDAO<User> userDAO;
 
-    public AppTokenServiceImpl(UserDAOImpl userDAOImpl) {
+    public JWTTokenServiceImpl(UserDAOImpl userDAOImpl) {
         this.userDAO = userDAOImpl;
     }
 
