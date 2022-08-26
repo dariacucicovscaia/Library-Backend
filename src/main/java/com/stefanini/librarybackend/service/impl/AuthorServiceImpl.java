@@ -47,11 +47,6 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Author findById(int id) {
-        return authorDAO.getById(id);
-    }
-
-    @Override
     public Author addBookToAuthor(int bookId, int id) {
         Book book = bookDAO.getById(bookId);
         Author author = authorDAO.getById(id);

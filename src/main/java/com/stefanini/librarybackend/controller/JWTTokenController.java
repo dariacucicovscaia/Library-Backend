@@ -1,7 +1,7 @@
 package com.stefanini.librarybackend.controller;
 
-import com.stefanini.librarybackend.service.AppTokenService;
-import com.stefanini.librarybackend.service.impl.AppTokenServiceImpl;
+import com.stefanini.librarybackend.service.JWTTokenService;
+import com.stefanini.librarybackend.service.impl.JWTTokenServiceImpl;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,16 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/api/token")
-public class TokenController {
+public class JWTTokenController {
 
-    private final AppTokenService appTokenService;
+    private final JWTTokenService JWTTokenService;
 
-    public TokenController(AppTokenServiceImpl appTokenServiceImpl) {
-        this.appTokenService = appTokenServiceImpl;
+    public JWTTokenController(JWTTokenServiceImpl JWTTokenServiceImpl) {
+        this.JWTTokenService = JWTTokenServiceImpl;
     }
 
     @GetMapping("/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) {
-        appTokenService.refreshToken(request, response);
+        JWTTokenService.refreshToken(request, response);
     }
 }

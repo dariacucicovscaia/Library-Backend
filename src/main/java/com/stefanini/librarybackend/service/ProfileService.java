@@ -13,4 +13,5 @@ public interface ProfileService {
     int deleteByEmail(String email);
     int deleteById(int id);
 
+    Profile getProfileById(int id);
 }
