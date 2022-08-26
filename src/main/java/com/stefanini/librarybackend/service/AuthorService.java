@@ -55,7 +55,11 @@ public interface AuthorService {
      */
     Author addBookToAuthor(int bookId, int id);
 
-
+    /**
+     *
+     * @param authorId by this id we will
+     * @return
+     */
     List<Book> findBooksByAuthor(int authorId);
 
 }

@@ -50,7 +50,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         userDAO.create(newUser);
 
 
-        String token = UUID.randomUUID().toString();
+        /*String token = UUID.randomUUID().toString();
 
         ConfirmationToken confirmationToken = new ConfirmationToken(
                 token,
@@ -59,6 +59,6 @@ public class RegistrationServiceImpl implements RegistrationService {
                 newUser
         );
 
-        emailConfirmationTokenService.saveConfirmationToken(confirmationToken);
+        emailConfirmationTokenService.saveConfirmationToken(confirmationToken);*/
     }
 }

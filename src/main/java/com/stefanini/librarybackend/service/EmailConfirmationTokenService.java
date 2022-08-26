@@ -1,6 +1,7 @@
 package com.stefanini.librarybackend.service;
 
 import com.stefanini.librarybackend.domain.ConfirmationToken;
+import com.stefanini.librarybackend.dto.RegistrationRequestDto;
 
 /**
  * This interface perform operations with email confirmation token that should be created after registration.
@@ -11,5 +12,10 @@ import com.stefanini.librarybackend.domain.ConfirmationToken;
  * @version 0.1
  */
 public interface EmailConfirmationTokenService {
+
+    /**
+     * Methods saves generated confirmation token in database
+     * @param confirmationToken that should be generated in {@link RegistrationService#registerUser(RegistrationRequestDto) registerUser} method
+     */
     void saveConfirmationToken(ConfirmationToken confirmationToken);
 }
