@@ -1,12 +1,10 @@
 package com.stefanini.librarybackend.dao;
+import java.util.List;
 
-import com.stefanini.librarybackend.domain.Book;
+import java.util.List;
 
 public interface BookDAO<Book> extends IGenericDao<Book> {
-    void updateStatusToBooked(String bookTitle, String bookStatus, String userId);
+    List<Book> getBooksByAnyCriteria (String criteria);
 
-    void updateStatusToTaken(String bookTitle, String bookStatus, String userId);
-
-    void updateStatusWhenReturned(String bookTitle);
 
 }

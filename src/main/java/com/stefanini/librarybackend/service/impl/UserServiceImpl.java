@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
-        if(user.getRoles() == null){
+        if (user.getRoles() == null) {
             user.setRoles(new HashSet<>(Arrays.asList(Role.USER)));
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -57,6 +57,8 @@ public class UserServiceImpl implements UserService {
     public User updateUser(int id, User user) {
         User u = findById(id);
         u.setEmail(user.getEmail());
+        u.getProfile().setFirstName(user.getProfile().getFirstName());
+        u.getProfile().setLastName(user.getProfile().getLastName());
         u.setPassword(passwordEncoder.encode(user.getPassword()));
         return userDao.update(u);
     }

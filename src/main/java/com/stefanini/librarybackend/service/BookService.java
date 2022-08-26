@@ -12,4 +12,9 @@ public interface BookService {
     Book findById(int id);
     int deleteBook(int id);
     Book bookTheBook (int bookId, int userId);
+    Book giveTheBook (int bookId, int userId);
+    Book returnTheBook (int bookId);
+    List<Book> findBooksByAnyCriteria(String criteria);
+    public List<Book> getBookByCategory(int categoryId);
+
 }

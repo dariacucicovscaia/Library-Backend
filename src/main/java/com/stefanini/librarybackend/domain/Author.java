@@ -1,5 +1,6 @@
 package com.stefanini.librarybackend.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,6 +36,7 @@ public class Author implements Serializable {
     @Column(name = "biography", length = 1_000)
     private String biography;
 
+    @JsonBackReference
     @ManyToMany(mappedBy = "authors", fetch = FetchType.EAGER)
     private List<Book> books = new ArrayList<>();
 
