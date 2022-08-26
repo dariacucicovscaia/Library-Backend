@@ -1,10 +1,7 @@
 package com.stefanini.librarybackend.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-<<<<<<< HEAD
 
-=======
->>>>>>> 0eb17c67b02e8eccd12b20ab6f932f0296ce86ae
 import com.stefanini.librarybackend.domain.enums.BookStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
