@@ -32,7 +32,7 @@ public class Author implements Serializable {
     @Column(name = "birthDate")
     private Date birthDate;
 
-    @Column(name = "biography")
+    @Column(name = "biography", length = 1_000)
     private String biography;
 
     @ManyToMany(mappedBy = "authors", fetch = FetchType.EAGER)
