@@ -14,11 +14,9 @@ import java.util.List;
 public class BookController {
 
     private final BookService bookService;
-    private final AuthorService authorService;
 
     public BookController(BookServiceImpl bookServiceImpl, AuthorService authorService) {
         this.bookService = bookServiceImpl;
-        this.authorService = authorService;
     }
 
     @PostMapping("/create")
@@ -65,7 +63,7 @@ public class BookController {
     }
     @GetMapping("/bookByAuthor/{authorId}")
     public List<Book> findBooksByAuthorId(@PathVariable int authorId) {
-        return authorService.findBooksByAuthor(authorId);
+        return bookService.findBooksByAuthor(authorId);
     }
 
     @GetMapping("/bookByCategory/{categoryId}")

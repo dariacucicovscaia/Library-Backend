@@ -34,7 +34,7 @@ public class RegistrationController {
         } catch (AuthenticationException e) {
             return ResponseEntity
                     .status(HttpStatus.FORBIDDEN)
-                    .body("Invalid email or password");
+                    .body("Email is already taken");
         }
     }
 }
