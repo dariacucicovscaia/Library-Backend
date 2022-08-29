@@ -17,6 +17,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,10 +25,13 @@ import org.springframework.stereotype.Service;
 public class AppUserServiceImpl implements UserDetailsService {
     private final UserDAO<User> userDAO;
     private final AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
 
-    public AppUserServiceImpl(UserDAOImpl userDAOImpl, @Lazy AuthenticationManager authenticationManager) {
+    public AppUserServiceImpl(UserDAOImpl userDAOImpl, @Lazy AuthenticationManager authenticationManager,
+                              PasswordEncoder passwordEncoder) {
         this.userDAO = userDAOImpl;
         this.authenticationManager = authenticationManager;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -38,8 +42,6 @@ public class AppUserServiceImpl implements UserDetailsService {
 
     public AuthResponseDto login(LoginRequestDto request) {
         User user = returnsUserIfExists(request.getEmail());
-        verifyPassword(user.getPassword(), request.getPassword());
-
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
@@ -49,7 +51,8 @@ public class AppUserServiceImpl implements UserDetailsService {
     }
 
     private void verifyPassword(String userPassword, String requestPassword) {
-        if (!userPassword.equals(requestPassword)) {
+        boolean isPasswordCorrect = passwordEncoder.matches(userPassword, requestPassword);
+        if (!isPasswordCorrect) {
             log.error("Invalid password");
             throw new InvalidEmailOrPasswordException();
         }
