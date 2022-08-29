@@ -2,6 +2,7 @@ package com.stefanini.librarybackend.controller;
 
 import com.stefanini.librarybackend.dto.LoginRequestDto;
 import com.stefanini.librarybackend.service.impl.AppUserServiceImpl;
+import com.stefanini.librarybackend.service.impl.exception.InvalidEmailOrPasswordException;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class AuthController {
             return ResponseEntity
                     .status(HttpStatus.ACCEPTED)
                     .body(appUserServiceImpl.login(request));
-        } catch (AuthenticationException e) {
+        } catch (InvalidEmailOrPasswordException e) {
             return ResponseEntity
                     .status(HttpStatus.FORBIDDEN)
                     .body("Invalid email or password");

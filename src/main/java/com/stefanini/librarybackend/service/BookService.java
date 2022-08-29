@@ -17,4 +17,5 @@ public interface BookService {
     List<Book> findBooksByAnyCriteria(String criteria);
     public List<Book> getBookByCategory(int categoryId);
 
+    List<Book> findBooksByAuthor(int authorId);
 }

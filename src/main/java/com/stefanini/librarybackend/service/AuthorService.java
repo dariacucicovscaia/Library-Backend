@@ -15,7 +15,7 @@ import java.util.List;
 public interface AuthorService {
 
     /**
-     * Creates new author in database.
+     * Creates new author.
      * @param author that should be created in controller before calling this method
      * @return the author that was saved in database
      */
@@ -54,12 +54,5 @@ public interface AuthorService {
      * @return author with assigned book
      */
     Author addBookToAuthor(int bookId, int id);
-
-    /**
-     *
-     * @param authorId by this id we will
-     * @return
-     */
-    List<Book> findBooksByAuthor(int authorId);
 
 }

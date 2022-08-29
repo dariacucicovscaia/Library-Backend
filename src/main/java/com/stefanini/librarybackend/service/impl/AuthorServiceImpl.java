@@ -55,12 +55,6 @@ public class AuthorServiceImpl implements AuthorService {
         return authorDAO.update(author);
     }
 
-    @Override
-    public List<Book> findBooksByAuthor(int authorId) {
-        Author author = authorDAO.getById(authorId);
-        return author.getBooks();
-    }
-
     private void setUpdatedAuthorData(Author updatedAuthor, Author author) {
         updatedAuthor.setFirstName(author.getFirstName());
         updatedAuthor.setLastName(author.getLastName());

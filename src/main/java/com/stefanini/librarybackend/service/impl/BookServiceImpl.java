@@ -1,37 +1,32 @@
 package com.stefanini.librarybackend.service.impl;
 
+import com.stefanini.librarybackend.dao.AuthorDAO;
 import com.stefanini.librarybackend.dao.BookDAO;
 import com.stefanini.librarybackend.dao.CategoryDAO;
 import com.stefanini.librarybackend.dao.UserDAO;
+import com.stefanini.librarybackend.dao.impl.AuthorDAOImpl;
 import com.stefanini.librarybackend.dao.impl.BookDAOImpl;
-import com.stefanini.librarybackend.domain.Book;
-import com.stefanini.librarybackend.domain.Category;
-import com.stefanini.librarybackend.domain.History;
-import com.stefanini.librarybackend.domain.User;
-
+import com.stefanini.librarybackend.domain.*;
 import com.stefanini.librarybackend.service.BookService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.stefanini.librarybackend.domain.enums.BookStatus.*;
 
 @Service
-
 public class BookServiceImpl implements BookService {
-    @Autowired
-    private final BookDAO<Book> bookDAOImpl;
 
+    private final BookDAO<Book> bookDAOImpl;
+    private final AuthorDAO<Author> authorDAO;
     private final UserDAO<User> userDAOImpl;
     private final CategoryDAO<Category> categoryDAOImpl;
 
 
-    public BookServiceImpl(BookDAOImpl bookDAOImpl, UserDAO<User> userDAOImpl, CategoryDAO<Category> categoryDAOImpl) {
+    public BookServiceImpl(BookDAOImpl bookDAOImpl, AuthorDAOImpl authorDAOImpl, UserDAO<User> userDAOImpl, CategoryDAO<Category> categoryDAOImpl) {
         this.bookDAOImpl = bookDAOImpl;
+        this.authorDAO = authorDAOImpl;
         this.userDAOImpl = userDAOImpl;
-
         this.categoryDAOImpl = categoryDAOImpl;
     }
 
@@ -76,18 +71,10 @@ public class BookServiceImpl implements BookService {
         Book book = bookDAOImpl.getById(bookId);
         book.setStatus(BOOKED);
         book.setUser(user);
-        String actionName = "The book " + book.getTitle() + " was reserved";
-        History history = new History();
-        history.setActionName(actionName);
-        history.setBook(book);
 
-       history.setUser(user);
-        List<History> bookHistoryList = book.getHistory();
-        bookHistoryList.add(history);
-        book.setHistory(bookHistoryList);
-        List<History> userHistoryList = user.getHistory();
-        userHistoryList.add(history);
-        user.setHistory(userHistoryList);
+        String actionName = "The book " + book.getTitle() + " was reserved";
+
+        updateHistory(actionName, book, user);
 
         userDAOImpl.update(user);
         return bookDAOImpl.update(book);
@@ -99,18 +86,11 @@ public class BookServiceImpl implements BookService {
         Book book = bookDAOImpl.getById(bookId);
         book.setStatus(TAKEN);
         book.setUser(user);
-        String actionName = "The book " + book.getTitle() + " was taken";
-        History history = new History();
-        history.setActionName(actionName);
-        history.setBook(book);
-        history.setUser(user);
 
-        List<History> bookHistoryList = book.getHistory();
-        bookHistoryList.add(history);
-        book.setHistory(bookHistoryList);
-        List<History> userHistoryList = user.getHistory();
-        userHistoryList.add(history);
-        user.setHistory(userHistoryList);
+        String actionName = "The book " + book.getTitle() + " was taken";
+
+        updateHistory(actionName, book, user);
+
         userDAOImpl.update(user);
         return bookDAOImpl.update(book);
     }
@@ -119,19 +99,14 @@ public class BookServiceImpl implements BookService {
     public Book returnTheBook(int bookId) {
         Book book = bookDAOImpl.getById(bookId);
         User user = book.getUser();
+
         String actionName = "The book " + book.getTitle() + " was returned";
-        History history = new History();
-        history.setActionName(actionName);
-        history.setBook(book);
-        history.setUser(user);
-        List<History> bookHistoryList = book.getHistory();
-        bookHistoryList.add(history);
-        book.setHistory(bookHistoryList);
-        List<History> userHistoryList = user.getHistory();
-        userHistoryList.add(history);
-        user.setHistory(userHistoryList);
+
+        updateHistory(actionName, book, user);
+
         book.setStatus(AVAILABLE);
         book.setUser(null);
+
         userDAOImpl.update(user);
         return bookDAOImpl.update(book);
     }
@@ -142,9 +117,30 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> getBookByCategory(int categoryId){
+    public List<Book> getBookByCategory(int categoryId) {
         Category category = categoryDAOImpl.getById(categoryId);
         return category.getBooks();
+    }
+
+    @Override
+    public List<Book> findBooksByAuthor(int authorId) {
+        Author author = authorDAO.getById(authorId);
+        return author.getBooks();
+    }
+
+    private void updateHistory(String actionName, Book book, User user) {
+        History history = new History();
+        history.setActionName(actionName);
+        history.setBook(book);
+        history.setUser(user);
+
+        List<History> bookHistoryList = book.getHistory();
+        bookHistoryList.add(history);
+        book.setHistory(bookHistoryList);
+
+        List<History> userHistoryList = user.getHistory();
+        userHistoryList.add(history);
+        user.setHistory(userHistoryList);
     }
 
 }

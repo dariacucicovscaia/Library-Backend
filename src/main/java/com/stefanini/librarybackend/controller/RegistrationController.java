@@ -5,6 +5,7 @@ import com.stefanini.librarybackend.dto.RegistrationRequestDto;
 import com.stefanini.librarybackend.service.RegistrationService;
 import com.stefanini.librarybackend.service.impl.AppUserServiceImpl;
 import com.stefanini.librarybackend.service.impl.RegistrationServiceImpl;
+import com.stefanini.librarybackend.service.impl.exception.EmailAlreadyTakenException;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,15 +27,15 @@ public class RegistrationController {
 
     @PostMapping(value = "/sign-up")
     public ResponseEntity<?> signUp(@RequestBody RegistrationRequestDto request) {
-            registrationService.registerUser(request);
         try {
+            registrationService.registerUser(request);
             return ResponseEntity
                     .status(HttpStatus.ACCEPTED)
                     .body(appUserServiceImpl.login(new LoginRequestDto(request.getEmail(), request.getPassword())));
-        } catch (AuthenticationException e) {
+        } catch (EmailAlreadyTakenException e) {
             return ResponseEntity
                     .status(HttpStatus.FORBIDDEN)
-                    .body("Invalid email or password");
+                    .body("Email is already taken");
         }
     }
 }
