@@ -38,12 +38,21 @@ public class AppUserServiceImpl implements UserDetailsService {
 
     public AuthResponseDto login(LoginRequestDto request) {
         User user = returnsUserIfExists(request.getEmail());
+        verifyPassword(user.getPassword(), request.getPassword());
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
 
 
         return JwtTokenFactory.generateAccessAndRefreshToken(authentication);
+    }
+
+    private void verifyPassword(String userPassword, String requestPassword) {
+        if (!userPassword.equals(requestPassword)) {
+            log.error("Invalid password");
+            throw new InvalidEmailOrPasswordException();
+        }
     }
 
     private User returnsUserIfExists(String email) {
