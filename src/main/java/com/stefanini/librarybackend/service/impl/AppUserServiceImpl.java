@@ -8,6 +8,7 @@ import com.stefanini.librarybackend.dao.impl.UserDAOImpl;
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.dto.AuthResponseDto;
 import com.stefanini.librarybackend.dto.LoginRequestDto;
+import com.stefanini.librarybackend.service.impl.exception.InvalidEmailOrPasswordException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -49,7 +50,7 @@ public class AppUserServiceImpl implements UserDetailsService {
             User user = userDAO.findUserByEmail(email);
             if (user == null) {
                 log.error("User with such email not found");
-                throw new UsernameNotFoundException("User with such email not found");
+                throw new InvalidEmailOrPasswordException();
             } else {
                 log.info("User with such email found: {}", email);
                 return user;

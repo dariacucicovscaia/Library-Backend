@@ -9,6 +9,8 @@ import com.stefanini.librarybackend.domain.enums.Role;
 import com.stefanini.librarybackend.dto.RegistrationRequestDto;
 import com.stefanini.librarybackend.service.EmailConfirmationTokenService;
 import com.stefanini.librarybackend.service.RegistrationService;
+import com.stefanini.librarybackend.service.impl.exception.EmailAlreadyTakenException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.UUID;
 
+@Slf4j
 @Service
 public class RegistrationServiceImpl implements RegistrationService {
 
@@ -38,7 +41,8 @@ public class RegistrationServiceImpl implements RegistrationService {
         User user = userDAO.findUserByEmail(request.getEmail());
 
         if (user != null) {
-            throw new IllegalStateException(String.format(EMAIL_ALREADY_TAKEN_MSG, request.getEmail()));
+            log.error(String.format(EMAIL_ALREADY_TAKEN_MSG, user.getEmail()));
+            throw new EmailAlreadyTakenException();
         }
 
         String encodedPassword = passwordEncoder.encode(request.getPassword());
