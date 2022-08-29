@@ -2,8 +2,10 @@ package com.stefanini.librarybackend.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.stefanini.librarybackend.domain.enums.Role;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -21,7 +23,9 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
+@NoArgsConstructor @JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class User implements Serializable {
 
     @Id
@@ -31,6 +35,8 @@ public class User implements Serializable {
 
     @Column(unique = true, name = "email")
     private String email;
+
+
 
     @Column(name = "password")
     private String password;
@@ -43,12 +49,12 @@ public class User implements Serializable {
 
     @Transient
     @OneToMany(mappedBy = "user")
+   // @JsonBackReference (value="book-user")
     private List<Book> book;
 
 
     @OneToMany(mappedBy = "user")
-    @JsonManagedReference
-
+    //@JsonManagedReference(value="user-history")
     private List<History> history;
 
     @OneToOne(cascade = CascadeType.ALL)

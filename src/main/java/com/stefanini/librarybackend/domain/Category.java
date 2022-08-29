@@ -1,6 +1,8 @@
 package com.stefanini.librarybackend.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +17,9 @@ import java.util.List;
 @Table(name = "category")
 @Getter
 @Setter
-@NoArgsConstructor
+@NoArgsConstructor @JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Category implements Serializable {
 
     @Id
@@ -25,7 +29,7 @@ public class Category implements Serializable {
 
     @Column(name = "title")
     private String title;
-    @JsonBackReference
+  //  @JsonBackReference(value="book-category")
     @ManyToMany(mappedBy = "categories")
     private List<Book> books = new ArrayList<>();
 

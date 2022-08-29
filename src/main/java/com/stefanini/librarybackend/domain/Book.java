@@ -1,10 +1,9 @@
 package com.stefanini.librarybackend.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-<<<<<<< HEAD
 
-=======
->>>>>>> 0eb17c67b02e8eccd12b20ab6f932f0296ce86ae
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.stefanini.librarybackend.domain.enums.BookStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +22,9 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Book implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +34,7 @@ public class Book implements Serializable {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "bookDescription")
+    @Column(name = "description")
     private String description;
 
     @Column(name = "shelfNumber")
@@ -47,21 +49,21 @@ public class Book implements Serializable {
     private Date createdOn;
 
     @ManyToOne
+   // @JsonManagedReference(value="book-user")
     @JoinColumn(name = "user_id")
     private User user;
-    @JsonManagedReference
+  //  @JsonManagedReference(value="book-category")
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "book_category", inverseJoinColumns = @JoinColumn(name = "category_id"), joinColumns = @JoinColumn(name = "book_id"))
     private List<Category> categories;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
+   //  @JsonManagedReference(value="book-author")
     @JoinTable(name = "book_author", inverseJoinColumns = @JoinColumn(name = "author_id"), joinColumns = @JoinColumn(name = "book_id"))
     private List<Author> authors = new ArrayList<>();
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
-
-    @JsonManagedReference
-
+  //  @JsonManagedReference(value="book-history")
     private List<History> history;
 
     public Book(int id, String title, String description, String shelfNumber, BookStatus status) {

@@ -40,16 +40,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
 
                 .antMatchers("/", "index", "/css/*", "/js/*", "/login", "/api/login").permitAll()
-<<<<<<< HEAD
 
                 .antMatchers("/api/token/refresh", "/sign-up", "/api/sign-up").permitAll()
-
                 .antMatchers(GET,"/api/author/**", "/api/book/**", "/api/category/**").permitAll()
-=======
-                .antMatchers("/api/token/refresh", "/sign-up", "/api/sign-up",
-                        "/api/user/update/{id}", "/api/user/delete/{id}","/api/user/assignRole/{id}/{role}" ).permitAll()
-                .antMatchers(GET,"/api/author/**", "/api/book/**", "/api/category/categories").permitAll()
->>>>>>> 0eb17c67b02e8eccd12b20ab6f932f0296ce86ae
+
                 .and()
                 .authorizeRequests().anyRequest().authenticated()
                 .and()

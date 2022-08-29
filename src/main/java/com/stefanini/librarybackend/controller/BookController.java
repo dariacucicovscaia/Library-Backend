@@ -22,7 +22,7 @@ public class BookController {
     }
 
     @PostMapping("/create")
-    @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN', 'USER')")
     public Book createBook(@RequestBody Book book) {
        return bookService.addBook(book);
     }
@@ -43,7 +43,7 @@ public class BookController {
     public List<Book> getAllBooks() {
         return bookService.showAllBooks();
     }
-<<<<<<< HEAD
+
     @PutMapping("/bookTheBook/{bookId}/{userId}")
    @PreAuthorize("hasAnyAuthority('USER','LIBRARIAN', 'ADMIN')")
     public Book bookTheBook (@PathVariable int bookId, @PathVariable int userId) {
@@ -68,8 +68,7 @@ public class BookController {
     public List<Book> findBooksByAuthorId(@PathVariable int authorId) {
         return authorService.findBooksByAuthor(authorId);
     }
-=======
->>>>>>> 0eb17c67b02e8eccd12b20ab6f932f0296ce86ae
+
 
     @GetMapping("/bookByCategory/{categoryId}")
     @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")

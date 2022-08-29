@@ -19,14 +19,7 @@ public class Profile implements Serializable {
     @Column(name = "id", nullable = false)
     private int id;
 
-<<<<<<< HEAD
 
-  /*  @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;*/
-
-=======
->>>>>>> 0eb17c67b02e8eccd12b20ab6f932f0296ce86ae
     @Column(name = "firstName")
     private String firstName;
 

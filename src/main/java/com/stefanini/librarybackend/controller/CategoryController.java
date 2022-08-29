@@ -19,7 +19,7 @@ public class CategoryController {
     }
 
     @PostMapping("/create")
-    @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN', 'USER')")
     public Category createCategory(@RequestBody Category category) {
         return categoryService.addCategory(category);
     }
