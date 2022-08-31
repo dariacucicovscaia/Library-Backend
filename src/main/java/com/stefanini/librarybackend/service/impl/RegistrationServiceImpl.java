@@ -1,6 +1,8 @@
 package com.stefanini.librarybackend.service.impl;
 
+import com.stefanini.librarybackend.dao.EmailConfirmationTokenDAO;
 import com.stefanini.librarybackend.dao.UserDAO;
+import com.stefanini.librarybackend.dao.impl.EmailConfirmationTokenDAOImpl;
 import com.stefanini.librarybackend.dao.impl.UserDAOImpl;
 import com.stefanini.librarybackend.domain.ConfirmationToken;
 import com.stefanini.librarybackend.domain.Profile;
@@ -27,13 +29,13 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserDAO<User> userDAO;
-    private final EmailConfirmationTokenService emailConfirmationTokenService;
+    private final EmailConfirmationTokenDAO<ConfirmationToken> emailConfirmationTokenDAO;
 
     public RegistrationServiceImpl(UserDAOImpl userDAOImpl, PasswordEncoder passwordEncoder,
-                                   EmailConfirmationTokenServiceImpl emailConfirmationTokenServiceImpl) {
+                                   EmailConfirmationTokenDAOImpl emailConfirmationTokenDAOImpl) {
         this.userDAO = userDAOImpl;
         this.passwordEncoder = passwordEncoder;
-        this.emailConfirmationTokenService = emailConfirmationTokenServiceImpl;
+        this.emailConfirmationTokenDAO = emailConfirmationTokenDAOImpl;
     }
 
     @Override
@@ -54,7 +56,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         userDAO.create(newUser);
 
 
-        /*String token = UUID.randomUUID().toString();
+        String token = UUID.randomUUID().toString();
 
         ConfirmationToken confirmationToken = new ConfirmationToken(
                 token,
@@ -63,6 +65,9 @@ public class RegistrationServiceImpl implements RegistrationService {
                 newUser
         );
 
-        emailConfirmationTokenService.saveConfirmationToken(confirmationToken);*/
+        emailConfirmationTokenDAO.create(confirmationToken);
+        log.info("Email confirmation token created");
+
+        // TODO: send mail
     }
 }

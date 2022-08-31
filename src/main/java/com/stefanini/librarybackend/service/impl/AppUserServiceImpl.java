@@ -42,6 +42,7 @@ public class AppUserServiceImpl implements UserDetailsService {
 
     public AuthResponseDto login(LoginRequestDto request) {
         User user = returnsUserIfExists(request.getEmail());
+        verifyPassword(user.getPassword(), request.getPassword());
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
@@ -51,7 +52,7 @@ public class AppUserServiceImpl implements UserDetailsService {
     }
 
     private void verifyPassword(String userPassword, String requestPassword) {
-        boolean isPasswordCorrect = passwordEncoder.matches(userPassword, requestPassword);
+        boolean isPasswordCorrect = passwordEncoder.matches(requestPassword, userPassword);
         if (!isPasswordCorrect) {
             log.error("Invalid password");
             throw new InvalidEmailOrPasswordException();

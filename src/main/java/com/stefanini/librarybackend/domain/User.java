@@ -62,6 +62,9 @@ public class User implements Serializable {
     @Column(name = "last_update")
     private LocalDateTime lastUpdate;
 
+    @OneToMany(mappedBy = "user")
+    private List<ConfirmationToken> confirmationTokens;
+
     public User(int id, String email, String password) {
         setId(id);
         setEmail(email);
