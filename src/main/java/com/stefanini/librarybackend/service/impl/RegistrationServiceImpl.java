@@ -9,7 +9,8 @@ import com.stefanini.librarybackend.domain.Profile;
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
 import com.stefanini.librarybackend.dto.RegistrationRequestDto;
-import com.stefanini.librarybackend.service.EmailConfirmationTokenService;
+import com.stefanini.librarybackend.email.EmailSenderService;
+import com.stefanini.librarybackend.email.MailHelper;
 import com.stefanini.librarybackend.service.RegistrationService;
 import com.stefanini.librarybackend.service.impl.exception.EmailAlreadyTakenException;
 import lombok.extern.slf4j.Slf4j;
@@ -24,18 +25,20 @@ import java.util.UUID;
 @Slf4j
 @Service
 public class RegistrationServiceImpl implements RegistrationService {
-
     private final String EMAIL_ALREADY_TAKEN_MSG = "Email %s taken";
 
     private final PasswordEncoder passwordEncoder;
     private final UserDAO<User> userDAO;
     private final EmailConfirmationTokenDAO<ConfirmationToken> emailConfirmationTokenDAO;
+    private final EmailSenderService emailSenderService;
 
     public RegistrationServiceImpl(UserDAOImpl userDAOImpl, PasswordEncoder passwordEncoder,
-                                   EmailConfirmationTokenDAOImpl emailConfirmationTokenDAOImpl) {
+                                   EmailConfirmationTokenDAOImpl emailConfirmationTokenDAOImpl,
+                                   EmailSenderService emailSenderService) {
         this.userDAO = userDAOImpl;
         this.passwordEncoder = passwordEncoder;
         this.emailConfirmationTokenDAO = emailConfirmationTokenDAOImpl;
+        this.emailSenderService = emailSenderService;
     }
 
     @Override
@@ -68,6 +71,11 @@ public class RegistrationServiceImpl implements RegistrationService {
         emailConfirmationTokenDAO.create(confirmationToken);
         log.info("Email confirmation token created");
 
-        // TODO: send mail
+        String link = "http://localhost:8080/api/email-confirmation/confirm/" + token;
+        emailSenderService.sendMail(
+                request.getEmail(),
+                MailHelper.buildEmail(request.getFirstName(), link)
+        );
+
     }
 }

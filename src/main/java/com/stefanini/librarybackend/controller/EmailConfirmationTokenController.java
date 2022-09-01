@@ -2,8 +2,8 @@ package com.stefanini.librarybackend.controller;
 
 import com.stefanini.librarybackend.service.EmailConfirmationTokenService;
 import com.stefanini.librarybackend.service.impl.EmailConfirmationTokenServiceImpl;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/email-confirmation")
@@ -13,5 +13,10 @@ public class EmailConfirmationTokenController {
 
     public EmailConfirmationTokenController(EmailConfirmationTokenServiceImpl emailConfirmationTokenServiceImpl) {
         this.emailConfirmationTokenService = emailConfirmationTokenServiceImpl;
+    }
+
+    @GetMapping("/confirm")
+    public ResponseEntity<?> confirmEmail(@RequestParam("token") String token) {
+        return emailConfirmationTokenService.confirmToken(token);
     }
 }

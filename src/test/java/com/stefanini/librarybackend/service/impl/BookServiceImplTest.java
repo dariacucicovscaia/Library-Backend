@@ -163,7 +163,7 @@ class BookServiceImplTest {
      * Unit test for method {@link BookService#bookTheBook(int, int) bookTheBook} addBook} method
      */
     @Test
-    void shouldBookTheBookAndUpdateUser() {
+    void shouldBookTheBookAndUpdateBook() {
         User user = new User(
                 1,
                 "email",
