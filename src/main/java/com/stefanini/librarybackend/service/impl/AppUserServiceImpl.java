@@ -17,6 +17,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,10 +25,12 @@ import org.springframework.stereotype.Service;
 public class AppUserServiceImpl implements UserDetailsService {
     private final UserDAO<User> userDAO;
     private final AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
 
-    public AppUserServiceImpl(UserDAOImpl userDAOImpl, @Lazy AuthenticationManager authenticationManager) {
+    public AppUserServiceImpl(UserDAOImpl userDAOImpl, @Lazy AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder) {
         this.userDAO = userDAOImpl;
         this.authenticationManager = authenticationManager;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -38,12 +41,22 @@ public class AppUserServiceImpl implements UserDetailsService {
 
     public AuthResponseDto login(LoginRequestDto request) {
         User user = returnsUserIfExists(request.getEmail());
+        verifyPassword(user.getPassword(), request.getPassword());
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
 
 
         return JwtTokenFactory.generateAccessAndRefreshToken(authentication);
+    }
+
+    private void verifyPassword(String userPassword, String requestPassword) {
+        boolean result = passwordEncoder.matches(requestPassword, userPassword);
+       if (!result) {
+            log.error("Invalid password");
+            throw new InvalidEmailOrPasswordException();
+        }
     }
 
     private User returnsUserIfExists(String email) {
