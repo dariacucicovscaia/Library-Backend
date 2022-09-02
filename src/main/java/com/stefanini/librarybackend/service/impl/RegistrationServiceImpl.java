@@ -1,13 +1,16 @@
 package com.stefanini.librarybackend.service.impl;
 
+import com.stefanini.librarybackend.dao.EmailConfirmationTokenDAO;
 import com.stefanini.librarybackend.dao.UserDAO;
+import com.stefanini.librarybackend.dao.impl.EmailConfirmationTokenDAOImpl;
 import com.stefanini.librarybackend.dao.impl.UserDAOImpl;
 import com.stefanini.librarybackend.domain.ConfirmationToken;
 import com.stefanini.librarybackend.domain.Profile;
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
 import com.stefanini.librarybackend.dto.RegistrationRequestDto;
-import com.stefanini.librarybackend.service.EmailConfirmationTokenService;
+import com.stefanini.librarybackend.email.EmailSenderService;
+import com.stefanini.librarybackend.email.MailHelper;
 import com.stefanini.librarybackend.service.RegistrationService;
 import com.stefanini.librarybackend.service.impl.exception.EmailAlreadyTakenException;
 import lombok.extern.slf4j.Slf4j;
@@ -22,18 +25,20 @@ import java.util.UUID;
 @Slf4j
 @Service
 public class RegistrationServiceImpl implements RegistrationService {
-
     private final String EMAIL_ALREADY_TAKEN_MSG = "Email %s taken";
 
     private final PasswordEncoder passwordEncoder;
     private final UserDAO<User> userDAO;
-    private final EmailConfirmationTokenService emailConfirmationTokenService;
+    private final EmailConfirmationTokenDAO<ConfirmationToken> emailConfirmationTokenDAO;
+    private final EmailSenderService emailSenderService;
 
     public RegistrationServiceImpl(UserDAOImpl userDAOImpl, PasswordEncoder passwordEncoder,
-                                   EmailConfirmationTokenServiceImpl emailConfirmationTokenServiceImpl) {
+                                   EmailConfirmationTokenDAOImpl emailConfirmationTokenDAOImpl,
+                                   EmailSenderService emailSenderService) {
         this.userDAO = userDAOImpl;
         this.passwordEncoder = passwordEncoder;
-        this.emailConfirmationTokenService = emailConfirmationTokenServiceImpl;
+        this.emailConfirmationTokenDAO = emailConfirmationTokenDAOImpl;
+        this.emailSenderService = emailSenderService;
     }
 
     @Override
@@ -54,7 +59,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         userDAO.create(newUser);
 
 
-        /*String token = UUID.randomUUID().toString();
+        String token = UUID.randomUUID().toString();
 
         ConfirmationToken confirmationToken = new ConfirmationToken(
                 token,
@@ -63,6 +68,14 @@ public class RegistrationServiceImpl implements RegistrationService {
                 newUser
         );
 
-        emailConfirmationTokenService.saveConfirmationToken(confirmationToken);*/
+        emailConfirmationTokenDAO.create(confirmationToken);
+        log.info("Email confirmation token created");
+
+        String link = "http://localhost:300/email-confirmation/" + token;
+        emailSenderService.sendMail(
+                request.getEmail(),
+                "Activate your account by this link - " + link
+        );
+
     }
 }

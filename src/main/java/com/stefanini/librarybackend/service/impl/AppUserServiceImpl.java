@@ -27,7 +27,9 @@ public class AppUserServiceImpl implements UserDetailsService {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
 
-    public AppUserServiceImpl(UserDAOImpl userDAOImpl, @Lazy AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder) {
+
+    public AppUserServiceImpl(UserDAOImpl userDAOImpl, @Lazy AuthenticationManager authenticationManager,
+                              PasswordEncoder passwordEncoder) {
         this.userDAO = userDAOImpl;
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
@@ -52,8 +54,8 @@ public class AppUserServiceImpl implements UserDetailsService {
     }
 
     private void verifyPassword(String userPassword, String requestPassword) {
-        boolean result = passwordEncoder.matches(requestPassword, userPassword);
-       if (!result) {
+        boolean isPasswordCorrect = passwordEncoder.matches(requestPassword, userPassword);
+        if (!isPasswordCorrect) {
             log.error("Invalid password");
             throw new InvalidEmailOrPasswordException();
         }

@@ -2,6 +2,8 @@ package com.stefanini.librarybackend.service;
 
 import com.stefanini.librarybackend.domain.ConfirmationToken;
 import com.stefanini.librarybackend.dto.RegistrationRequestDto;
+import com.stefanini.librarybackend.service.impl.exception.InvalidTokenException;
+import org.springframework.http.ResponseEntity;
 
 /**
  * This interface perform operations with email confirmation token that should be created after registration.
@@ -18,4 +20,6 @@ public interface EmailConfirmationTokenService {
      * @param confirmationToken that should be generated in {@link RegistrationService#registerUser(RegistrationRequestDto) registerUser} method
      */
     void saveConfirmationToken(ConfirmationToken confirmationToken);
+
+    ResponseEntity<?> confirmToken(String token) throws InvalidTokenException;
 }
