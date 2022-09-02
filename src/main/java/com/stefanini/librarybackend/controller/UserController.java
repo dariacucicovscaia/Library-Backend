@@ -79,7 +79,5 @@ public class UserController {
                 .body("Invalid email");
 
     }
-
-
 }
 

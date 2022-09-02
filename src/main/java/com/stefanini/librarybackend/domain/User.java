@@ -45,6 +45,7 @@ public class User implements Serializable {
 
 
     @OneToMany(mappedBy = "user")
+    @JsonBackReference
     private List<Book> book;
 
 
@@ -61,6 +62,12 @@ public class User implements Serializable {
     @UpdateTimestamp
     @Column(name = "last_update")
     private LocalDateTime lastUpdate;
+
+    @OneToMany(mappedBy = "user")
+    private List<ConfirmationToken> confirmationTokens;
+
+    @Column(name = "isConfirmedByEmail")
+    private boolean isConfirmedByEmail;
 
     public User(int id, String email, String password) {
         setId(id);
