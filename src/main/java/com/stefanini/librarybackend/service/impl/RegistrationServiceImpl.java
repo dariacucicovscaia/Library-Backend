@@ -71,10 +71,10 @@ public class RegistrationServiceImpl implements RegistrationService {
         emailConfirmationTokenDAO.create(confirmationToken);
         log.info("Email confirmation token created");
 
-        String link = "http://localhost:8080/api/email-confirmation/confirm/" + token;
+        String link = "http://localhost:300/email-confirmation/" + token;
         emailSenderService.sendMail(
                 request.getEmail(),
-                MailHelper.buildEmail(request.getFirstName(), link)
+                "Activate your account by this link - " + link
         );
 
     }
