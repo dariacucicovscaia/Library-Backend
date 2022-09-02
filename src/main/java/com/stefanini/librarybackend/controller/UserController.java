@@ -1,11 +1,15 @@
 package com.stefanini.librarybackend.controller;
 
 
+import com.stefanini.librarybackend.domain.Book;
+import com.stefanini.librarybackend.domain.History;
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
+import com.stefanini.librarybackend.email.EmailSenderService;
 import com.stefanini.librarybackend.service.impl.UserServiceImpl;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 
@@ -17,22 +21,28 @@ import static com.stefanini.librarybackend.helper.PasswordGenerator.generateRand
 
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping(value = "/api/user")
 public class UserController {
     private final UserServiceImpl userService;
-
-    public UserController(UserServiceImpl userService) {
+    private final EmailSenderService emailSenderService;
+    public UserController(UserServiceImpl userService, EmailSenderService emailSenderService) {
         this.userService = userService;
+        this.emailSenderService = emailSenderService;
     }
 
 
-    @PostMapping("/create")
+    @PostMapping(value = "/create")
     @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
-    public String addUser(@RequestBody User user) {
+    public User addUser(@RequestBody User user) {
         String password = generateRandomPassword();
         user.setPassword(password);
-        userService.createUser(user);
-        return password;
+        user.setStatus("new user");
+        String email = "Hello, " + user.getProfile().getFirstName() +" " + user.getProfile().getLastName() + "!"
+                + " Here is your password for Stefanini Library Aplication " + password
+                + " To use the aplication please visit http://localhost:3000/";
+        String subject = "Registration info";
+                emailSenderService.sendMail(user.getEmail(), email, subject);
+        return userService.createUser(user);
     }
 
     @GetMapping("/find/{id}")
@@ -77,7 +87,16 @@ public class UserController {
         } else return ResponseEntity
                 .status(HttpStatus.FORBIDDEN)
                 .body("Invalid email");
-
+    }
+    @GetMapping("/usersBooks/{userId}")
+    @PreAuthorize("hasAnyAuthority('USER')")
+    public List<Book> getUserBooks(@PathVariable int userId){
+        return userService.getUserBooks(userId);
+    }
+    @GetMapping("/usersHistory/{userId}")
+    @PreAuthorize("hasAnyAuthority('USER')")
+    public List<History> getUserHistory(@PathVariable int userId){
+        return userService.getUserHistory(userId);
     }
 }
 

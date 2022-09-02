@@ -20,10 +20,9 @@ import java.util.Set;
 @Setter
 @ToString
 @NoArgsConstructor
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
-@JsonIdentityReference(alwaysAsId = true)
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id")
 public class User implements Serializable {
 
     @Id
@@ -45,11 +44,12 @@ public class User implements Serializable {
 
 
     @OneToMany(mappedBy = "user")
-    @JsonBackReference
+    @JsonManagedReference(value="book-user")
     private List<Book> book;
 
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference(value="user-history")
     private List<History> history;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -66,8 +66,11 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user")
     private List<ConfirmationToken> confirmationTokens;
 
-    @Column(name = "isConfirmedByEmail")
-    private boolean isConfirmedByEmail;
+//    @Column(name = "isConfirmedByEmail")
+//    private boolean isConfirmedByEmail;
+
+    @Column(name = "status")
+   private String status;
 
     public User(int id, String email, String password) {
         setId(id);

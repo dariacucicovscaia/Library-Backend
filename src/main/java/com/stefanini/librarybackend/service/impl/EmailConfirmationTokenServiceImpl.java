@@ -32,7 +32,7 @@ public class EmailConfirmationTokenServiceImpl implements EmailConfirmationToken
         ConfirmationToken confirmationToken = emailConfirmationTokenDAO.findByToken(token);
         verifyToken(confirmationToken);
         confirmationToken.setConfirmedAt(LocalDateTime.now());
-        confirmationToken.getUser().setConfirmedByEmail(true);
+      //  confirmationToken.getUser().setConfirmedByEmail(true);
         return null;
     }
 

@@ -19,9 +19,10 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id")
+
 public class History implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,10 +37,12 @@ public class History implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference(value="user-history")
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "book_id")
+    @JsonBackReference(value="book-history")
     private Book book;
 
     History(int id, String actionName, Date date) {
