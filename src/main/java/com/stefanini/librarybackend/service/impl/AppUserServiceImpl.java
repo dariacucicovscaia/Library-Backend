@@ -27,6 +27,7 @@ public class AppUserServiceImpl implements UserDetailsService {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
 
+
     public AppUserServiceImpl(UserDAOImpl userDAOImpl, @Lazy AuthenticationManager authenticationManager,
                               PasswordEncoder passwordEncoder) {
         this.userDAO = userDAOImpl;
@@ -43,6 +44,7 @@ public class AppUserServiceImpl implements UserDetailsService {
     public AuthResponseDto login(LoginRequestDto request) {
         User user = returnsUserIfExists(request.getEmail());
         verifyPassword(user.getPassword(), request.getPassword());
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
