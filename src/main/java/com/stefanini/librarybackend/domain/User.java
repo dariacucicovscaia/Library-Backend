@@ -1,8 +1,6 @@
 package com.stefanini.librarybackend.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import com.stefanini.librarybackend.domain.enums.Role;
 import lombok.*;
@@ -22,6 +20,10 @@ import java.util.Set;
 @Setter
 @ToString
 @NoArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
+@JsonIdentityReference(alwaysAsId = true)
 public class User implements Serializable {
 
     @Id
@@ -43,13 +45,10 @@ public class User implements Serializable {
 
 
     @OneToMany(mappedBy = "user")
-    @JsonBackReference
     private List<Book> book;
 
 
     @OneToMany(mappedBy = "user")
-    @JsonManagedReference
-
     private List<History> history;
 
     @OneToOne(cascade = CascadeType.ALL)

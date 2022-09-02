@@ -1,7 +1,6 @@
 package com.stefanini.librarybackend.controller;
 
 
-
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
 import com.stefanini.librarybackend.service.impl.UserServiceImpl;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+import static com.stefanini.librarybackend.helper.PasswordGenerator.generateRandomPassword;
 
 
 @RestController
@@ -29,8 +28,11 @@ public class UserController {
 
     @PostMapping("/create")
     @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
-    public User addUser(@RequestBody User user) {
-        return userService.createUser(user);
+    public String addUser(@RequestBody User user) {
+        String password = generateRandomPassword();
+        user.setPassword(password);
+        userService.createUser(user);
+        return password;
     }
 
     @GetMapping("/find/{id}")
@@ -54,7 +56,7 @@ public class UserController {
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
     public int deleteById(@PathVariable int id) {
-        return  userService.deleteById(id);
+        return userService.deleteById(id);
     }
 
     @GetMapping("/users")
@@ -67,16 +69,17 @@ public class UserController {
     @GetMapping("/find-by-email/{email}")
     @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
     public ResponseEntity<?> findByEmail(@PathVariable String email) {
-    User user = userService.findByEmail(email);
-    if (user != null){
-        return ResponseEntity
-                .status(HttpStatus.ACCEPTED)
-                .body(user);
-    }else return ResponseEntity
+        User user = userService.findByEmail(email);
+        if (user != null) {
+            return ResponseEntity
+                    .status(HttpStatus.ACCEPTED)
+                    .body(user);
+        } else return ResponseEntity
                 .status(HttpStatus.FORBIDDEN)
                 .body("Invalid email");
 
     }
+
 
 }
 
