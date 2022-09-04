@@ -41,8 +41,9 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-    @Transient
+
     @OneToMany(mappedBy = "user")
+    @JsonBackReference
     private List<Book> book;
 
 

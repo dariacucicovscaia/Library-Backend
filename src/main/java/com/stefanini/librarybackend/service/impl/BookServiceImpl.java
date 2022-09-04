@@ -71,11 +71,12 @@ public class BookServiceImpl implements BookService {
         Book book = bookDAOImpl.getById(bookId);
         book.setStatus(BOOKED);
         book.setUser(user);
-
         String actionName = "The book " + book.getTitle() + " was reserved";
 
         updateHistory(actionName, book, user);
-
+        List<Book> userBookList = user.getBook();
+        userBookList.add(book);
+        user.setBook(userBookList);
         userDAOImpl.update(user);
         return bookDAOImpl.update(book);
     }
@@ -90,7 +91,9 @@ public class BookServiceImpl implements BookService {
         String actionName = "The book " + book.getTitle() + " was taken";
 
         updateHistory(actionName, book, user);
-
+        List<Book> userBookList = user.getBook();
+        userBookList.add(book);
+        user.setBook(userBookList);
         userDAOImpl.update(user);
         return bookDAOImpl.update(book);
     }
