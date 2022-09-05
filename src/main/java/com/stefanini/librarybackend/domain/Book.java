@@ -44,6 +44,7 @@ public class Book implements Serializable {
     private Date createdOn;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "user_id")
     private User user;
     @JsonManagedReference

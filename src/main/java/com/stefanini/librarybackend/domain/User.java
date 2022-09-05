@@ -41,8 +41,9 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-    @Transient
+
     @OneToMany(mappedBy = "user")
+    @JsonBackReference
     private List<Book> book;
 
 
@@ -64,6 +65,9 @@ public class User implements Serializable {
 
     @OneToMany(mappedBy = "user")
     private List<ConfirmationToken> confirmationTokens;
+
+    @Column(name = "isConfirmedByEmail")
+    private boolean isConfirmedByEmail;
 
     public User(int id, String email, String password) {
         setId(id);

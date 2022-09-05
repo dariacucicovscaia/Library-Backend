@@ -30,7 +30,7 @@ public class JwtTokenFactory {
 
         String refresh_token = JWT.create()
                 .withSubject(appUser.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 30 * 60 * 1000))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 2 * 60 * 1000))
                 .sign(algorithm);
 
         log.info("refresh_token created");

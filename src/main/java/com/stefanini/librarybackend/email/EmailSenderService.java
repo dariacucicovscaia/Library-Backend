@@ -22,8 +22,6 @@ public class EmailSenderService {
     private JavaMailSender mailSender;
 
     public void sendMail(String to, String email) {
-        // TODO: change to mimeMessage
-
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(from);
         message.setTo(to);
