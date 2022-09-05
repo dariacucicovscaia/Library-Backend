@@ -11,6 +11,7 @@ import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.BookStatus;
 import com.stefanini.librarybackend.domain.enums.Role;
 import com.stefanini.librarybackend.service.BookService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ import java.util.List;
 import static com.stefanini.librarybackend.domain.enums.BookStatus.*;
 
 @Service
-
+@Slf4j
 public class BookServiceImpl implements BookService {
     @Autowired
     private final BookDAO<Book> bookDAOImpl;
@@ -76,36 +77,22 @@ public class BookServiceImpl implements BookService {
     }
 
 
+
     @Override
     public Book bookTheBook(int bookId, int userId) {
         User user = userDAOImpl.getById(userId);
         Book book = bookDAOImpl.getById(bookId);
         book.setStatus(BOOKED);
         book.setUser(user);
+      //  List<Book> userBookList = user.getBook();
+//        userBookList.add(book);
+//        user.setBook(userBookList);
         String actionName = "The book " + book.getTitle() + " was reserved";
-        History history = new History();
-        history.setActionName(actionName);
-        history.setBook(book);
-
-       history.setUser(user);
-        List<History> bookHistoryList = book.getHistory();
-        bookHistoryList.add(history);
-        book.setHistory(bookHistoryList);
-        List<History> userHistoryList = user.getHistory();
-        userHistoryList.add(history);
-        user.setHistory(userHistoryList);
-
+        updateHistory(actionName, book, user);
         userDAOImpl.update(user);
         return bookDAOImpl.update(book);
     }
-
-    @Override
-    public Book giveTheBook(int bookId, int userId) {
-        User user = userDAOImpl.getById(userId);
-        Book book = bookDAOImpl.getById(bookId);
-        book.setStatus(TAKEN);
-        book.setUser(user);
-        String actionName = "The book " + book.getTitle() + " was taken";
+    private void updateHistory(String actionName, Book book, User user) {
         History history = new History();
         history.setActionName(actionName);
         history.setBook(book);
@@ -114,9 +101,22 @@ public class BookServiceImpl implements BookService {
         List<History> bookHistoryList = book.getHistory();
         bookHistoryList.add(history);
         book.setHistory(bookHistoryList);
+
         List<History> userHistoryList = user.getHistory();
         userHistoryList.add(history);
         user.setHistory(userHistoryList);
+    }
+    @Override
+    public Book giveTheBook(int bookId, int userId) {
+        User user = userDAOImpl.getById(userId);
+        Book book = bookDAOImpl.getById(bookId);
+        book.setStatus(TAKEN);
+        book.setUser(user);
+
+        String actionName = "The book " + book.getTitle() + " was taken";
+
+        updateHistory(actionName, book, user);
+
         userDAOImpl.update(user);
         return bookDAOImpl.update(book);
     }
@@ -125,23 +125,17 @@ public class BookServiceImpl implements BookService {
     public Book returnTheBook(int bookId) {
         Book book = bookDAOImpl.getById(bookId);
         User user = book.getUser();
+
         String actionName = "The book " + book.getTitle() + " was returned";
-        History history = new History();
-        history.setActionName(actionName);
-        history.setBook(book);
-        history.setUser(user);
-        List<History> bookHistoryList = book.getHistory();
-        bookHistoryList.add(history);
-        book.setHistory(bookHistoryList);
-        List<History> userHistoryList = user.getHistory();
-        userHistoryList.add(history);
-        user.setHistory(userHistoryList);
+
+        updateHistory(actionName, book, user);
+
         book.setStatus(AVAILABLE);
         book.setUser(null);
+
         userDAOImpl.update(user);
         return bookDAOImpl.update(book);
     }
-
     @Override
     public List<Book> findBooksByAnyCriteria(String criteria) {
         return bookDAOImpl.getBooksByAnyCriteria(criteria);
@@ -152,5 +146,7 @@ public class BookServiceImpl implements BookService {
         Category category = categoryDAOImpl.getById(categoryId);
         return category.getBooks();
     }
+
+
 
 }

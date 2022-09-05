@@ -2,8 +2,11 @@ package com.stefanini.librarybackend.controller;
 
 
 
+import com.stefanini.librarybackend.domain.Book;
+import com.stefanini.librarybackend.domain.History;
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
+import com.stefanini.librarybackend.service.BookService;
 import com.stefanini.librarybackend.service.impl.UserServiceImpl;
 
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,7 +23,7 @@ import java.util.List;
 public class UserController {
     private final UserServiceImpl userService;
 
-    public UserController(UserServiceImpl userService) {
+    public UserController(UserServiceImpl userService, BookService bookService) {
         this.userService = userService;
     }
 
@@ -37,19 +40,19 @@ public class UserController {
     }
 
     @PutMapping("/update/{id}")
-   // @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
     public User updateUser(@PathVariable int id, @RequestBody User user) {
         return userService.updateUser(id, user);
     }
 
     @PutMapping("/assignRole/{id}/{role}")
-  @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     public User assignRole(@PathVariable int id, @PathVariable Role role) {
         return userService.assignRole(id, role);
     }
 
     @DeleteMapping("/delete/{id}")
- //   @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
     public int deleteById(@PathVariable int id) {
         return  userService.deleteById(id);
     }
@@ -60,5 +63,16 @@ public class UserController {
         return userService.showAllUsers();
     }
 
+
+    @GetMapping("/usersBooks/{userId}")
+    @PreAuthorize("hasAnyAuthority('USER')")
+    public List<Book> getUserBooks(@PathVariable int userId){
+        return userService.getUserBooks(userId);
+    }
+    @GetMapping("/usersHistory/{userId}")
+    @PreAuthorize("hasAnyAuthority('USER')")
+    public List<History> getUserHistory(@PathVariable int userId){
+        return userService.getUserHistory(userId);
+    }
 }
 

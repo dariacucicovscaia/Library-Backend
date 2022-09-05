@@ -13,4 +13,6 @@ public interface CategoryService {
     List<Category> getAllCategories();
 
     Category addBookToCategory(int bookId, int id);
+
+    Category getCategoryById(int id);
 }

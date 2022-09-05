@@ -17,7 +17,8 @@ import java.util.List;
 @Table(name = "category")
 @Getter
 @Setter
-@NoArgsConstructor @JsonIdentityInfo(
+@NoArgsConstructor
+@JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
 public class Category implements Serializable {
@@ -27,9 +28,8 @@ public class Category implements Serializable {
     @Column(name = "id", nullable = false)
     private int id;
 
-    @Column(name = "title")
+    @Column(name = "title", unique = true)
     private String title;
-  //  @JsonBackReference(value="book-category")
     @ManyToMany(mappedBy = "categories")
     private List<Book> books = new ArrayList<>();
 

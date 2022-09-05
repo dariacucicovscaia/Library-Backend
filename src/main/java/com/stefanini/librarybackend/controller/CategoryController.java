@@ -1,6 +1,7 @@
 package com.stefanini.librarybackend.controller;
 
 import com.stefanini.librarybackend.domain.Category;
+import com.stefanini.librarybackend.domain.Profile;
 import com.stefanini.librarybackend.service.CategoryService;
 import com.stefanini.librarybackend.service.impl.CategoryServiceImpl;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,7 +24,11 @@ public class CategoryController {
     public Category createCategory(@RequestBody Category category) {
         return categoryService.addCategory(category);
     }
-
+    @GetMapping("/get/{id}")
+    @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
+    public Category getCategoryById(@PathVariable int id) {
+        return categoryService.getCategoryById(id);
+    }
     @PutMapping("/assignBook/{bookId}/{id}")
     @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
     public Category addBookToCategory(@PathVariable int bookId, @PathVariable int id) {
@@ -35,6 +40,7 @@ public class CategoryController {
     public int deleteCategory(@PathVariable int id) {
         return categoryService.deleteCategory(id);
     }
+
 
     @GetMapping("/categories")
     public List<Category> getAllCategories() {

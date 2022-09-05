@@ -10,6 +10,8 @@ import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stefanini.librarybackend.dao.UserDAO;
 import com.stefanini.librarybackend.dao.impl.UserDAOImpl;
+import com.stefanini.librarybackend.domain.Book;
+import com.stefanini.librarybackend.domain.History;
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
 import com.stefanini.librarybackend.service.UserService;
@@ -59,7 +61,13 @@ public class UserServiceImpl implements UserService {
         u.setEmail(user.getEmail());
         u.getProfile().setFirstName(user.getProfile().getFirstName());
         u.getProfile().setLastName(user.getProfile().getLastName());
-        u.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        if (user.getPassword() != null){
+            u.setPassword(passwordEncoder.encode(user.getPassword()));
+        }else{
+            u.setPassword(u.getPassword());
+        }
+
         return userDao.update(u);
     }
 
@@ -96,4 +104,13 @@ public class UserServiceImpl implements UserService {
         log.info("Role {} was assigned to user with id {}", role.name(), user.getId());
         return userDao.update(user);
     }
+    @Override
+    public List<History> getUserHistory(int userId) {
+        return userDao.getById(userId).getHistory();
+    }
+    @Override
+    public List<Book> getUserBooks(int userId) {
+        return  userDao.getById(userId).getBook();
+    }
+
 }

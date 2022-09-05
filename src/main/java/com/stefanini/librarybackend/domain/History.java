@@ -1,8 +1,6 @@
 package com.stefanini.librarybackend.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,11 +33,13 @@ public class History implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-   // @JsonBackReference(value="user-history")
+    @JsonView
+  //  @JsonBackReference(value="user-history")
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "book_id")
+    @JsonView
   //  @JsonBackReference(value="book-history")
     private Book book;
 

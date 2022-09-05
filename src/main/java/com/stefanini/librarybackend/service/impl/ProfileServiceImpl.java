@@ -55,4 +55,9 @@ public class ProfileServiceImpl implements ProfileService {
     public int deleteById(int id) {
         return profileDao.removeById(id);
     }
+
+    @Override
+    public Profile getProfileById(int id) {
+        return profileDao.getById(id);
+    }
 }

@@ -1,11 +1,7 @@
 package com.stefanini.librarybackend.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.*;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.stefanini.librarybackend.domain.enums.Role;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -23,9 +19,8 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor @JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+@NoArgsConstructor
+
 public class User implements Serializable {
 
     @Id
@@ -36,26 +31,21 @@ public class User implements Serializable {
     @Column(unique = true, name = "email")
     private String email;
 
-
-
     @Column(name = "password")
     private String password;
-
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-    @Transient
     @OneToMany(mappedBy = "user")
-   // @JsonBackReference (value="book-user")
-    private List<Book> book;
-
+   // @JsonManagedReference (value="book-user")
+    private List<Book> book = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    //@JsonManagedReference(value="user-history")
-    private List<History> history;
+ //   @JsonManagedReference(value="user-history")
+    private List<History> history = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL)
     private Profile profile;

@@ -2,6 +2,7 @@ package com.stefanini.librarybackend.service;
 
 import com.stefanini.librarybackend.dao.BookDAO;
 import com.stefanini.librarybackend.domain.Book;
+import com.stefanini.librarybackend.domain.History;
 
 import java.util.List;
 
@@ -16,7 +17,5 @@ public interface BookService {
     Book returnTheBook (int bookId);
     List<Book> findBooksByAnyCriteria(String criteria);
     List<Book> getBookByCategory(int categoryId);
-
-
 
 }

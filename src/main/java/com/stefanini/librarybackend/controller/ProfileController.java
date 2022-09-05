@@ -23,4 +23,10 @@ public class ProfileController {
     public Profile updateProfile(@PathVariable int id, @RequestBody Profile user) {
         return profileService.updateProfile(id, user);
     }
+
+    @GetMapping("/get/{id}")
+    @PreAuthorize("hasAnyAuthority('USER', 'LIBRARIAN', 'ADMIN')")
+    public Profile getProfile(@PathVariable int id) {
+        return profileService.getProfileById(id);
+    }
 }

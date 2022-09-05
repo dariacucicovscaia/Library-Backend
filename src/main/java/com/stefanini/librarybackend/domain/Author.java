@@ -41,7 +41,6 @@ public class Author implements Serializable {
     @Column(name = "biography")
     private String biography;
 
-   // @JsonBackReference(value="book-author")
     @ManyToMany(mappedBy = "authors", fetch = FetchType.EAGER)
     private List<Book> books = new ArrayList<>();
 

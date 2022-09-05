@@ -12,5 +12,5 @@ public interface ProfileService {
     Profile findByEmail(String email);
     int deleteByEmail(String email);
     int deleteById(int id);
-
+    public Profile getProfileById(int id);
 }
