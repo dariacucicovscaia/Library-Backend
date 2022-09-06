@@ -21,12 +21,12 @@ public class EmailSenderService {
     @Autowired
     private JavaMailSender mailSender;
 
-    public void sendMail(String to, String email) {
+    public void sendMail(String to, String email, String subject) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(from);
         message.setTo(to);
         message.setText(email);
-        message.setSubject("Confirm your email");
+        message.setSubject(subject);
 
 
         mailSender.send(message);

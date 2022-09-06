@@ -14,14 +14,16 @@ public class AuthResponseDto {
     private String access_token;
     private String refresh_token;
     private Set<Role> roles;
+    private String status;
 
 
-    public AuthResponseDto(int id, String email, String access_token, String refresh_token, Set<Role> roles) {
+    public AuthResponseDto(int id, String email, String access_token, String refresh_token, Set<Role> roles, String status) {
         this.id = id;
         this.email = email;
         this.access_token = access_token;
         this.refresh_token = refresh_token;
         this.roles = roles;
+        this.status = status;
     }
 
     public AuthResponseDto(String email, String token) {

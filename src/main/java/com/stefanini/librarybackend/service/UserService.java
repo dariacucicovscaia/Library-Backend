@@ -1,5 +1,7 @@
 package com.stefanini.librarybackend.service;
 
+import com.stefanini.librarybackend.domain.Book;
+import com.stefanini.librarybackend.domain.History;
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
 
@@ -17,4 +19,6 @@ public interface UserService {
     int deleteById(int id);
 
     User assignRole(int id, Role role);
+    List<History> getUserHistory(int userId);
+    List<Book> getUserBooks(int userId);
 }

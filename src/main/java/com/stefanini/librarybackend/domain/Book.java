@@ -1,6 +1,6 @@
 package com.stefanini.librarybackend.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import com.stefanini.librarybackend.domain.enums.BookStatus;
 import lombok.Getter;
@@ -20,6 +20,10 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id")
+//@JsonIdentityReference(alwaysAsId = true)
 public class Book implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,10 +48,10 @@ public class Book implements Serializable {
     private Date createdOn;
 
     @ManyToOne
-    @JsonManagedReference
     @JoinColumn(name = "user_id")
+    @JsonBackReference(value="book-user")
     private User user;
-    @JsonManagedReference
+
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "book_category", inverseJoinColumns = @JoinColumn(name = "category_id"), joinColumns = @JoinColumn(name = "book_id"))
     private List<Category> categories;
@@ -57,9 +61,7 @@ public class Book implements Serializable {
     private List<Author> authors = new ArrayList<>();
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
-
-    @JsonManagedReference
-
+    @JsonManagedReference(value="book-history")
     private List<History> history;
 
     public Book(int id, String title, String description, String shelfNumber, BookStatus status) {

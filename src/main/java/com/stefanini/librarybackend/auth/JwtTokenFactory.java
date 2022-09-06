@@ -22,7 +22,7 @@ public class JwtTokenFactory {
 
         String access_token = JWT.create()
                 .withSubject(appUser.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 1 * 60 * 1000))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 30 * 60 * 1000))
                 .withClaim("roles", appUser.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
 
@@ -30,7 +30,7 @@ public class JwtTokenFactory {
 
         String refresh_token = JWT.create()
                 .withSubject(appUser.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 2 * 60 * 1000))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 60 * 60 * 1000))
                 .sign(algorithm);
 
         log.info("refresh_token created");
@@ -43,6 +43,6 @@ public class JwtTokenFactory {
 
 
         User user = appUser.getUser();
-        return new AuthResponseDto(user.getId(), user.getEmail(), access_token, refresh_token, user.getRoles());
+        return new AuthResponseDto(user.getId(), user.getEmail(), access_token, refresh_token, user.getRoles(), user.getStatus());
     }
 }

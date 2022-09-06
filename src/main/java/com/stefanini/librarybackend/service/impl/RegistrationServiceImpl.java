@@ -74,7 +74,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         String link = "http://localhost:300/email-confirmation/" + token;
         emailSenderService.sendMail(
                 request.getEmail(),
-                "Activate your account by this link - " + link
+                "Activate your account by this link - " + link, "Email confirmation"
         );
 
     }
