@@ -41,8 +41,12 @@ public class UserServiceImpl implements UserService {
     public User updateUser(int id, User user) {
         User u = findById(id);
         u.setEmail(user.getEmail());
-        u.getProfile().setFirstName(user.getProfile().getFirstName());
-        u.getProfile().setLastName(user.getProfile().getLastName());
+
+        if(user.getProfile() != null ){
+            u.getProfile().setFirstName(user.getProfile().getFirstName());
+            u.getProfile().setLastName(user.getProfile().getLastName());
+        }
+
         u.setPassword(passwordEncoder.encode(user.getPassword()));
         return userDao.update(u);
     }
@@ -87,5 +91,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Book> getUserBooks(int userId) {
         return  userDao.getById(userId).getBook();
+    }
+
+    public List<User> findUserByAnyCriteria(String criteria) {
+        return userDao.getUsersByCriteria(criteria);
     }
 }

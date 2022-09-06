@@ -63,7 +63,9 @@ public class User implements Serializable {
     @Column(name = "last_update")
     private LocalDateTime lastUpdate;
 
+
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference(value="user-confirmationTokens")
     private List<ConfirmationToken> confirmationTokens;
 
 //    @Column(name = "isConfirmedByEmail")
