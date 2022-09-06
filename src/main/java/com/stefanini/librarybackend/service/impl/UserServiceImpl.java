@@ -93,7 +93,9 @@ public class UserServiceImpl implements UserService {
         return  userDao.getById(userId).getBook();
     }
 
+
     public List<User> findUserByAnyCriteria(String criteria) {
         return userDao.getUsersByCriteria(criteria);
     }
+
 }

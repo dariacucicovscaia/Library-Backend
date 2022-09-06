@@ -1,22 +1,17 @@
 package com.stefanini.librarybackend.controller;
 
-
 import com.stefanini.librarybackend.domain.Book;
 import com.stefanini.librarybackend.domain.History;
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
 import com.stefanini.librarybackend.email.EmailSenderService;
 import com.stefanini.librarybackend.service.impl.UserServiceImpl;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-
 import static com.stefanini.librarybackend.helper.PasswordGenerator.generateRandomPassword;
 
 
@@ -27,7 +22,9 @@ public class UserController {
     private final UserServiceImpl userService;
     private final EmailSenderService emailSenderService;
 
+
     public UserController(UserServiceImpl userService, EmailSenderService emailSenderService) {
+
         this.userService = userService;
         this.emailSenderService = emailSenderService;
     }
@@ -65,7 +62,7 @@ public class UserController {
     }
 
     @PutMapping("/update/{id}")
-  //@PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
+    //@PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
     public User updateUser(@PathVariable int id, @RequestBody User user) {
         return userService.updateUser(id, user);
     }
@@ -113,10 +110,12 @@ public class UserController {
     public List<History> getUserHistory(@PathVariable int userId) {
         return userService.getUserHistory(userId);
     }
+
     @GetMapping("/find_users_by_criteria/{criteria}")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public List<User> findBooksByCriteria(@PathVariable String criteria) {
         return userService.findUserByAnyCriteria(criteria);
     }
 }
+
 

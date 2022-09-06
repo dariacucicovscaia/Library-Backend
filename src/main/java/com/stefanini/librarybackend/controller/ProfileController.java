@@ -29,4 +29,6 @@ public class ProfileController {
     public Profile getProfile(@PathVariable int id) {
         return profileService.getProfileById(id);
     }
+
 }
+
