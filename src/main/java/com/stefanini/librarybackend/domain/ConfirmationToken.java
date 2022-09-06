@@ -2,14 +2,19 @@ package com.stefanini.librarybackend.domain;
 
 
 
+import com.stefanini.librarybackend.domain.enums.ConfirmationTokenStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import static com.stefanini.librarybackend.domain.enums.ConfirmationTokenStatus.*;
 
 @Entity
 @Table(name = "confirmation_token")
@@ -28,13 +33,20 @@ public class ConfirmationToken implements Serializable {
     private String token;
 
     @Column(name = "createdAt", nullable = false)
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
     @Column(name = "expiresAt", nullable = false)
+    @UpdateTimestamp
     private LocalDateTime expiresAt;
 
     @Column(name = "confirmedAt")
+    @UpdateTimestamp
     private LocalDateTime confirmedAt;
+
+    @Column(name = "status")
+    @Enumerated(value = EnumType.STRING)
+    private ConfirmationTokenStatus status;
 
     @ManyToOne
     @JoinColumn(
@@ -43,10 +55,22 @@ public class ConfirmationToken implements Serializable {
     )
     private User user;
 
-    public ConfirmationToken(String token, LocalDateTime createdAt, LocalDateTime expiresAt, User user) {
+    private ConfirmationToken(String token, LocalDateTime createdAt, LocalDateTime expiresAt,
+                             User user, ConfirmationTokenStatus status) {
         this.token = token;
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;
         this.user = user;
+        this.status = status;
+    }
+
+    public static ConfirmationToken createConfirmationToken(String token, User user) {
+        return new ConfirmationToken(
+                token,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusMinutes(15),
+                user,
+                PENDING_CONFIRMATION
+        );
     }
 }
