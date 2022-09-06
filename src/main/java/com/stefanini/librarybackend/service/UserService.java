@@ -22,5 +22,5 @@ public interface UserService {
     List<Book> getUserBooks(int userId);
 
     List<User> findUserByAnyCriteria(String criteria);
-
+    User changePassword(int id, String password);
 }

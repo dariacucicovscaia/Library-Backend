@@ -62,11 +62,15 @@ public class UserController {
     }
 
     @PutMapping("/update/{id}")
-    //@PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
     public User updateUser(@PathVariable int id, @RequestBody User user) {
         return userService.updateUser(id, user);
     }
 
+    @PutMapping("/forgotPassword/changePassword/{id}")
+    public User updatePassword(@PathVariable int id, @RequestBody User user) {
+        return userService.changePassword(id, user.getPassword());
+    }
     @PutMapping("/assignRole/{id}/{role}")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public User assignRole(@PathVariable int id, @PathVariable Role role) {
