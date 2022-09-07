@@ -36,11 +36,11 @@ public class User implements Serializable {
     @Column(name = "password")
     private String password;
 
-
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
+
 
 
     @OneToMany(mappedBy = "user")
@@ -51,6 +51,7 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user")
     @JsonManagedReference(value="user-history")
     private List<History> history;
+
 
     @OneToOne(cascade = CascadeType.ALL)
     private Profile profile;
@@ -63,7 +64,9 @@ public class User implements Serializable {
     @Column(name = "last_update")
     private LocalDateTime lastUpdate;
 
+
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference(value="user-confirmationTokens")
     private List<ConfirmationToken> confirmationTokens;
 
 //    @Column(name = "isConfirmedByEmail")

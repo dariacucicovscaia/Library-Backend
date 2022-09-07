@@ -1,6 +1,7 @@
 package com.stefanini.librarybackend.controller;
 
 import com.stefanini.librarybackend.domain.Book;
+import com.stefanini.librarybackend.domain.History;
 import com.stefanini.librarybackend.service.AuthorService;
 import com.stefanini.librarybackend.service.BookService;
 import com.stefanini.librarybackend.service.impl.BookServiceImpl;
@@ -41,6 +42,7 @@ public class BookController {
     public List<Book> getAllBooks() {
         return bookService.showAllBooks();
     }
+
     @PutMapping("/bookTheBook/{bookId}/{userId}")
    @PreAuthorize("hasAnyAuthority('USER','LIBRARIAN', 'ADMIN')")
     public Book bookTheBook (@PathVariable int bookId, @PathVariable int userId) {
@@ -70,4 +72,8 @@ public class BookController {
     public List<Book> getBooksByCategory(@PathVariable int categoryId){
         return bookService.getBookByCategory(categoryId);
     }
+
+
+
+
 }

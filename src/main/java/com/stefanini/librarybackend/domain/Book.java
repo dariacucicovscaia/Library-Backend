@@ -33,7 +33,7 @@ public class Book implements Serializable {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "bookDescription")
+    @Column(name = "description")
     private String description;
 
     @Column(name = "shelfNumber")
@@ -52,13 +52,15 @@ public class Book implements Serializable {
     @JsonBackReference(value="book-user")
     private User user;
 
+
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "book_category", inverseJoinColumns = @JoinColumn(name = "category_id"), joinColumns = @JoinColumn(name = "book_id"))
-    private List<Category> categories;
+    private List<Category> categories = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "book_author", inverseJoinColumns = @JoinColumn(name = "author_id"), joinColumns = @JoinColumn(name = "book_id"))
     private List<Author> authors = new ArrayList<>();
+
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     @JsonManagedReference(value="book-history")

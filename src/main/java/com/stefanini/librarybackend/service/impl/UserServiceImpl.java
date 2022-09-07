@@ -41,11 +41,26 @@ public class UserServiceImpl implements UserService {
     public User updateUser(int id, User user) {
         User u = findById(id);
         u.setEmail(user.getEmail());
+
         u.getProfile().setFirstName(user.getProfile().getFirstName());
         u.getProfile().setLastName(user.getProfile().getLastName());
-        u.setPassword(passwordEncoder.encode(user.getPassword()));
+        u.getProfile().setPhoneNumber(user.getProfile().getPhoneNumber());
+
+        if (user.getPassword() != null) {
+            u.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
         return userDao.update(u);
     }
+
+    @Override
+    public User changePassword(int id, String password) {
+        User u = findById(id);
+        u.setStatus(null);
+        u.setPassword(passwordEncoder.encode(password));
+        return userDao.update(u);
+    }
+
 
     @Override
     public List<User> showAllUsers() {
@@ -80,12 +95,22 @@ public class UserServiceImpl implements UserService {
         log.info("Role {} was assigned to user with id {}", role.name(), user.getId());
         return userDao.update(user);
     }
+
     @Override
     public List<History> getUserHistory(int userId) {
         return userDao.getById(userId).getHistory();
     }
+
+
     @Override
     public List<Book> getUserBooks(int userId) {
-        return  userDao.getById(userId).getBook();
+        return userDao.getById(userId).getBook();
     }
+
+
+    public List<User> findUserByAnyCriteria(String criteria) {
+        return userDao.getUsersByCriteria(criteria);
+    }
+
+
 }

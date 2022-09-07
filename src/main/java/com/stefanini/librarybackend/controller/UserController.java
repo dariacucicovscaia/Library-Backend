@@ -1,18 +1,18 @@
 package com.stefanini.librarybackend.controller;
 
-
 import com.stefanini.librarybackend.domain.Book;
 import com.stefanini.librarybackend.domain.History;
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
+import com.stefanini.librarybackend.dto.LoginRequestDto;
 import com.stefanini.librarybackend.email.EmailSenderService;
 import com.stefanini.librarybackend.service.impl.UserServiceImpl;
-
+import com.stefanini.librarybackend.service.impl.exception.InvalidEmailOrPasswordException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,10 +21,12 @@ import static com.stefanini.librarybackend.helper.PasswordGenerator.generateRand
 
 
 @RestController
+@Slf4j
 @RequestMapping(value = "/api/user")
 public class UserController {
     private final UserServiceImpl userService;
     private final EmailSenderService emailSenderService;
+
     public UserController(UserServiceImpl userService, EmailSenderService emailSenderService) {
         this.userService = userService;
         this.emailSenderService = emailSenderService;
@@ -37,13 +39,34 @@ public class UserController {
         String password = generateRandomPassword();
         user.setPassword(password);
         user.setStatus("new user");
+
         String email = "Hello, " + user.getProfile().getFirstName() +" " + user.getProfile().getLastName() + "!"
                 + " Here is your password for Stefanini Library Aplication " + password
                 + " To use the aplication please visit http://localhost:3000/";
         String subject = "Registration info";
                 emailSenderService.sendMail(user.getEmail(), email, subject);
+
         return userService.createUser(user);
     }
+
+    @GetMapping(value = "/forgotPassword/{email}")
+    public ResponseEntity<?> forgotPassword(@PathVariable String email) {
+        User user = userService.findByEmail(email);
+        if (user != null) {
+            String message = "Hello, please access the link to update your password " + "http://localhost:3000/resetPassword/"
+                    + user.getId() + "/" + user.getEmail();
+            String subject = "Forgot password";
+            log.info(message);
+            emailSenderService.sendMail(user.getEmail(), message, subject);
+
+            return ResponseEntity
+                    .status(HttpStatus.ACCEPTED)
+                    .body(user);
+        } else return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .body("Invalid email");
+    }
+
 
     @GetMapping("/find/{id}")
     public User findById(@PathVariable int id) {
@@ -56,9 +79,13 @@ public class UserController {
         return userService.updateUser(id, user);
     }
 
+    @PutMapping("/forgotPassword/changePassword/{id}")
+    public User updatePassword(@PathVariable int id, @RequestBody User user) {
+        return userService.changePassword(id, user.getPassword());
+    }
+
     @PutMapping("/assignRole/{id}/{role}")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-
     public User assignRole(@PathVariable int id, @PathVariable Role role) {
         return userService.assignRole(id, role);
     }
@@ -87,16 +114,27 @@ public class UserController {
         } else return ResponseEntity
                 .status(HttpStatus.FORBIDDEN)
                 .body("Invalid email");
+
     }
+
     @GetMapping("/usersBooks/{userId}")
     @PreAuthorize("hasAnyAuthority('USER')")
-    public List<Book> getUserBooks(@PathVariable int userId){
+    public List<Book> getUserBooks(@PathVariable int userId) {
         return userService.getUserBooks(userId);
     }
+
     @GetMapping("/usersHistory/{userId}")
     @PreAuthorize("hasAnyAuthority('USER')")
-    public List<History> getUserHistory(@PathVariable int userId){
+    public List<History> getUserHistory(@PathVariable int userId) {
         return userService.getUserHistory(userId);
     }
+
+    @GetMapping("/find_users_by_criteria/{criteria}")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public List<User> findBooksByCriteria(@PathVariable String criteria) {
+        return userService.findUserByAnyCriteria(criteria);
+    }
+
 }
+
 
