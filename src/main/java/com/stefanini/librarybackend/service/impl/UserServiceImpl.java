@@ -1,7 +1,4 @@
 package com.stefanini.librarybackend.service.impl;
-
-
-import com.stefanini.librarybackend.auth.JwtTokenFactory;
 import com.stefanini.librarybackend.dao.UserDAO;
 import com.stefanini.librarybackend.dao.impl.UserDAOImpl;
 import com.stefanini.librarybackend.domain.Book;

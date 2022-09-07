@@ -20,6 +20,9 @@ import java.util.Set;
 @Setter
 @ToString
 @NoArgsConstructor
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id")
 public class User implements Serializable {
 
     @Id

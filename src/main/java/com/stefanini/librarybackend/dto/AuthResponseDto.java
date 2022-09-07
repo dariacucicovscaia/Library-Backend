@@ -24,6 +24,7 @@ public class AuthResponseDto {
         this.refresh_token = refresh_token;
         this.roles = roles;
         this.hasTemporaryPassword = hasTemporaryPassword;
+
     }
 
     public AuthResponseDto(String email, String token) {
