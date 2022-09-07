@@ -20,9 +20,6 @@ import java.util.Set;
 @Setter
 @ToString
 @NoArgsConstructor
-//@JsonIdentityInfo(
-//        generator = ObjectIdGenerators.PropertyGenerator.class,
-//        property = "id")
 public class User implements Serializable {
 
     @Id
@@ -69,8 +66,8 @@ public class User implements Serializable {
 //    @Column(name = "isConfirmedByEmail")
 //    private boolean isConfirmedByEmail;
 
-    @Column(name = "status")
-   private String status;
+    @Column(name = "hasTemporaryPassword", columnDefinition = "boolean default false")
+    private boolean hasTemporaryPassword;
 
     public User(int id, String email, String password) {
         setId(id);

@@ -4,9 +4,8 @@ import com.stefanini.librarybackend.domain.Book;
 import com.stefanini.librarybackend.domain.History;
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
+import com.stefanini.librarybackend.dto.AuthResponseDto;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public interface UserService {
@@ -21,4 +20,5 @@ public interface UserService {
     User assignRole(int id, Role role);
     List<History> getUserHistory(int userId);
     List<Book> getUserBooks(int userId);
+    User changePassword(int id, String password);
 }

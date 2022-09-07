@@ -22,7 +22,7 @@ public class JwtTokenFactory {
 
         String access_token = JWT.create()
                 .withSubject(appUser.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 30 * 60 * 1000))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 1 * 60 * 1000))
                 .withClaim("roles", appUser.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
 
@@ -43,6 +43,6 @@ public class JwtTokenFactory {
 
 
         User user = appUser.getUser();
-        return new AuthResponseDto(user.getId(), user.getEmail(), access_token, refresh_token, user.getRoles(), user.getStatus());
+        return new AuthResponseDto(user.getId(), user.getEmail(), access_token, refresh_token, user.getRoles(), user.isHasTemporaryPassword());
     }
 }

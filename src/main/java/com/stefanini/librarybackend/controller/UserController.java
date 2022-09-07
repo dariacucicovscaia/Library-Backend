@@ -5,6 +5,7 @@ import com.stefanini.librarybackend.domain.Book;
 import com.stefanini.librarybackend.domain.History;
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
+import com.stefanini.librarybackend.dto.AuthResponseDto;
 import com.stefanini.librarybackend.email.EmailSenderService;
 import com.stefanini.librarybackend.service.impl.UserServiceImpl;
 
@@ -36,7 +37,7 @@ public class UserController {
     public User addUser(@RequestBody User user) {
         String password = generateRandomPassword();
         user.setPassword(password);
-        user.setStatus("new user");
+        user.setHasTemporaryPassword(true);
         String email = "Hello, " + user.getProfile().getFirstName() +" " + user.getProfile().getLastName() + "!"
                 + " Here is your password for Stefanini Library Aplication " + password
                 + " To use the aplication please visit http://localhost:3000/";
@@ -98,5 +99,12 @@ public class UserController {
     public List<History> getUserHistory(@PathVariable int userId){
         return userService.getUserHistory(userId);
     }
-}
+
+    @PutMapping("/change-password/{id}")
+    @PreAuthorize("hasAnyAuthority('USER')")
+    public User updateUserPassword(@PathVariable int id, @RequestBody User user) {
+        return userService.changePassword(id, user.getPassword());
+        }
+    }
+
 
