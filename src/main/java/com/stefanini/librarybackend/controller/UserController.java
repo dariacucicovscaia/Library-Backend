@@ -4,8 +4,6 @@ import com.stefanini.librarybackend.domain.Book;
 import com.stefanini.librarybackend.domain.History;
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
-import com.stefanini.librarybackend.dto.AuthResponseDto;
-import com.stefanini.librarybackend.dto.LoginRequestDto;
 import com.stefanini.librarybackend.email.EmailSenderService;
 import com.stefanini.librarybackend.service.impl.UserServiceImpl;
 import com.stefanini.librarybackend.service.impl.exception.InvalidEmailOrPasswordException;
@@ -134,7 +132,7 @@ public class UserController {
     public User updateUserPassword(@PathVariable int id, @RequestBody User user) {
         return userService.changePassword(id, user.getPassword());
         }
-    }
+
 
     @GetMapping("/find_users_by_criteria/{criteria}")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
