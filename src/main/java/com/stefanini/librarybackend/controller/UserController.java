@@ -10,6 +10,7 @@ import com.stefanini.librarybackend.service.impl.UserServiceImpl;
 import com.stefanini.librarybackend.service.impl.exception.InvalidEmailOrPasswordException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -26,9 +27,7 @@ public class UserController {
     private final UserServiceImpl userService;
     private final EmailSenderService emailSenderService;
 
-
     public UserController(UserServiceImpl userService, EmailSenderService emailSenderService) {
-
         this.userService = userService;
         this.emailSenderService = emailSenderService;
     }
@@ -40,11 +39,13 @@ public class UserController {
         String password = generateRandomPassword();
         user.setPassword(password);
         user.setStatus("new user");
-        String email = "Hello, " + user.getProfile().getFirstName() + " " + user.getProfile().getLastName() + "!"
+
+        String email = "Hello, " + user.getProfile().getFirstName() +" " + user.getProfile().getLastName() + "!"
                 + " Here is your password for Stefanini Library Aplication " + password
                 + " To use the aplication please visit http://localhost:3000/";
         String subject = "Registration info";
-        emailSenderService.sendMail(user.getEmail(), email, subject);
+                emailSenderService.sendMail(user.getEmail(), email, subject);
+
         return userService.createUser(user);
     }
 
@@ -113,6 +114,7 @@ public class UserController {
         } else return ResponseEntity
                 .status(HttpStatus.FORBIDDEN)
                 .body("Invalid email");
+
     }
 
     @GetMapping("/usersBooks/{userId}")
@@ -132,6 +134,7 @@ public class UserController {
     public List<User> findBooksByCriteria(@PathVariable String criteria) {
         return userService.findUserByAnyCriteria(criteria);
     }
+
 }
 
 

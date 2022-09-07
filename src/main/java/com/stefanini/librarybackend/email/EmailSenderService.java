@@ -22,12 +22,6 @@ public class EmailSenderService {
     private JavaMailSender mailSender;
 
     public void sendMail(String to, String email, String subject) {
-        log.info("");
-        log.info(from);
-        log.info(to);
-        log.info(email);
-        log.info(subject);
-
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(from);
         message.setTo(to);

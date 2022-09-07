@@ -101,6 +101,7 @@ public class UserServiceImpl implements UserService {
         return userDao.getById(userId).getHistory();
     }
 
+
     @Override
     public List<Book> getUserBooks(int userId) {
         return userDao.getById(userId).getBook();
@@ -110,5 +111,6 @@ public class UserServiceImpl implements UserService {
     public List<User> findUserByAnyCriteria(String criteria) {
         return userDao.getUsersByCriteria(criteria);
     }
+
 
 }
