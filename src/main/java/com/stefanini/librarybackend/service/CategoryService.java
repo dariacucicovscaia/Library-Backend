@@ -43,4 +43,6 @@ public interface CategoryService {
      * @return category with assigned book
      */
     Category addBookToCategory(int bookId, int id);
+
+    Category getCategoryById(int id);
 }

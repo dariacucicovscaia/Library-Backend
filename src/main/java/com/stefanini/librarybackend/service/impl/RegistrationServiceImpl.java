@@ -70,8 +70,8 @@ public class RegistrationServiceImpl implements RegistrationService {
         String link = "http://localhost:3000/email-confirmation/" + token;
         emailSenderService.sendMail(
                 request.getEmail(),
-                "Activate your account by this link - " + link
+                "Activate your account by this link - " + link,
+                "Confirm your email"
         );
-
     }
 }

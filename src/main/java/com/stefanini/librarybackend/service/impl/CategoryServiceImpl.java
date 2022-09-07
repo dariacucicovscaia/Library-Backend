@@ -49,4 +49,9 @@ public class CategoryServiceImpl implements CategoryService {
         log.info("Book {} was added to Category {}", book.getTitle(), category.getTitle());
         return categoryDAO.update(category);
     }
+
+    @Override
+    public Category getCategoryById(int id) {
+        return categoryDAO.getById(id);
+    }
 }

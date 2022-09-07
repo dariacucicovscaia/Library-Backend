@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
 import static com.stefanini.librarybackend.domain.enums.ConfirmationTokenStatus.*;
-
 @Slf4j
 @Service
 public class EmailConfirmationTokenServiceImpl implements EmailConfirmationTokenService {

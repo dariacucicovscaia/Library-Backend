@@ -1,8 +1,6 @@
 package com.stefanini.librarybackend.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import com.stefanini.librarybackend.domain.enums.Role;
 import lombok.*;
@@ -22,6 +20,9 @@ import java.util.Set;
 @Setter
 @ToString
 @NoArgsConstructor
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id")
 public class User implements Serializable {
 
     @Id
@@ -35,22 +36,22 @@ public class User implements Serializable {
     @Column(name = "password")
     private String password;
 
-
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
 
+
     @OneToMany(mappedBy = "user")
-    @JsonBackReference
+    @JsonManagedReference(value="book-user")
     private List<Book> book;
 
 
     @OneToMany(mappedBy = "user")
-    @JsonManagedReference
-
+    @JsonManagedReference(value="user-history")
     private List<History> history;
+
 
     @OneToOne(cascade = CascadeType.ALL)
     private Profile profile;
@@ -67,8 +68,11 @@ public class User implements Serializable {
     @JsonManagedReference(value="user-confirmationTokens")
     private List<ConfirmationToken> confirmationTokens;
 
-    @Column(name = "isConfirmedByEmail")
-    private boolean isConfirmedByEmail = false;
+    @Column(name = "isConfirmedByEmail", columnDefinition = "boolean default false")
+    private boolean isConfirmedByEmail;
+
+    @Column(name = "hasTemporaryPassword", columnDefinition = "boolean default false")
+    private boolean hasTemporaryPassword;
 
     public User(int id, String email, String password) {
         setId(id);

@@ -1,47 +1,35 @@
 package com.stefanini.librarybackend.service.impl;
-
-
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.DecodedJWT;
-import com.fasterxml.jackson.core.exc.StreamWriteException;
-import com.fasterxml.jackson.databind.DatabindException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stefanini.librarybackend.dao.UserDAO;
 import com.stefanini.librarybackend.dao.impl.UserDAOImpl;
+import com.stefanini.librarybackend.domain.Book;
+import com.stefanini.librarybackend.domain.History;
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
+import com.stefanini.librarybackend.dto.AuthResponseDto;
 import com.stefanini.librarybackend.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
-import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static java.util.Arrays.stream;
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
-import static org.springframework.http.HttpStatus.FORBIDDEN;
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Service
 @Slf4j
 public class UserServiceImpl implements UserService {
     private final UserDAO<User> userDao;
     private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
 
-    public UserServiceImpl(UserDAOImpl userDao, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserDAOImpl userDao, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
     }
 
     @Override
@@ -57,9 +45,15 @@ public class UserServiceImpl implements UserService {
     public User updateUser(int id, User user) {
         User u = findById(id);
         u.setEmail(user.getEmail());
+
         u.getProfile().setFirstName(user.getProfile().getFirstName());
         u.getProfile().setLastName(user.getProfile().getLastName());
-        u.setPassword(passwordEncoder.encode(user.getPassword()));
+        u.getProfile().setPhoneNumber(user.getProfile().getPhoneNumber());
+
+        if (user.getPassword() != null) {
+            u.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
         return userDao.update(u);
     }
 
@@ -96,4 +90,28 @@ public class UserServiceImpl implements UserService {
         log.info("Role {} was assigned to user with id {}", role.name(), user.getId());
         return userDao.update(user);
     }
+
+    @Override
+    public List<History> getUserHistory(int userId) {
+        return userDao.getById(userId).getHistory();
+    }
+
+
+    @Override
+    public List<Book> getUserBooks(int userId) {
+        return userDao.getById(userId).getBook();
+    }
+    @Override
+    public User changePassword(int id, String password) {
+        User u = findById(id);
+        u.setHasTemporaryPassword(false);
+        u.setPassword(passwordEncoder.encode(password));
+        return userDao.update(u);
+    }
+
+
+    public List<User> findUserByAnyCriteria(String criteria) {
+        return userDao.getUsersByCriteria(criteria);
+    }
+
 }
