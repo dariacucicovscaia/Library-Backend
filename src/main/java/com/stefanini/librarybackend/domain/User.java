@@ -64,10 +64,11 @@ public class User implements Serializable {
     private LocalDateTime lastUpdate;
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference(value="user-confirmationTokens")
     private List<ConfirmationToken> confirmationTokens;
 
     @Column(name = "isConfirmedByEmail")
-    private boolean isConfirmedByEmail;
+    private boolean isConfirmedByEmail = false;
 
     public User(int id, String email, String password) {
         setId(id);

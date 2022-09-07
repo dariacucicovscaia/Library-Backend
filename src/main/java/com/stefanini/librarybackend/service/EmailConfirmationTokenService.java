@@ -1,6 +1,7 @@
 package com.stefanini.librarybackend.service;
 
 import com.stefanini.librarybackend.domain.ConfirmationToken;
+import com.stefanini.librarybackend.domain.enums.ConfirmationTokenStatus;
 import com.stefanini.librarybackend.dto.RegistrationRequestDto;
 import com.stefanini.librarybackend.service.impl.exception.InvalidTokenException;
 import org.springframework.http.ResponseEntity;
@@ -21,5 +22,5 @@ public interface EmailConfirmationTokenService {
      */
     void saveConfirmationToken(ConfirmationToken confirmationToken);
 
-    ResponseEntity<?> confirmToken(String token) throws InvalidTokenException;
+    ConfirmationTokenStatus confirmToken(String token) throws InvalidTokenException;
 }

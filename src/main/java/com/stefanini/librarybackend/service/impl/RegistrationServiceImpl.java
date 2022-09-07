@@ -55,6 +55,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         User newUser = new User(request.getEmail(), encodedPassword,
                 new Profile(request.getFirstName(), request.getLastName(), request.getPhoneNumber()));
         newUser.setRoles(new HashSet<>(Arrays.asList(Role.USER)));
+        newUser.setConfirmedByEmail(false);
 
         userDAO.create(newUser);
 
@@ -64,9 +65,9 @@ public class RegistrationServiceImpl implements RegistrationService {
         ConfirmationToken confirmationToken = ConfirmationToken.createConfirmationToken(token, newUser);
 
         emailConfirmationTokenDAO.create(confirmationToken);
-        log.info("Email confirmation token created");
+        log.info("Email confirmation token saved in database");
 
-        String link = "http://localhost:300/email-confirmation/" + token;
+        String link = "http://localhost:3000/email-confirmation/" + token;
         emailSenderService.sendMail(
                 request.getEmail(),
                 "Activate your account by this link - " + link

@@ -31,13 +31,13 @@ public class EmailConfirmationTokenServiceImpl implements EmailConfirmationToken
     }
 
     @Override
-    public ResponseEntity<?> confirmToken(String token) throws InvalidTokenException {
+    public ConfirmationTokenStatus confirmToken(String token) throws InvalidTokenException {
         ConfirmationToken confirmationToken = emailConfirmationTokenDAO.findByToken(token);
         verifyToken(confirmationToken);
         confirmationToken.setConfirmedAt(LocalDateTime.now());
         confirmationToken.setStatus(CONFIRMED);
         confirmationToken.getUser().setConfirmedByEmail(true);
-        return null;
+        return confirmationToken.getStatus();
     }
 
     private void verifyToken(ConfirmationToken confirmationToken) throws InvalidTokenException {
@@ -51,7 +51,7 @@ public class EmailConfirmationTokenServiceImpl implements EmailConfirmationToken
             throw new InvalidTokenException("Token is already confirmed");
         }
 
-        if (confirmationToken.getExpiresAt() != null) {
+        if (confirmationToken.getExpiresAt().isAfter(LocalDateTime.now())) {
             log.error("Token is expired");
             confirmationToken.setStatus(EXPIRED);
             throw new InvalidTokenException("Token is expired");
