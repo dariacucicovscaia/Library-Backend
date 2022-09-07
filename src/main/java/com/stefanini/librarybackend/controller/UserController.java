@@ -4,14 +4,18 @@ import com.stefanini.librarybackend.domain.Book;
 import com.stefanini.librarybackend.domain.History;
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
+import com.stefanini.librarybackend.dto.LoginRequestDto;
 import com.stefanini.librarybackend.email.EmailSenderService;
 import com.stefanini.librarybackend.service.impl.UserServiceImpl;
+import com.stefanini.librarybackend.service.impl.exception.InvalidEmailOrPasswordException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
+
 import static com.stefanini.librarybackend.helper.PasswordGenerator.generateRandomPassword;
 
 
@@ -44,8 +48,8 @@ public class UserController {
         return userService.createUser(user);
     }
 
-    @PutMapping(value = "/forgotPassword/{email}")
-    public void forgotPassword(@PathVariable String email) {
+    @GetMapping(value = "/forgotPassword/{email}")
+    public ResponseEntity<?> forgotPassword(@PathVariable String email) {
         User user = userService.findByEmail(email);
         if (user != null) {
             String message = "Hello, please access the link to update your password " + "http://localhost:3000/resetPassword/"
@@ -53,8 +57,15 @@ public class UserController {
             String subject = "Forgot password";
             log.info(message);
             emailSenderService.sendMail(user.getEmail(), message, subject);
-        }
+
+            return ResponseEntity
+                    .status(HttpStatus.ACCEPTED)
+                    .body(user);
+        } else return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .body("Invalid email");
     }
+
 
     @GetMapping("/find/{id}")
     public User findById(@PathVariable int id) {
@@ -71,6 +82,7 @@ public class UserController {
     public User updatePassword(@PathVariable int id, @RequestBody User user) {
         return userService.changePassword(id, user.getPassword());
     }
+
     @PutMapping("/assignRole/{id}/{role}")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public User assignRole(@PathVariable int id, @PathVariable Role role) {

@@ -44,8 +44,12 @@ public class UserServiceImpl implements UserService {
 
         u.getProfile().setFirstName(user.getProfile().getFirstName());
         u.getProfile().setLastName(user.getProfile().getLastName());
+        u.getProfile().setPhoneNumber(user.getProfile().getPhoneNumber());
 
-        u.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (user.getPassword() != null) {
+            u.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
         return userDao.update(u);
     }
 
