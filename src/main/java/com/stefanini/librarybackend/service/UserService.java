@@ -16,9 +16,10 @@ public interface UserService {
     User findByEmail(String email);
     int deleteByEmail(String email);
     int deleteById(int id);
-
     User assignRole(int id, Role role);
     List<History> getUserHistory(int userId);
     List<Book> getUserBooks(int userId);
+    List<User> findUserByAnyCriteria(String criteria);
     User changePassword(int id, String password);
+
 }

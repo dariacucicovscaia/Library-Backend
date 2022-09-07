@@ -1,11 +1,13 @@
 package com.stefanini.librarybackend.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,6 +18,9 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Category implements Serializable {
 
     @Id
@@ -23,8 +28,9 @@ public class Category implements Serializable {
     @Column(name = "id", nullable = false)
     private int id;
 
-    @Column(name = "title")
+    @Column(name = "title", unique = true)
     private String title;
+
     @JsonBackReference
     @ManyToMany(mappedBy = "categories")
     private List<Book> books = new ArrayList<>();
