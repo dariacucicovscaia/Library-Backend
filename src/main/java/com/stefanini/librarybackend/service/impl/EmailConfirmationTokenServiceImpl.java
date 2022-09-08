@@ -3,17 +3,17 @@ package com.stefanini.librarybackend.service.impl;
 import com.stefanini.librarybackend.dao.EmailConfirmationTokenDAO;
 import com.stefanini.librarybackend.dao.impl.EmailConfirmationTokenDAOImpl;
 import com.stefanini.librarybackend.domain.ConfirmationToken;
-import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.ConfirmationTokenStatus;
 import com.stefanini.librarybackend.service.EmailConfirmationTokenService;
 import com.stefanini.librarybackend.service.impl.exception.InvalidTokenException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
-import static com.stefanini.librarybackend.domain.enums.ConfirmationTokenStatus.*;
+import static com.stefanini.librarybackend.domain.enums.ConfirmationTokenStatus.CONFIRMED;
+import static com.stefanini.librarybackend.domain.enums.ConfirmationTokenStatus.EXPIRED;
+
 @Slf4j
 @Service
 public class EmailConfirmationTokenServiceImpl implements EmailConfirmationTokenService {

@@ -1,8 +1,6 @@
 package com.stefanini.librarybackend.dto;
 
 import com.stefanini.librarybackend.domain.enums.Role;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 
 import java.util.Set;

@@ -16,7 +16,7 @@ public class EmailConfirmationTokenDAOImpl extends DAOAbstractImpl<ConfirmationT
     @Override
     public ConfirmationToken findByToken(String token) {
         TypedQuery query = entityManager.createQuery(
-                "select a from ConfirmationToken a where a.token = ?1",ConfirmationToken.class
+                "select a from ConfirmationToken a where a.token = ?1", ConfirmationToken.class
         );
         query.setParameter(1, token);
         if (query.getResultList().isEmpty()) {

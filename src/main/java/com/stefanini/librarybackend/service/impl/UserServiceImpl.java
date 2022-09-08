@@ -1,23 +1,21 @@
 package com.stefanini.librarybackend.service.impl;
+
 import com.stefanini.librarybackend.dao.UserDAO;
 import com.stefanini.librarybackend.dao.impl.UserDAOImpl;
 import com.stefanini.librarybackend.domain.Book;
 import com.stefanini.librarybackend.domain.History;
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
-import com.stefanini.librarybackend.dto.AuthResponseDto;
 import com.stefanini.librarybackend.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.*;
-
-import static java.util.Arrays.stream;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -101,6 +99,7 @@ public class UserServiceImpl implements UserService {
     public List<Book> getUserBooks(int userId) {
         return userDao.getById(userId).getBook();
     }
+
     @Override
     public User changePassword(int id, String password) {
         User u = findById(id);

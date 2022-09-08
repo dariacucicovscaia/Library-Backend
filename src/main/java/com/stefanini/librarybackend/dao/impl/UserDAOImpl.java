@@ -1,7 +1,6 @@
 package com.stefanini.librarybackend.dao.impl;
 
 import com.stefanini.librarybackend.dao.UserDAO;
-import com.stefanini.librarybackend.domain.Book;
 import com.stefanini.librarybackend.domain.User;
 import org.springframework.stereotype.Repository;
 
@@ -29,8 +28,8 @@ public class UserDAOImpl extends DAOAbstractImpl<User> implements UserDAO<User> 
 
     @Override
     public List<User> getUsersByCriteria(String criteria) {
-        return entityManager.createQuery("from User" +  " WHERE  LCASE(email) LIKE '%" + criteria.toLowerCase() +
-                "" + "%'" ).getResultList();
+        return entityManager.createQuery("from User" + " WHERE  LCASE(email) LIKE '%" + criteria.toLowerCase() +
+                "" + "%'").getResultList();
     }
 
 

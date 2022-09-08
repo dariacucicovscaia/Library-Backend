@@ -1,7 +1,6 @@
 package com.stefanini.librarybackend.domain;
 
 
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.stefanini.librarybackend.domain.enums.ConfirmationTokenStatus;
 import lombok.AllArgsConstructor;
@@ -54,11 +53,11 @@ public class ConfirmationToken implements Serializable {
             nullable = false,
             name = "user_id"
     )
-    @JsonBackReference(value="user-confirmationTokens")
+    @JsonBackReference(value = "user-confirmationTokens")
     private User user;
 
     private ConfirmationToken(String token, LocalDateTime createdAt, LocalDateTime expiresAt,
-                             User user, ConfirmationTokenStatus status) {
+                              User user, ConfirmationTokenStatus status) {
         this.token = token;
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;

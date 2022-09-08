@@ -62,13 +62,13 @@ public class AppUserServiceImpl implements UserDetailsService {
     }
 
     private User returnsUserIfExists(String email) {
-            User user = userDAO.findUserByEmail(email);
-            if (user == null) {
-                log.error("User with such email not found");
-                throw new InvalidEmailOrPasswordException();
-            } else {
-                log.info("User with such email found: {}", email);
-                return user;
-            }
+        User user = userDAO.findUserByEmail(email);
+        if (user == null) {
+            log.error("User with such email not found");
+            throw new InvalidEmailOrPasswordException();
+        } else {
+            log.info("User with such email found: {}", email);
+            return user;
+        }
     }
 }

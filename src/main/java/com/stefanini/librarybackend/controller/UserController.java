@@ -6,10 +6,8 @@ import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
 import com.stefanini.librarybackend.email.EmailSenderService;
 import com.stefanini.librarybackend.service.impl.UserServiceImpl;
-import com.stefanini.librarybackend.service.impl.exception.InvalidEmailOrPasswordException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -38,11 +36,11 @@ public class UserController {
         String password = generateRandomPassword();
         user.setPassword(password);
         user.setHasTemporaryPassword(true);
-        String email = "Hello, " + user.getProfile().getFirstName() +" " + user.getProfile().getLastName() + "!"
+        String email = "Hello, " + user.getProfile().getFirstName() + " " + user.getProfile().getLastName() + "!"
                 + " Here is your password for Stefanini Library Aplication " + password
                 + " To use the aplication please visit http://localhost:3000/";
         String subject = "Registration info";
-                emailSenderService.sendMail(user.getEmail(), email, subject);
+        emailSenderService.sendMail(user.getEmail(), email, subject);
 
         return userService.createUser(user);
     }
@@ -131,7 +129,7 @@ public class UserController {
     @PreAuthorize("hasAnyAuthority('USER')")
     public User updateUserPassword(@PathVariable int id, @RequestBody User user) {
         return userService.changePassword(id, user.getPassword());
-        }
+    }
 
 
     @GetMapping("/find_users_by_criteria/{criteria}")

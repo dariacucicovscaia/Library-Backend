@@ -16,7 +16,7 @@ public class EmailConfirmationTokenController {
     public EmailConfirmationTokenController(EmailConfirmationTokenServiceImpl emailConfirmationTokenServiceImpl) {
         this.emailConfirmationTokenService = emailConfirmationTokenServiceImpl;
     }
-    
+
     @GetMapping("/confirm/{token}")
     public ResponseEntity<?> confirmEmail(@PathVariable String token) {
         try {

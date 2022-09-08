@@ -10,14 +10,12 @@ import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
 import com.stefanini.librarybackend.dto.RegistrationRequestDto;
 import com.stefanini.librarybackend.email.EmailSenderService;
-import com.stefanini.librarybackend.email.MailHelper;
 import com.stefanini.librarybackend.service.RegistrationService;
 import com.stefanini.librarybackend.service.impl.exception.EmailAlreadyTakenException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.UUID;

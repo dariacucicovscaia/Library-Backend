@@ -9,12 +9,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan({"com.stefanini.librarybackend.service","com.stefanini.librarybackend.dao"})
+@ComponentScan({"com.stefanini.librarybackend.service", "com.stefanini.librarybackend.dao"})
 public class HibernateUtil {
 
 

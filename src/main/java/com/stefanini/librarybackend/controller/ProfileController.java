@@ -1,10 +1,7 @@
 package com.stefanini.librarybackend.controller;
 
 import com.stefanini.librarybackend.domain.Profile;
-import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.service.impl.ProfileServiceImpl;
-import com.stefanini.librarybackend.service.impl.UserServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
