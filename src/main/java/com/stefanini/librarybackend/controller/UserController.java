@@ -36,6 +36,7 @@ public class UserController {
         String password = generateRandomPassword();
         user.setPassword(password);
         user.setHasTemporaryPassword(true);
+        user.setConfirmedByEmail(true);
         String email = "Hello, " + user.getProfile().getFirstName() + " " + user.getProfile().getLastName() + "!"
                 + " Here is your password for Stefanini Library Aplication " + password
                 + " To use the aplication please visit http://localhost:3000/";

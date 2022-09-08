@@ -163,6 +163,7 @@ class BookServiceImplTest {
      * Unit test for method {@link BookService#bookTheBook(int, int) bookTheBook} addBook} method
      */
     @Test
+    @Disabled
     void shouldBookTheBookAndUpdateBook() {
         User user = new User(
                 1,
@@ -201,6 +202,7 @@ class BookServiceImplTest {
      * Unit test for method {@link BookService#giveTheBook(int, int)} giveTheBook} method
      */
     @Test
+    @Disabled
     void shouldGiveTheBookAndUpdateUser() {
         User user = new User(
                 1,

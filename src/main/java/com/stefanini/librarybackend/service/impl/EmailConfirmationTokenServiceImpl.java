@@ -1,8 +1,11 @@
 package com.stefanini.librarybackend.service.impl;
 
 import com.stefanini.librarybackend.dao.EmailConfirmationTokenDAO;
+import com.stefanini.librarybackend.dao.UserDAO;
 import com.stefanini.librarybackend.dao.impl.EmailConfirmationTokenDAOImpl;
+import com.stefanini.librarybackend.dao.impl.UserDAOImpl;
 import com.stefanini.librarybackend.domain.ConfirmationToken;
+import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.ConfirmationTokenStatus;
 import com.stefanini.librarybackend.service.EmailConfirmationTokenService;
 import com.stefanini.librarybackend.service.impl.exception.InvalidTokenException;
@@ -19,9 +22,11 @@ import static com.stefanini.librarybackend.domain.enums.ConfirmationTokenStatus.
 public class EmailConfirmationTokenServiceImpl implements EmailConfirmationTokenService {
 
     private final EmailConfirmationTokenDAO<ConfirmationToken> emailConfirmationTokenDAO;
+    private final UserDAO<User> userDAO;
 
-    public EmailConfirmationTokenServiceImpl(EmailConfirmationTokenDAOImpl emailConfirmationTokenDAOImpl) {
+    public EmailConfirmationTokenServiceImpl(EmailConfirmationTokenDAOImpl emailConfirmationTokenDAOImpl, UserDAOImpl userDAOImpl) {
         this.emailConfirmationTokenDAO = emailConfirmationTokenDAOImpl;
+        this.userDAO = userDAOImpl;
     }
 
     @Override
@@ -33,9 +38,13 @@ public class EmailConfirmationTokenServiceImpl implements EmailConfirmationToken
     public ConfirmationTokenStatus confirmToken(String token) throws InvalidTokenException {
         ConfirmationToken confirmationToken = emailConfirmationTokenDAO.findByToken(token);
         verifyToken(confirmationToken);
+
         confirmationToken.setConfirmedAt(LocalDateTime.now());
         confirmationToken.setStatus(CONFIRMED);
         confirmationToken.getUser().setConfirmedByEmail(true);
+
+        userDAO.update(confirmationToken.getUser());
+        emailConfirmationTokenDAO.update(confirmationToken);
         return confirmationToken.getStatus();
     }
 
