@@ -29,4 +29,17 @@ public class EmailConfirmationTokenController {
                     .body(e.getMessage());
         }
     }
+
+    @GetMapping("/send-new-token/{token}")
+    public ResponseEntity<?> sendNewToken(@PathVariable String token) {
+        try {
+            return ResponseEntity
+                    .status(HttpStatus.ACCEPTED)
+                    .body(emailConfirmationTokenService.sendNewToken(token));
+        } catch (InvalidTokenException e) {
+            return ResponseEntity
+                    .status(HttpStatus.FORBIDDEN)
+                    .body(e.getMessage());
+        }
+    }
 }

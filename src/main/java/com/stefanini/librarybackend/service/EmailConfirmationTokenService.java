@@ -24,4 +24,6 @@ public interface EmailConfirmationTokenService {
     void saveConfirmationToken(ConfirmationToken confirmationToken);
 
     ConfirmationTokenStatus confirmToken(String token) throws InvalidTokenException;
+
+    ConfirmationTokenStatus sendNewToken(String token) throws InvalidTokenException;
 }

@@ -37,11 +37,9 @@ public class ConfirmationToken implements Serializable {
     private LocalDateTime createdAt;
 
     @Column(name = "expiresAt", nullable = false)
-    @UpdateTimestamp
     private LocalDateTime expiresAt;
 
     @Column(name = "confirmedAt")
-    @UpdateTimestamp
     private LocalDateTime confirmedAt;
 
     @Column(name = "status")
@@ -66,10 +64,11 @@ public class ConfirmationToken implements Serializable {
     }
 
     public static ConfirmationToken createConfirmationToken(String token, User user) {
+        LocalDateTime fifteenMinutesLater = LocalDateTime.now().plusMinutes(15);
         return new ConfirmationToken(
                 token,
                 LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(15),
+                fifteenMinutesLater,
                 user,
                 PENDING_CONFIRMATION
         );
