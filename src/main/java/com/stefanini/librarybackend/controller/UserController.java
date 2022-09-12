@@ -38,8 +38,8 @@ public class UserController {
         user.setHasTemporaryPassword(true);
         user.setConfirmedByEmail(true);
         String email = "Hello, " + user.getProfile().getFirstName() + " " + user.getProfile().getLastName() + "!"
-                + " Here is your password for Stefanini Library Aplication " + password
-                + " To use the aplication please visit http://localhost:3000/";
+                + " Here is your password for Stefanini Library Application " + password
+                + " To use the application please visit http://localhost:3000/";
         String subject = "Registration info";
         emailSenderService.sendMail(user.getEmail(), email, subject);
 
@@ -71,7 +71,7 @@ public class UserController {
     }
 
     @PutMapping("/update/{id}")
-    @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('USER','LIBRARIAN', 'ADMIN')")
     public User updateUser(@PathVariable int id, @RequestBody User user) {
         return userService.updateUser(id, user);
     }
