@@ -16,8 +16,8 @@ public class BookDAOImpl extends DAOAbstractImpl<Book> implements BookDAO<Book> 
 
     @Override
     public List<Book> getBooksByAnyCriteria(String criteria) {
-        return entityManager.createQuery("from Book" + " WHERE  LCASE(title) LIKE '%" + criteria.toLowerCase() +
-                "%' OR LCASE(bookDescription) LIKE '%" + criteria.toLowerCase() + "%'").getResultList();
+        return entityManager.createQuery("from Book" +  " WHERE  LCASE(title) LIKE '%" + criteria.toLowerCase() +
+                "%' OR LCASE(description) LIKE '%" + criteria.toLowerCase() + "%'" ).getResultList();
     }
 
 
