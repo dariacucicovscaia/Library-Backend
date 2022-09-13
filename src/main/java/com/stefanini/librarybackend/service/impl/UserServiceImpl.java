@@ -56,7 +56,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User changePassword(int id, String password) {
         User u = findById(id);
-        u.setStatus(null);
         u.setPassword(passwordEncoder.encode(password));
         return userDao.update(u);
     }

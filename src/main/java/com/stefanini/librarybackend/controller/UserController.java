@@ -38,7 +38,6 @@ public class UserController {
     public User addUser(@RequestBody User user) {
         String password = generateRandomPassword();
         user.setPassword(password);
-        user.setStatus("new user");
 
         String email = "Hello, " + user.getProfile().getFirstName() +" " + user.getProfile().getLastName() + "!"
                 + " Here is your password for Stefanini Library Aplication " + password
