@@ -18,7 +18,7 @@ services:
 
     environment:
 
-      - MYSQL_ROOT_PASSWORD=d@r1@Cuc1covscAIA
+      - MYSQL_ROOT_PASSWORD=${ROOT_PASSWORD}
 
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
 
@@ -26,11 +26,11 @@ services:
 
     image: flyway/flyway
 
-    command: -url=jdbc:mysql://db:3306 -schemas=library -user=root -password=d@r1@Cuc1covscAIA -connectRetries=60 migrate
+    command: -url=jdbc:mysql://db:3306 -schemas=library -user=${SPRING_USERNAME} -password=${SPRING_PASSWORD} -connectRetries=60 migrate
 
     volumes:
 
-      - ../Library-Backend/src/main/resources/db/migration/:/flyway/sql/
+      - ${VOLUMES_PATH}
 
     depends_on:
 
@@ -60,15 +60,15 @@ services:
 
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/library?useUnicode=yes&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true&autoReconnect=true
 
-      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_USERNAME: ${SPRING_USERNAME}
 
-      SPRING_DATASOURCE_PASSWORD: d@r1@Cuc1covscAIA
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_PASSWORD}
 
   frontend-app:
 
     build:
 
-      context: C:\Users\DCUCICOV\WebstormProjects\library-frontend # Use an image built from the specified dockerfile in the `library-frontend` directory.
+      context: ${FRONTEND_PATH}  # Use an image built from the specified dockerfile in the `library-frontend` directory.
 
       dockerfile: Dockerfile
 
