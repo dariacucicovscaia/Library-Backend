@@ -1,0 +1,87 @@
+services:
+
+  db:
+
+    image: mysql:8.0.29
+
+    ports:
+
+      - "3307:3306"
+
+    healthcheck:
+
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+
+      timeout: 20s
+
+      retries: 2
+
+    environment:
+
+      - MYSQL_ROOT_PASSWORD=d@r1@Cuc1covscAIA
+
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+
+  flyway:
+
+    image: flyway/flyway
+
+    command: -url=jdbc:mysql://db:3306 -schemas=library -user=root -password=d@r1@Cuc1covscAIA -connectRetries=60 migrate
+
+    volumes:
+
+      - ../Library-Backend/src/main/resources/db/migration/:/flyway/sql/
+
+    depends_on:
+
+      - backend-server
+
+  backend-server:
+
+    build:
+
+      context: .
+
+      dockerfile: Dockerfile
+
+    ports:
+
+      - "8080:8080" # Forward the exposed port 8080 on the container to port 8080 on the host machine
+
+    restart: always
+
+    depends_on:
+
+      db:
+
+        condition: service_healthy # This service depends on mysql. Start that first.
+
+    environment:
+
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/library?useUnicode=yes&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true&autoReconnect=true
+
+      SPRING_DATASOURCE_USERNAME: root
+
+      SPRING_DATASOURCE_PASSWORD: d@r1@Cuc1covscAIA
+
+  frontend-app:
+
+    build:
+
+      context: C:\Users\DCUCICOV\WebstormProjects\library-frontend # Use an image built from the specified dockerfile in the `library-frontend` directory.
+
+      dockerfile: Dockerfile
+
+      args:
+
+        REACT_APP_API_BASE_URL: http://127.0.0.1:8080/api
+
+    ports:
+
+      - "3000:80" # Map the exposed port 80 on the container to port 9090 on the host machine
+
+    restart: always
+
+    depends_on:
+
+      - backend-server

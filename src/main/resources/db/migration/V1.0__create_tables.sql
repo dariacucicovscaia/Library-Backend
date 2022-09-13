@@ -1,5 +1,3 @@
-
-
 create table profile (
   id int not null
   primary key
