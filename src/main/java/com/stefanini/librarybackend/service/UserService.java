@@ -12,7 +12,7 @@ public interface UserService {
     User createUser(User user);
     User updateUser(int id, User user);
     List<User> showAllUsers();
-    public User findById(int id);
+    User findById(int id);
     User findByEmail(String email);
     int deleteByEmail(String email);
     int deleteById(int id);
@@ -21,5 +21,6 @@ public interface UserService {
     List<Book> getUserBooks(int userId);
     List<User> findUserByAnyCriteria(String criteria);
     User changePassword(int id, String password);
+    void sendLinkForChangePassword (User user);
 
 }
