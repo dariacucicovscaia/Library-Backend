@@ -3,12 +3,11 @@ package com.stefanini.librarybackend.dao.impl;
 import com.google.common.base.Preconditions;
 import com.stefanini.librarybackend.dao.IGenericDao;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.io.Serializable;
 import java.util.List;
 
@@ -40,9 +39,9 @@ public abstract class DAOAbstractImpl<T extends Serializable> implements IGeneri
     @Override
     @Transactional
     public T create(T entity) {
-       entityManager.persist(entity);
-       log.info("Entity {} was created", entity.getClass().getName());
-       return entity;
+        entityManager.persist(entity);
+        log.info("Entity {} was created", entity.getClass().getName());
+        return entity;
     }
 
     @Override

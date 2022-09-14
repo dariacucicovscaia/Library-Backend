@@ -10,14 +10,13 @@ import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
 import com.stefanini.librarybackend.dto.RegistrationRequestDto;
 import com.stefanini.librarybackend.email.EmailSenderService;
-import com.stefanini.librarybackend.email.MailHelper;
 import com.stefanini.librarybackend.service.RegistrationService;
 import com.stefanini.librarybackend.service.impl.exception.EmailAlreadyTakenException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.UUID;
@@ -31,14 +30,16 @@ public class RegistrationServiceImpl implements RegistrationService {
     private final UserDAO<User> userDAO;
     private final EmailConfirmationTokenDAO<ConfirmationToken> emailConfirmationTokenDAO;
     private final EmailSenderService emailSenderService;
+    private final Environment environment;
 
     public RegistrationServiceImpl(UserDAOImpl userDAOImpl, PasswordEncoder passwordEncoder,
                                    EmailConfirmationTokenDAOImpl emailConfirmationTokenDAOImpl,
-                                   EmailSenderService emailSenderService) {
+                                   EmailSenderService emailSenderService, Environment environment) {
         this.userDAO = userDAOImpl;
         this.passwordEncoder = passwordEncoder;
         this.emailConfirmationTokenDAO = emailConfirmationTokenDAOImpl;
         this.emailSenderService = emailSenderService;
+        this.environment = environment;
     }
 
     @Override
@@ -55,27 +56,23 @@ public class RegistrationServiceImpl implements RegistrationService {
         User newUser = new User(request.getEmail(), encodedPassword,
                 new Profile(request.getFirstName(), request.getLastName(), request.getPhoneNumber()));
         newUser.setRoles(new HashSet<>(Arrays.asList(Role.USER)));
+        newUser.setConfirmedByEmail(false);
 
         userDAO.create(newUser);
 
 
         String token = UUID.randomUUID().toString();
 
-        ConfirmationToken confirmationToken = new ConfirmationToken(
-                token,
-                LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(15),
-                newUser
-        );
+        ConfirmationToken confirmationToken = ConfirmationToken.createConfirmationToken(token, newUser);
 
         emailConfirmationTokenDAO.create(confirmationToken);
-        log.info("Email confirmation token created");
+        log.info("Email confirmation token saved in database");
 
-        String link = "http://localhost:300/email-confirmation/" + token;
+        String link = environment.getProperty("CORS_ALLOWED_ORIGINS") + "/email-confirmation/" + token;
         emailSenderService.sendMail(
                 request.getEmail(),
-                "Activate your account by this link - " + link, "Email confirmation"
+                "Activate your account by this link - " + link + "\n Link will expired in 15 minutes",
+                "Confirm your email"
         );
-
     }
 }

@@ -17,12 +17,25 @@ public class EmailConfirmationTokenController {
         this.emailConfirmationTokenService = emailConfirmationTokenServiceImpl;
     }
 
-    @GetMapping("/confirm")
-    public ResponseEntity<?> confirmEmail(@RequestParam("token") String token) {
+    @GetMapping("/confirm/{token}")
+    public ResponseEntity<?> confirmEmail(@PathVariable String token) {
         try {
             return ResponseEntity
                     .status(HttpStatus.ACCEPTED)
                     .body(emailConfirmationTokenService.confirmToken(token));
+        } catch (InvalidTokenException e) {
+            return ResponseEntity
+                    .status(HttpStatus.FORBIDDEN)
+                    .body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/send-new-token/{token}")
+    public ResponseEntity<?> sendNewToken(@PathVariable String token) {
+        try {
+            return ResponseEntity
+                    .status(HttpStatus.ACCEPTED)
+                    .body(emailConfirmationTokenService.sendNewToken(token));
         } catch (InvalidTokenException e) {
             return ResponseEntity
                     .status(HttpStatus.FORBIDDEN)

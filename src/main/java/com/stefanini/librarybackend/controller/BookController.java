@@ -1,7 +1,6 @@
 package com.stefanini.librarybackend.controller;
 
 import com.stefanini.librarybackend.domain.Book;
-import com.stefanini.librarybackend.domain.History;
 import com.stefanini.librarybackend.service.AuthorService;
 import com.stefanini.librarybackend.service.BookService;
 import com.stefanini.librarybackend.service.impl.BookServiceImpl;
@@ -23,7 +22,7 @@ public class BookController {
     @PostMapping("/create")
     @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
     public Book createBook(@RequestBody Book book) {
-       return bookService.addBook(book);
+        return bookService.addBook(book);
     }
 
     @PutMapping("/update/{id}")
@@ -37,25 +36,27 @@ public class BookController {
     public void deleteBook(@PathVariable int id) {
         bookService.deleteBook(id);
     }
-        
+
     @GetMapping("/books")
     public List<Book> getAllBooks() {
         return bookService.showAllBooks();
     }
 
     @PutMapping("/bookTheBook/{bookId}/{userId}")
-   @PreAuthorize("hasAnyAuthority('USER','LIBRARIAN', 'ADMIN')")
-    public Book bookTheBook (@PathVariable int bookId, @PathVariable int userId) {
+    @PreAuthorize("hasAnyAuthority('USER','LIBRARIAN', 'ADMIN')")
+    public Book bookTheBook(@PathVariable int bookId, @PathVariable int userId) {
         return bookService.bookTheBook(bookId, userId);
     }
+
     @PutMapping("/giveTheBook/{bookId}/{userId}")
     @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
-    public Book giveTheBook (@PathVariable int bookId, @PathVariable int userId) {
+    public Book giveTheBook(@PathVariable int bookId, @PathVariable int userId) {
         return bookService.giveTheBook(bookId, userId);
     }
+
     @PutMapping("/returnTheBook/{bookId}")
     @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
-    public Book returnTheBook (@PathVariable int bookId) {
+    public Book returnTheBook(@PathVariable int bookId) {
         return bookService.returnTheBook(bookId);
     }
 
@@ -63,17 +64,16 @@ public class BookController {
     public List<Book> findBooksByCriteria(@PathVariable String criteria) {
         return bookService.findBooksByAnyCriteria(criteria);
     }
+
     @GetMapping("/bookByAuthor/{authorId}")
     public List<Book> findBooksByAuthorId(@PathVariable int authorId) {
         return bookService.findBooksByAuthor(authorId);
     }
 
     @GetMapping("/bookByCategory/{categoryId}")
-    public List<Book> getBooksByCategory(@PathVariable int categoryId){
+    public List<Book> getBooksByCategory(@PathVariable int categoryId) {
         return bookService.getBookByCategory(categoryId);
     }
-
-
 
 
 }

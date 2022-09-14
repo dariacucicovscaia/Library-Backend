@@ -1,17 +1,20 @@
 package com.stefanini.librarybackend.domain;
 
 
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.stefanini.librarybackend.domain.enums.ConfirmationTokenStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import static com.stefanini.librarybackend.domain.enums.ConfirmationTokenStatus.*;
 
 @Entity
 @Table(name = "confirmation_token")
@@ -30,6 +33,7 @@ public class ConfirmationToken implements Serializable {
     private String token;
 
     @Column(name = "createdAt", nullable = false)
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
     @Column(name = "expiresAt", nullable = false)
@@ -38,18 +42,35 @@ public class ConfirmationToken implements Serializable {
     @Column(name = "confirmedAt")
     private LocalDateTime confirmedAt;
 
+    @Column(name = "status")
+    @Enumerated(value = EnumType.STRING)
+    private ConfirmationTokenStatus status;
+
     @ManyToOne
     @JoinColumn(
             nullable = false,
             name = "user_id"
     )
-    @JsonBackReference(value="user-confirmationTokens")
+    @JsonBackReference(value = "user-confirmationTokens")
     private User user;
 
-    public ConfirmationToken(String token, LocalDateTime createdAt, LocalDateTime expiresAt, User user) {
+    private ConfirmationToken(String token, LocalDateTime createdAt, LocalDateTime expiresAt,
+                              User user, ConfirmationTokenStatus status) {
         this.token = token;
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;
         this.user = user;
+        this.status = status;
+    }
+
+    public static ConfirmationToken createConfirmationToken(String token, User user) {
+        LocalDateTime fifteenMinutesLater = LocalDateTime.now().plusMinutes(15);
+        return new ConfirmationToken(
+                token,
+                LocalDateTime.now(),
+                fifteenMinutesLater,
+                user,
+                PENDING_CONFIRMATION
+        );
     }
 }

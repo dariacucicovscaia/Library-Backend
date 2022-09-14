@@ -33,6 +33,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book addBook(Book book) {
+        book.setStatus(AVAILABLE);
         return bookDAOImpl.create(book);
     }
 

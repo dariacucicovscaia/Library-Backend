@@ -49,7 +49,7 @@ public class Book implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonBackReference(value="book-user")
+    @JsonBackReference(value = "book-user")
     private User user;
 
 
@@ -63,7 +63,7 @@ public class Book implements Serializable {
 
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
-    @JsonManagedReference(value="book-history")
+    @JsonManagedReference(value = "book-history")
     private List<History> history;
 
     public Book(int id, String title, String description, String shelfNumber, BookStatus status) {

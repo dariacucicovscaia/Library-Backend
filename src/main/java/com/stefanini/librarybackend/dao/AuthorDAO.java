@@ -1,7 +1,6 @@
 package com.stefanini.librarybackend.dao;
 
 /**
- *
  * @param <Author>
  * @author dcuciuc
  * @version 0.1

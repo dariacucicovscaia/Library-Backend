@@ -10,8 +10,8 @@ import java.util.List;
 
 /**
  * @author dcuciuc
- * @since 0.1
  * @version 0.1
+ * @since 0.1
  */
 @RestController
 @RequestMapping("/api/author")

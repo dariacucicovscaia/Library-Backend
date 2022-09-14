@@ -1,16 +1,17 @@
 package com.stefanini.librarybackend.domain;
 
-import com.fasterxml.jackson.annotation.*;
-
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.stefanini.librarybackend.domain.enums.Role;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -42,14 +43,13 @@ public class User implements Serializable {
     private Set<Role> roles;
 
 
-
     @OneToMany(mappedBy = "user")
-    @JsonManagedReference(value="book-user")
+    @JsonManagedReference(value = "book-user")
     private List<Book> book;
 
 
     @OneToMany(mappedBy = "user")
-    @JsonManagedReference(value="user-history")
+    @JsonManagedReference(value = "user-history")
     private List<History> history;
 
 
@@ -64,13 +64,12 @@ public class User implements Serializable {
     @Column(name = "last_update")
     private LocalDateTime lastUpdate;
 
-
     @OneToMany(mappedBy = "user")
-    @JsonManagedReference(value="user-confirmationTokens")
+    @JsonManagedReference(value = "user-confirmationTokens")
     private List<ConfirmationToken> confirmationTokens;
 
-//    @Column(name = "isConfirmedByEmail")
-//    private boolean isConfirmedByEmail;
+    @Column(name = "isConfirmedByEmail", columnDefinition = "boolean default false")
+    private boolean isConfirmedByEmail;
 
     @Column(name = "hasTemporaryPassword", columnDefinition = "boolean default false")
     private boolean hasTemporaryPassword;

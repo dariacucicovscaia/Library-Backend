@@ -6,10 +6,8 @@ import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
 import com.stefanini.librarybackend.email.EmailSenderService;
 import com.stefanini.librarybackend.service.impl.UserServiceImpl;
-import com.stefanini.librarybackend.service.impl.exception.InvalidEmailOrPasswordException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -24,26 +22,15 @@ import static com.stefanini.librarybackend.helper.PasswordGenerator.generateRand
 @RequestMapping(value = "/api/user")
 public class UserController {
     private final UserServiceImpl userService;
-    private final EmailSenderService emailSenderService;
 
     public UserController(UserServiceImpl userService, EmailSenderService emailSenderService) {
         this.userService = userService;
-        this.emailSenderService = emailSenderService;
     }
 
 
     @PostMapping(value = "/create")
     @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
     public User addUser(@RequestBody User user) {
-        String password = generateRandomPassword();
-        user.setPassword(password);
-        user.setHasTemporaryPassword(true);
-        String email = "Hello, " + user.getProfile().getFirstName() +" " + user.getProfile().getLastName() + "!"
-                + " Here is your password for Stefanini Library Aplication " + password
-                + " To use the aplication please visit http://localhost:3000/";
-        String subject = "Registration info";
-                emailSenderService.sendMail(user.getEmail(), email, subject);
-
         return userService.createUser(user);
     }
 
@@ -51,12 +38,7 @@ public class UserController {
     public ResponseEntity<?> forgotPassword(@PathVariable String email) {
         User user = userService.findByEmail(email);
         if (user != null) {
-            String message = "Hello, please access the link to update your password " + "http://localhost:3000/resetPassword/"
-                    + user.getId() + "/" + user.getEmail();
-            String subject = "Forgot password";
-            log.info(message);
-            emailSenderService.sendMail(user.getEmail(), message, subject);
-
+            userService.sendLinkForChangePassword(user);
             return ResponseEntity
                     .status(HttpStatus.ACCEPTED)
                     .body(user);
@@ -72,7 +54,7 @@ public class UserController {
     }
 
     @PutMapping("/update/{id}")
-    @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('USER','LIBRARIAN', 'ADMIN')")
     public User updateUser(@PathVariable int id, @RequestBody User user) {
         return userService.updateUser(id, user);
     }
@@ -131,7 +113,7 @@ public class UserController {
     @PreAuthorize("hasAnyAuthority('USER')")
     public User updateUserPassword(@PathVariable int id, @RequestBody User user) {
         return userService.changePassword(id, user.getPassword());
-        }
+    }
 
 
     @GetMapping("/find_users_by_criteria/{criteria}")

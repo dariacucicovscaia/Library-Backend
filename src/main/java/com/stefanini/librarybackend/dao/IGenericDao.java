@@ -5,17 +5,15 @@ import java.util.List;
 public interface IGenericDao<T> {
 
 
-
-    List<T> getAll() ;
+    List<T> getAll();
 
     T update(T entity);
 
     T create(T entity);
 
-    T getById(int id) ;
+    T getById(int id);
 
     int removeById(int id);
-
 
 
 }
