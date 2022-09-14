@@ -32,4 +32,6 @@ public interface UserService {
 
     User changePassword(int id, String password);
 
+
+    void sendLinkForChangePassword(User user);
 }

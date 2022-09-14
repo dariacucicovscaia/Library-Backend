@@ -11,6 +11,7 @@ import com.stefanini.librarybackend.email.EmailSenderService;
 import com.stefanini.librarybackend.service.EmailConfirmationTokenService;
 import com.stefanini.librarybackend.service.impl.exception.InvalidTokenException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -25,12 +26,14 @@ public class EmailConfirmationTokenServiceImpl implements EmailConfirmationToken
     private final EmailConfirmationTokenDAO<ConfirmationToken> emailConfirmationTokenDAO;
     private final UserDAO<User> userDAO;
     private final EmailSenderService emailSenderService;
+    private final Environment environment;
 
     public EmailConfirmationTokenServiceImpl(EmailConfirmationTokenDAOImpl emailConfirmationTokenDAOImpl,
-                                             UserDAOImpl userDAOImpl, EmailSenderService emailSenderService) {
+                                             UserDAOImpl userDAOImpl, EmailSenderService emailSenderService, Environment environment) {
         this.emailConfirmationTokenDAO = emailConfirmationTokenDAOImpl;
         this.userDAO = userDAOImpl;
         this.emailSenderService = emailSenderService;
+        this.environment = environment;
     }
 
     @Override
@@ -72,7 +75,7 @@ public class EmailConfirmationTokenServiceImpl implements EmailConfirmationToken
         emailConfirmationTokenDAO.create(confirmationToken);
         log.info("Email confirmation token saved in database");
 
-        String link = "http://localhost:3000/email-confirmation/" + token;
+        String link = environment.getProperty("CORS_ALLOWED_ORIGINS") + "/email-confirmation/" + token;
         emailSenderService.sendMail(
                 confirmationToken.getUser().getEmail(),
                 "Activate your account by this link - " + link + "\n Link will expired in 15 minutes",

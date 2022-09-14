@@ -6,9 +6,10 @@ import com.stefanini.librarybackend.domain.Book;
 import com.stefanini.librarybackend.domain.History;
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
+import com.stefanini.librarybackend.email.EmailSenderService;
 import com.stefanini.librarybackend.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,21 +18,35 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
+import static com.stefanini.librarybackend.helper.PasswordGenerator.generateRandomPassword;
+
 @Service
 @Slf4j
 public class UserServiceImpl implements UserService {
     private final UserDAO<User> userDao;
     private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
+    private final EmailSenderService emailSenderService;
+    private final Environment environment;
 
-    public UserServiceImpl(UserDAOImpl userDao, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+    public UserServiceImpl(UserDAOImpl userDao, PasswordEncoder passwordEncoder, EmailSenderService emailSenderService, Environment environment) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
-        this.authenticationManager = authenticationManager;
+        this.emailSenderService = emailSenderService;
+        this.environment = environment;
     }
 
     @Override
     public User createUser(User user) {
+        String password = generateRandomPassword();
+        user.setPassword(password);
+        user.setConfirmedByEmail(true);
+        user.setHasTemporaryPassword(true);
+        String appHomePage = environment.getProperty("CORS_ALLOWED_ORIGINS") + "/";
+        String email = "Hello, " + user.getProfile().getFirstName() + " " + user.getProfile().getLastName() + "!"
+                + " Here is your password for Stefanini Library Aplication " + password
+                + " To use the aplication please visit " + appHomePage;
+        String subject = "Registration info";
+        emailSenderService.sendMail(user.getEmail(), email, subject);
         if (user.getRoles() == null) {
             user.setRoles(new HashSet<>(Arrays.asList(Role.USER)));
         }
@@ -111,6 +126,16 @@ public class UserServiceImpl implements UserService {
 
     public List<User> findUserByAnyCriteria(String criteria) {
         return userDao.getUsersByCriteria(criteria);
+    }
+
+    @Override
+    public void sendLinkForChangePassword(User user) {
+        String link = environment.getProperty("CORS_ALLOWED_ORIGINS") + "/resetPassword/";
+        String message = "Hello, please access the link to update your password " + link
+                + user.getId() + "/" + user.getEmail();
+        String subject = "Forgot password";
+        log.info(message);
+        emailSenderService.sendMail(user.getEmail(), message, subject);
     }
 
 }

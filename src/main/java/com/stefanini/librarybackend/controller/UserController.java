@@ -22,27 +22,15 @@ import static com.stefanini.librarybackend.helper.PasswordGenerator.generateRand
 @RequestMapping(value = "/api/user")
 public class UserController {
     private final UserServiceImpl userService;
-    private final EmailSenderService emailSenderService;
 
     public UserController(UserServiceImpl userService, EmailSenderService emailSenderService) {
         this.userService = userService;
-        this.emailSenderService = emailSenderService;
     }
 
 
     @PostMapping(value = "/create")
     @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
     public User addUser(@RequestBody User user) {
-        String password = generateRandomPassword();
-        user.setPassword(password);
-        user.setHasTemporaryPassword(true);
-        user.setConfirmedByEmail(true);
-        String email = "Hello, " + user.getProfile().getFirstName() + " " + user.getProfile().getLastName() + "!"
-                + " Here is your password for Stefanini Library Application " + password
-                + " To use the application please visit http://localhost:3000/";
-        String subject = "Registration info";
-        emailSenderService.sendMail(user.getEmail(), email, subject);
-
         return userService.createUser(user);
     }
 
@@ -50,12 +38,7 @@ public class UserController {
     public ResponseEntity<?> forgotPassword(@PathVariable String email) {
         User user = userService.findByEmail(email);
         if (user != null) {
-            String message = "Hello, please access the link to update your password " + "http://localhost:3000/resetPassword/"
-                    + user.getId() + "/" + user.getEmail();
-            String subject = "Forgot password";
-            log.info(message);
-            emailSenderService.sendMail(user.getEmail(), message, subject);
-
+            userService.sendLinkForChangePassword(user);
             return ResponseEntity
                     .status(HttpStatus.ACCEPTED)
                     .body(user);

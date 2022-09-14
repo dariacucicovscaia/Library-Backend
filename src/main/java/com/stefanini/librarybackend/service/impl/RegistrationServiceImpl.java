@@ -13,6 +13,7 @@ import com.stefanini.librarybackend.email.EmailSenderService;
 import com.stefanini.librarybackend.service.RegistrationService;
 import com.stefanini.librarybackend.service.impl.exception.EmailAlreadyTakenException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,14 +30,16 @@ public class RegistrationServiceImpl implements RegistrationService {
     private final UserDAO<User> userDAO;
     private final EmailConfirmationTokenDAO<ConfirmationToken> emailConfirmationTokenDAO;
     private final EmailSenderService emailSenderService;
+    private final Environment environment;
 
     public RegistrationServiceImpl(UserDAOImpl userDAOImpl, PasswordEncoder passwordEncoder,
                                    EmailConfirmationTokenDAOImpl emailConfirmationTokenDAOImpl,
-                                   EmailSenderService emailSenderService) {
+                                   EmailSenderService emailSenderService, Environment environment) {
         this.userDAO = userDAOImpl;
         this.passwordEncoder = passwordEncoder;
         this.emailConfirmationTokenDAO = emailConfirmationTokenDAOImpl;
         this.emailSenderService = emailSenderService;
+        this.environment = environment;
     }
 
     @Override
@@ -65,7 +68,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         emailConfirmationTokenDAO.create(confirmationToken);
         log.info("Email confirmation token saved in database");
 
-        String link = "http://localhost:3000/email-confirmation/" + token;
+        String link = environment.getProperty("CORS_ALLOWED_ORIGINS") + "/email-confirmation/" + token;
         emailSenderService.sendMail(
                 request.getEmail(),
                 "Activate your account by this link - " + link + "\n Link will expired in 15 minutes",
