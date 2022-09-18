@@ -44,9 +44,13 @@ public class EmailConfirmationTokenServiceImpl implements EmailConfirmationToken
     @Override
     public ConfirmationTokenStatus confirmToken(String token) throws InvalidTokenException {
         ConfirmationToken confirmationToken = emailConfirmationTokenDAO.findByToken(token);
+
+        log.info("Token status after getting it from db: " + confirmationToken.getStatus());
         verifyToken(confirmationToken);
+        log.info("Token status after verifyMethod: " + confirmationToken.getStatus());
 
         if (confirmationToken.getStatus() == CONFIRMED) {
+            log.error("Token was already confirmed!");
             return WAS_ALREADY_CONFIRMED;
         }
 

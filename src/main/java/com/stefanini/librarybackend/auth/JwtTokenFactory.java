@@ -13,9 +13,21 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * This class is one of the helpers.
+ * Class represents factory helper class for jwt token
+ * @author dcuciuc
+ * @version 0.1
+ * @since 0.1
+ */
 @Slf4j
 public class JwtTokenFactory {
 
+    /**
+     * Method generates access token and refresh token
+     * @param authentication that have AppUser
+     * @return AuthResponseDto with all information of user plus tokens
+     */
     public static AuthResponseDto generateAccessAndRefreshToken(Authentication authentication) {
         AppUser appUser = (AppUser) authentication.getPrincipal();
         Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());

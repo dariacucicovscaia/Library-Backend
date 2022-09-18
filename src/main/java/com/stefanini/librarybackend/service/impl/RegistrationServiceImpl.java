@@ -64,6 +64,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         String token = UUID.randomUUID().toString();
 
         ConfirmationToken confirmationToken = ConfirmationToken.createConfirmationToken(token, newUser);
+        log.info("Token status before saving: " + confirmationToken.getStatus());
 
         emailConfirmationTokenDAO.create(confirmationToken);
         log.info("Email confirmation token saved in database");

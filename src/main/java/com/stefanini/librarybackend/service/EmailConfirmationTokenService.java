@@ -23,7 +23,21 @@ public interface EmailConfirmationTokenService {
      */
     void saveConfirmationToken(ConfirmationToken confirmationToken);
 
+    /**
+     * Confirm email confirmation token. Change it status to CONFIRMED
+     *
+     * @param token that will be confirmed
+     * @return confirmation token status
+     * @throws InvalidTokenException if token is expired, not found or already confirmed
+     */
     ConfirmationTokenStatus confirmToken(String token) throws InvalidTokenException;
 
+    /**
+     * Method should be used if previous token is expired
+     *
+     * @param token previous token
+     * @return confirmation token status
+     * @throws InvalidTokenException if previous token was not found
+     */
     ConfirmationTokenStatus sendNewToken(String token) throws InvalidTokenException;
 }

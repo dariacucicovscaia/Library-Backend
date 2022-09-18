@@ -15,7 +15,7 @@ import java.util.List;
 public interface AuthorService {
 
     /**
-     * Creates new author.
+     * Create new author.
      *
      * @param author that should be created in controller before calling this method
      * @return the author that was saved in database
@@ -24,7 +24,7 @@ public interface AuthorService {
 
 
     /**
-     * Perform an updating/editing operation about author and saving it in database.
+     * Perform an updating/editing operation about author and saving it.
      *
      * @param id     of author to be updated/edited
      * @param author object with new data that should be saved
@@ -34,7 +34,7 @@ public interface AuthorService {
 
 
     /**
-     * Delete author from database by id.
+     * Delete author by id.
      *
      * @param id of author to be deleted
      * @return id of author that was deleted
