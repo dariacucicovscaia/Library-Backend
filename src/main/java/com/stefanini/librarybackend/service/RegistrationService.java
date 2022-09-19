@@ -1,5 +1,6 @@
 package com.stefanini.librarybackend.service;
 
+import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.dto.RegistrationRequestDto;
 
 /**
@@ -17,5 +18,5 @@ public interface RegistrationService {
      *
      * @param request with registration data
      */
-    void registerUser(RegistrationRequestDto request);
+   User registerUser(RegistrationRequestDto request);
 }

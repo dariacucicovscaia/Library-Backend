@@ -1,5 +1,6 @@
 package com.stefanini.librarybackend.controller;
 
+import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.dto.LoginRequestDto;
 import com.stefanini.librarybackend.dto.RegistrationRequestDto;
 import com.stefanini.librarybackend.service.RegistrationService;
@@ -30,7 +31,7 @@ public class RegistrationController {
     @PostMapping(value = "/sign-up")
     public ResponseEntity<?> signUp(@RequestBody RegistrationRequestDto request) {
         try {
-            registrationService.registerUser(request);
+          registrationService.registerUser(request);
             return ResponseEntity
                     .status(HttpStatus.ACCEPTED)
                     .body(appUserServiceImpl.login(new LoginRequestDto(request.getEmail(), request.getPassword())));

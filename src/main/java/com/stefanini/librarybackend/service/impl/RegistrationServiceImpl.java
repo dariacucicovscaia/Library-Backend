@@ -43,17 +43,17 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
-    public void registerUser(RegistrationRequestDto request) {
+    public User registerUser(RegistrationRequestDto request) {
         User user = userDAO.findUserByEmail(request.getEmail());
-
+        User newUser;
         if (user != null) {
             log.error(String.format(EMAIL_ALREADY_TAKEN_MSG, user.getEmail()));
             throw new EmailAlreadyTakenException();
-        }
+        }else{
 
         String encodedPassword = passwordEncoder.encode(request.getPassword());
 
-        User newUser = new User(request.getEmail(), encodedPassword,
+        newUser = new User(request.getEmail(), encodedPassword,
                 new Profile(request.getFirstName(), request.getLastName(), request.getPhoneNumber()));
         newUser.setRoles(new HashSet<>(Arrays.asList(Role.USER)));
         newUser.setConfirmedByEmail(false);
@@ -73,6 +73,7 @@ public class RegistrationServiceImpl implements RegistrationService {
                 request.getEmail(),
                 "Activate your account by this link - " + link + "\n Link will expired in 15 minutes",
                 "Confirm your email"
-        );
+        );}
+        return newUser;
     }
 }
