@@ -72,8 +72,8 @@ create table book_category (
 
 create table history (
   id int not null
-  primary key
-  auto_increment,
+  auto_increment
+   primary key,
   actionName varchar(255) null,
   date datetime(6) null,
   book_id int null,
@@ -142,6 +142,9 @@ VALUES   ('Agatha Mary Clarissa Miller was born on 15 September 1890, into a wea
             "1957-06-20", 'Bonnie', 'Garmus'),
 
          (' Rebecca Serle Rebecca Serle is an American author and television writer. Her novel In Five Years was a New York Times best seller, and her Famous in Love series was adapted into a young adult television series on Freeform. ',
+            "1984-02-01", ' Rebecca', 'Serle'),
+
+         (' Rebecca Serle Rebecca Serle is an American author and television writer. Her novel In Five Years was a New York Times best seller, and her Famous in Love series was adapted into a young adult television series on Freeform. ',
             "1984-02-01", ' Rebecca', 'Serle');
 
 INSERT INTO book_author VALUES (1, 1),
@@ -149,7 +152,7 @@ INSERT INTO book_author VALUES (1, 1),
                                (3, 2),
                                (4, 3),
                                (5, 4),
-                               (6, 4);
+                               (6, 5);
 
 insert into category (title) values ('Detective'),
                                     ('Crime fiction'),

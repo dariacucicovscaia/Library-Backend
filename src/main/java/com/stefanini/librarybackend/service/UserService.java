@@ -4,6 +4,7 @@ import com.stefanini.librarybackend.domain.Book;
 import com.stefanini.librarybackend.domain.History;
 import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
+import com.stefanini.librarybackend.dto.AuthResponseDto;
 
 import java.util.List;
 

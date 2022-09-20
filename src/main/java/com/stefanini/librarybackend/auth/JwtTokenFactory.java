@@ -43,15 +43,7 @@ public class JwtTokenFactory {
 
 
         User user = appUser.getUser();
-        return new AuthResponseDto(
-                user.getId(),
-                user.getEmail(),
-                access_token,
-                refresh_token,
-                user.getRoles(),
-                user.isHasTemporaryPassword(),
-                user.isConfirmedByEmail()
-        );
+        return new AuthResponseDto(user.getId(), user.getEmail(), access_token, refresh_token, user.getRoles(), user.isHasTemporaryPassword());
 
     }
 }
