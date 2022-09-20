@@ -38,6 +38,16 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public Book addBookWithExistingCategoryAndAuthor(Book book, int categoryId, int authorId) {
+        book.setStatus(AVAILABLE);
+
+        book.getCategories().add(categoryDAOImpl.getById(categoryId));
+        book.getAuthors().add(authorDAO.getById(authorId));
+
+        return bookDAOImpl.create(book);
+    }
+
+    @Override
     public List<Book> showAllBooks() {
         return bookDAOImpl.getAll();
     }

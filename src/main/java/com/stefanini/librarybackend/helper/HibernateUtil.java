@@ -28,9 +28,9 @@ public class HibernateUtil {
     @Bean
     public DataSource dataSource() {
         MysqlDataSource dataSource = new MysqlDataSource();
-        dataSource.setPassword(environment.getProperty("jdbc.password"));
-        dataSource.setUser(environment.getProperty("jdbc.root"));
-        dataSource.setUrl(environment.getProperty("jdbc.url"));
+        dataSource.setPassword(environment.getProperty("SPRING_DATASOURCE_PASSWORD"));
+        dataSource.setUser(environment.getProperty("SPRING_DATASOURCE_USERNAME"));
+        dataSource.setUrl(environment.getProperty("SPRING_DATASOURCE_URL"));
 
         return dataSource;
     }

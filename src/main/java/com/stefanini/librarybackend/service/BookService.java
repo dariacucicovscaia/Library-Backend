@@ -26,4 +26,6 @@ public interface BookService {
     List<Book> getBookByCategory(int categoryId);
 
     List<Book> findBooksByAuthor(int authorId);
+
+    Book addBookWithExistingCategoryAndAuthor(Book book, int categoryId, int authorId);
 }

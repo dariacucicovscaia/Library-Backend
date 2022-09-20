@@ -24,6 +24,11 @@ public class BookController {
     public Book createBook(@RequestBody Book book) {
         return bookService.addBook(book);
     }
+  @PostMapping("/addBookWithExistingCategoryAndAuthor/{categoryId}/{authorId}")
+    @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
+    public Book addBookWithExistingCategoryAndAuthor(@RequestBody Book book, @PathVariable int categoryId, @PathVariable int authorId) {
+        return bookService.addBookWithExistingCategoryAndAuthor(book, categoryId, authorId);
+    }
 
     @PutMapping("/update/{id}")
     @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
