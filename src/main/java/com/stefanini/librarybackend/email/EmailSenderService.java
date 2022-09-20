@@ -23,7 +23,7 @@ public class EmailSenderService {
 
     public void sendMail(String to, String email, String subject) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(Objects.requireNonNull(environment.getProperty("SPRING_MAIL_USERNAME")));
+        message.setFrom(Objects.requireNonNull(environment.getProperty("spring.mail.username")));
         message.setTo(to);
         message.setText(email);
         message.setSubject(subject);
