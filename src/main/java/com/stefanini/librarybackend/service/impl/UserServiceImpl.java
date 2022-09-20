@@ -86,11 +86,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int deleteByEmail(String email) {
-        return userDao.removeById(findByEmail(email).getId());
-    }
-
-    @Override
     public int deleteById(int id) {
         return userDao.removeById(id);
     }

@@ -37,11 +37,6 @@ public class EmailConfirmationTokenServiceImpl implements EmailConfirmationToken
     }
 
     @Override
-    public void saveConfirmationToken(ConfirmationToken confirmationToken) {
-        emailConfirmationTokenDAO.create(confirmationToken);
-    }
-
-    @Override
     public ConfirmationTokenStatus confirmToken(String token) throws InvalidTokenException {
         ConfirmationToken confirmationToken = emailConfirmationTokenDAO.findByToken(token);
 

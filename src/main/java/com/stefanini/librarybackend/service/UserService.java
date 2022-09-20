@@ -57,14 +57,6 @@ public interface UserService {
     User findByEmail(String email);
 
     /**
-     * Delete user by email.
-     *
-     * @param email of user to be deleted
-     * @return id of deleted user
-     */
-    int deleteByEmail(String email);
-
-    /**
      * Delete user by id.
      *
      * @param id of user to be deleted

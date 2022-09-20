@@ -17,13 +17,6 @@ import com.stefanini.librarybackend.service.impl.exception.InvalidTokenException
 public interface EmailConfirmationTokenService {
 
     /**
-     * Methods saves generated confirmation token in database
-     *
-     * @param confirmationToken that should be generated in {@link RegistrationService#registerUser(RegistrationRequestDto) registerUser} method
-     */
-    void saveConfirmationToken(ConfirmationToken confirmationToken);
-
-    /**
      * Confirm email confirmation token. Change it status to CONFIRMED
      *
      * @param token that will be confirmed
