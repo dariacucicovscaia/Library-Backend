@@ -340,6 +340,9 @@ class BookServiceImplTest {
         assertThat(author.getBooks().get(0)).isEqualTo(books.get(0));
     }
 
+    /**
+     * Unit test for method {@link BookService#addBookWithExistingCategoryAndAuthor(Book, int, int) addBookWithExistingCategoryAndAuthor} method
+     */
     @Test
     void shouldCreateBookWithExistingCategoryAndAuthor() {
         Book book = new Book(

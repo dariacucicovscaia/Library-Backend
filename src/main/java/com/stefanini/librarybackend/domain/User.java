@@ -88,4 +88,13 @@ public class User implements Serializable {
         setEmail(email);
         setPassword(password);
     }
+
+    public User(String email) {
+        this.email = email;
+    }
+
+    public User(String email, Profile profile) {
+        this.email = email;
+        this.profile = profile;
+    }
 }
