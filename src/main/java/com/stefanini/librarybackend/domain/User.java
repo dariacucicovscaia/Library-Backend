@@ -21,9 +21,6 @@ import java.util.Set;
 @Setter
 @ToString
 @NoArgsConstructor
-//@JsonIdentityInfo(
-//        generator = ObjectIdGenerators.PropertyGenerator.class,
-//        property = "id")
 public class User implements Serializable {
 
     @Id
@@ -48,7 +45,7 @@ public class User implements Serializable {
     private List<Book> book;
 
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference(value = "user-history")
     private List<History> history;
 
@@ -64,7 +61,7 @@ public class User implements Serializable {
     @Column(name = "last_update")
     private LocalDateTime lastUpdate;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference(value = "user-confirmationTokens")
     private List<ConfirmationToken> confirmationTokens;
 

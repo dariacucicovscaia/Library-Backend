@@ -75,5 +75,11 @@ public class BookController {
         return bookService.getBookByCategory(categoryId);
     }
 
+    @PostMapping("/addBookWithExistingCategoryAndAuthor/{categoryId}/{authorId}")
+    @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
+    public Book addBookWithExistingCategoryAndAuthor(@RequestBody Book book, @PathVariable int categoryId, @PathVariable int authorId) {
+        return bookService.addBookWithExistingCategoryAndAuthor(book, categoryId, authorId);
+    }
+
 
 }

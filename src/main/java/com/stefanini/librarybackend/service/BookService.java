@@ -108,4 +108,14 @@ public interface BookService {
      * @return list of books found by author id
      */
     List<Book> findBooksByAuthor(int authorId);
+
+    /**
+     * Create new book with existing category and author by id of both.
+     *
+     * @param book to be created
+     * @param categoryId to be assigned to book
+     * @param authorId   to be assigned to book
+     * @return created book with category and author
+     */
+    Book addBookWithExistingCategoryAndAuthor(Book book, int categoryId, int authorId);
 }
