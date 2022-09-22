@@ -17,13 +17,20 @@ import com.stefanini.librarybackend.service.impl.exception.InvalidTokenException
 public interface EmailConfirmationTokenService {
 
     /**
-     * Methods saves generated confirmation token in database
+     * Confirm email confirmation token. Change it status to CONFIRMED
      *
-     * @param confirmationToken that should be generated in {@link RegistrationService#registerUser(RegistrationRequestDto) registerUser} method
+     * @param token that will be confirmed
+     * @return confirmation token status
+     * @throws InvalidTokenException if token is expired, not found or already confirmed
      */
-    void saveConfirmationToken(ConfirmationToken confirmationToken);
-
     ConfirmationTokenStatus confirmToken(String token) throws InvalidTokenException;
 
+    /**
+     * Method should be used if previous token is expired
+     *
+     * @param token previous token
+     * @return confirmation token status
+     * @throws InvalidTokenException if previous token was not found
+     */
     ConfirmationTokenStatus sendNewToken(String token) throws InvalidTokenException;
 }

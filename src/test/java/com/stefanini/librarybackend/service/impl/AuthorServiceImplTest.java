@@ -43,7 +43,7 @@ class AuthorServiceImplTest {
 
 
     /**
-     * Unit test for method {@link AuthorService#addAuthor(Author) addAuthor} method
+     * Unit test for {@link AuthorService#addAuthor(Author) addAuthor} method
      */
     @Test
     void shouldCreateAuthor() {
@@ -65,7 +65,7 @@ class AuthorServiceImplTest {
     }
 
     /**
-     * Unit test for method {@link AuthorService#update(int, Author)} updateAuthor} method
+     * Unit test for {@link AuthorService#update(int, Author)} updateAuthor} method
      */
     @Test
     void shouldUpdateAuthorData() {
@@ -100,7 +100,7 @@ class AuthorServiceImplTest {
     }
 
     /**
-     * Unit test for method {@link AuthorService#deleteAuthor(int)} deleteAuthor} method
+     * Unit test for {@link AuthorService#deleteAuthor(int)} deleteAuthor} method
      */
     @Test
     void shouldDeleteAuthor() {
@@ -119,7 +119,7 @@ class AuthorServiceImplTest {
     }
 
     /**
-     * Unit test for method {@link AuthorService#getAllAuthors() getAllAuthors} method
+     * Unit test for {@link AuthorService#getAllAuthors() getAllAuthors} method
      */
     @Test
     void shouldGetAllAuthors() {
@@ -129,7 +129,7 @@ class AuthorServiceImplTest {
     }
 
     /**
-     * Unit test for method {@link AuthorService#addBookToAuthor(int, int)} addBookToAuthor} method
+     * Unit test for {@link AuthorService#addBookToAuthor(int, int)} addBookToAuthor} method
      */
     @Test
     void shouldAssignBookToAuthor() {

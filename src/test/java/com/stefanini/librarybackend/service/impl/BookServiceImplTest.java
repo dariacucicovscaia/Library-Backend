@@ -4,27 +4,23 @@ import com.stefanini.librarybackend.dao.impl.AuthorDAOImpl;
 import com.stefanini.librarybackend.dao.impl.BookDAOImpl;
 import com.stefanini.librarybackend.dao.impl.CategoryDAOImpl;
 import com.stefanini.librarybackend.dao.impl.UserDAOImpl;
-import com.stefanini.librarybackend.domain.Book;
-import com.stefanini.librarybackend.domain.Category;
-import com.stefanini.librarybackend.domain.History;
-import com.stefanini.librarybackend.domain.User;
+import com.stefanini.librarybackend.domain.*;
 import com.stefanini.librarybackend.service.BookService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.stefanini.librarybackend.domain.enums.BookStatus.AVAILABLE;
 import static com.stefanini.librarybackend.domain.enums.BookStatus.TAKEN;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 class BookServiceImplTest {
@@ -39,9 +35,6 @@ class BookServiceImplTest {
 
     @Mock
     private CategoryDAOImpl categoryDAO;
-
-    @Mock
-    private Category categoryEntity;
     private AutoCloseable autoCloseable;
     private BookService underTest;
 
@@ -163,7 +156,6 @@ class BookServiceImplTest {
      * Unit test for method {@link BookService#bookTheBook(int, int) bookTheBook} addBook} method
      */
     @Test
-    @Disabled
     void shouldBookTheBookAndUpdateBook() {
         User user = new User(
                 1,
@@ -179,6 +171,7 @@ class BookServiceImplTest {
         );
 
         user.setHistory(new ArrayList<History>());
+        user.setBook(new ArrayList<>());
         book.setHistory(new ArrayList<History>());
 
         given(userDAO.getById(user.getId()))
@@ -202,7 +195,6 @@ class BookServiceImplTest {
      * Unit test for method {@link BookService#giveTheBook(int, int)} giveTheBook} method
      */
     @Test
-    @Disabled
     void shouldGiveTheBookAndUpdateUser() {
         User user = new User(
                 1,
@@ -218,6 +210,7 @@ class BookServiceImplTest {
         );
 
         user.setHistory(new ArrayList<History>());
+        user.setBook(new ArrayList<>());
         book.setHistory(new ArrayList<History>());
 
         given(userDAO.getById(user.getId()))
@@ -292,16 +285,103 @@ class BookServiceImplTest {
      * Unit test for method {@link BookService#getBookByCategory(int) getBookByCategory} method
      */
     @Test
-    @Disabled
     void shouldReturnBookByCategoryId() {
+        ArrayList<Book> books = new ArrayList<>();
+        books.add(new Book(
+                1,
+                "Lord of Rings",
+                "Cool book",
+                "25b",
+                TAKEN
+        ));
 
+        Category category = new Category(
+                1,
+                "Romance",
+                books
+        );
+
+        given(categoryDAO.getById(category.getId()))
+                .willReturn(category);
+
+        underTest.getBookByCategory(category.getId());
+
+        assertThat(category.getBooks().get(0)).isEqualTo(books.get(0));
     }
 
     /**
      * Unit test for method {@link BookService#findBooksByAuthor(int)} findBooksByAuthor} method
      */
     @Test
-    @Disabled
     void shouldFindExistBooksByAuthorId() {
+        ArrayList<Book> books = new ArrayList<>();
+        books.add(new Book(
+                1,
+                "Lord of Rings",
+                "Cool book",
+                "25b",
+                TAKEN
+        ));
+
+        Author author = new Author(
+                23,
+                "John",
+                "Tolkien",
+                Date.valueOf(LocalDate.now()),
+                "Cool author",
+                books
+        );
+
+        given(authorDAO.getById(author.getId()))
+                .willReturn(author);
+
+        underTest.findBooksByAuthor(author.getId());
+
+        assertThat(author.getBooks().get(0)).isEqualTo(books.get(0));
+    }
+
+    /**
+     * Unit test for method {@link BookService#addBookWithExistingCategoryAndAuthor(Book, int, int) addBookWithExistingCategoryAndAuthor} method
+     */
+    @Test
+    void shouldCreateBookWithExistingCategoryAndAuthor() {
+        Book book = new Book(
+                "Lord of Rings",
+                "Cool book",
+                "25b"
+        );
+
+        Author author = new Author(
+                23,
+                "John",
+                "Tolkien",
+                Date.valueOf(LocalDate.now()),
+                "Cool author"
+        );
+
+        Category category = new Category(
+                1,
+                "Fantasy"
+        );
+
+        book.setCategories(new ArrayList<>());
+        book.setAuthors(new ArrayList<>());
+
+        given(authorDAO.getById(author.getId()))
+                .willReturn(author);
+        given(categoryDAO.getById(category.getId()))
+                .willReturn(category);
+
+        underTest.addBookWithExistingCategoryAndAuthor(book, category.getId(), author.getId());
+
+        ArgumentCaptor<Book> bookArgumentCaptor = ArgumentCaptor.forClass(Book.class);
+
+        verify(bookDAO)
+                .create(bookArgumentCaptor.capture());
+
+        Book capturedBook = bookArgumentCaptor.getValue();
+
+        assertThat(capturedBook.getCategories().get(0)).isEqualTo(category);
+        assertThat(capturedBook.getAuthors().get(0)).isEqualTo(author);
     }
 }

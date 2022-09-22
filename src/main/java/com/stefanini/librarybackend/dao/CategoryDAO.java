@@ -2,6 +2,8 @@ package com.stefanini.librarybackend.dao;
 
 
 /**
+ * The class is responsible for database operations with Category entity.
+ *
  * @param <Category>
  * @author dcuciuc
  * @version 0.1

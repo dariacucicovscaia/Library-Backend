@@ -23,6 +23,14 @@ import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+/**
+ * This class responding for user authentication.
+ * After successful authentication user will receive access token and refresh token
+ *
+ * @author dcuciuc
+ * @version 0.1
+ * @since 0.1
+ */
 @Slf4j
 public class AppAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -32,6 +40,17 @@ public class AppAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         this.authenticationManager = authenticationManager;
     }
 
+    /**
+     * Method receive request with email and password in from header.
+     * After this method will try to authenticate user.
+     * If authentication will be successfully, method will execute {@link #successfulAuthentication(HttpServletRequest, HttpServletResponse, FilterChain, Authentication) successfulAuthentication} method.
+     * In other case it will return error
+     *
+     * @param request
+     * @param response
+     * @return
+     * @throws AuthenticationException
+     */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         String email = request.getParameter("email");
@@ -45,6 +64,17 @@ public class AppAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         return authenticationManager.authenticate(authenticationToken);
     }
 
+    /**
+     * Method generates access token and refresh token for the user.
+     * After this method will return tokens in header and response
+     *
+     * @param request
+     * @param response
+     * @param chain
+     * @param authResult
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         AppUser user = (AppUser) authResult.getPrincipal();

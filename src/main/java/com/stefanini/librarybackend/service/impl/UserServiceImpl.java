@@ -43,8 +43,8 @@ public class UserServiceImpl implements UserService {
         user.setHasTemporaryPassword(true);
         String appHomePage = environment.getProperty("CORS_ALLOWED_ORIGINS") + "/";
         String email = "Hello, " + user.getProfile().getFirstName() + " " + user.getProfile().getLastName() + "!"
-                + " Here is your password for Stefanini Library Aplication " + password
-                + " To use the aplication please visit " + appHomePage;
+                + " Here is your password for Stefanini Library Application " + password
+                + " To use the application please visit " + appHomePage;
         String subject = "Registration info";
         emailSenderService.sendMail(user.getEmail(), email, subject);
         if (user.getRoles() == null) {
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUser(int id, User user) {
-        User u = findById(id);
+        User u = userDao.getById(id);
         u.setEmail(user.getEmail());
 
         u.getProfile().setFirstName(user.getProfile().getFirstName());
@@ -86,11 +86,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int deleteByEmail(String email) {
-        return userDao.removeById(findByEmail(email).getId());
-    }
-
-    @Override
     public int deleteById(int id) {
         return userDao.removeById(id);
     }
@@ -98,7 +93,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User assignRole(int id, Role role) {
-        User user = findById(id);
+        User user = userDao.getById(id);
         user.getRoles().add(role);
         log.info("Role {} was assigned to user with id {}", role.name(), user.getId());
         return userDao.update(user);
@@ -117,7 +112,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User changePassword(int id, String password) {
-        User u = findById(id);
+        User u = userDao.getById(id);
         u.setHasTemporaryPassword(false);
         u.setPassword(passwordEncoder.encode(password));
         return userDao.update(u);

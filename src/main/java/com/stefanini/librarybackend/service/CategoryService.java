@@ -15,7 +15,7 @@ import java.util.List;
 public interface CategoryService {
 
     /**
-     * Creates new Category in database.
+     * Create new category.
      *
      * @param category that should be created in controller before calling this method
      * @return the category that was saved in database
@@ -49,5 +49,12 @@ public interface CategoryService {
      */
     Category addBookToCategory(int bookId, int id);
 
+
+    /**
+     * Get category by id.
+     *
+     * @param id of category to be found
+     * @return category that was found
+     */
     Category getCategoryById(int id);
 }
