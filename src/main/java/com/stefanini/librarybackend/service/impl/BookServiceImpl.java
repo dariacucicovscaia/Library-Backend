@@ -146,5 +146,11 @@ public class BookServiceImpl implements BookService {
         userHistoryList.add(history);
         user.setHistory(userHistoryList);
     }
-
+    @Override
+    public Book addBookWithExistingCategoryAndAuthor(Book book, int categoryId, int authorId) {
+        book.setStatus(AVAILABLE);
+        book.getCategories().add(categoryDAOImpl.getById(categoryId));
+        book.getAuthors().add(authorDAO.getById(authorId));
+        return bookDAOImpl.create(book);
+    }
 }
