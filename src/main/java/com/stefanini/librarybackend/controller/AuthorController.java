@@ -8,11 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * @author dcuciuc
- * @version 0.1
- * @since 0.1
- */
+
 @RestController
 @RequestMapping("/api/author")
 public class AuthorController {
