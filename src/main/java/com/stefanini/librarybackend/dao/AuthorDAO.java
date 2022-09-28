@@ -9,5 +9,4 @@ package com.stefanini.librarybackend.dao;
  * @since 0.1
  */
 public interface AuthorDAO<Author> extends IGenericDao<Author> {
-
 }

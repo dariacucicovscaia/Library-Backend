@@ -24,11 +24,15 @@ public interface BookService {
     Book addBook(Book book);
 
     /**
-     * Get all books from database.
+     * Return sorted and only needed books.
      *
-     * @return all books
+     * @param pageNumber
+     * @param pageSize
+     * @param sortBy
+     * @param sortOrder
+     * @return pageNumber of books sorted by sortBy for page pageNumber
      */
-    List<Book> showAllBooks();
+    List<Book> getAllBooks(int pageNumber, int pageSize, String sortBy, String sortOrder);
 
     /**
      * Update book data.
@@ -118,4 +122,11 @@ public interface BookService {
      * @return created book with category and author
      */
     Book addBookWithExistingCategoryAndAuthor(Book book, int categoryId, int authorId);
+
+    /**
+     * Return number of books.
+     *
+     * @return long number of books
+     */
+    Long getNumberOfBooks();
 }

@@ -43,8 +43,18 @@ public class AuthorController {
         return authorService.deleteAuthor(id);
     }
 
-    @GetMapping("/authors")
-    public List<Author> getAllAuthors() {
-        return authorService.getAllAuthors();
+    @GetMapping("/authors/{pageNumber}/{pageSize}/{sortBy}/{sortOrder}")
+    public List<Author> getAllAuthors(
+            @PathVariable int pageNumber,
+            @PathVariable int pageSize,
+            @PathVariable String sortBy,
+            @PathVariable String sortOrder
+    ) {
+        return authorService.getAllAuthors(pageNumber, pageSize, sortBy, sortOrder);
+    }
+
+    @GetMapping("/numberOf")
+    public Long getNumberOfAuthors() {
+        return authorService.getNumberOfAuthors();
     }
 }

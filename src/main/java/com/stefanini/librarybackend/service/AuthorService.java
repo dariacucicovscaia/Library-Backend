@@ -47,7 +47,7 @@ public interface AuthorService {
      *
      * @return list of all authors from database
      */
-    List<Author> getAllAuthors();
+    List<Author> getAllAuthors(int pageNumber, int pageSize, String sortBy, String sortOrder);
 
 
     /**
@@ -60,4 +60,10 @@ public interface AuthorService {
      */
     Author addBookToAuthor(int bookId, int id);
 
+    /**
+     * Return number of authors.
+     *
+     * @return long number of authors
+     */
+    Long getNumberOfAuthors();
 }

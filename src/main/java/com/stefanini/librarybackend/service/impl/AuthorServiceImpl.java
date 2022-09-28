@@ -7,6 +7,7 @@ import com.stefanini.librarybackend.dao.impl.BookDAOImpl;
 import com.stefanini.librarybackend.domain.Author;
 import com.stefanini.librarybackend.domain.Book;
 import com.stefanini.librarybackend.service.AuthorService;
+import com.stefanini.librarybackend.service.helper.ValueChecker;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -42,8 +43,9 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public List<Author> getAllAuthors() {
-        return authorDAO.getAll();
+    public List<Author> getAllAuthors(int pageNumber, int pageSize, String sortBy, String sortOrder) {
+        ValueChecker.verifyPagingAndSortingValues(pageNumber, pageSize, sortBy, sortOrder);
+        return authorDAO.getAllSortedAndPaginated(pageNumber, pageSize, sortBy, sortOrder);
     }
 
     @Override
@@ -53,6 +55,11 @@ public class AuthorServiceImpl implements AuthorService {
         author.addBook(book);
         log.info("Book {} was added to Author {}", book.getTitle(), author.getFullName());
         return authorDAO.update(author);
+    }
+
+    @Override
+    public Long getNumberOfAuthors() {
+        return authorDAO.getNumberOf();
     }
 
     private void setUpdatedAuthorData(Author updatedAuthor, Author author) {

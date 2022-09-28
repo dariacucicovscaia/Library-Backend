@@ -17,6 +17,24 @@ public interface IGenericDao<T> {
     List<T> getAll();
 
     /**
+     * Get all sorted and paginated.
+     *
+     * @param pageNumber current page
+     * @param pageSize   how many entities to get
+     * @param sortBy     one of field from db
+     * @param sortOrder
+     * @return sorted and paginated list of T
+     */
+    List<T> getAllSortedAndPaginated(int pageNumber, int pageSize, String sortBy, String sortOrder);
+
+    /**
+     * Return number of entities in db.
+     *
+     * @return number of entities
+     */
+    Long getNumberOf();
+
+    /**
      * Update entity.
      *
      * @param entity

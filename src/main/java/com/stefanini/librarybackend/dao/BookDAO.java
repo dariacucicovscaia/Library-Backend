@@ -20,5 +20,4 @@ public interface BookDAO<Book> extends IGenericDao<Book> {
      */
     List<Book> getBooksByAnyCriteria(String criteria);
 
-
 }

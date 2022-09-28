@@ -38,7 +38,7 @@ public interface UserService {
      *
      * @return list of all users
      */
-    List<User> showAllUsers();
+    List<User> getAllUsers(int pageNumber, int pageSize, String sortBy, String sortOrder);
 
     /**
      * Get user by id.
@@ -112,4 +112,11 @@ public interface UserService {
      * @param user
      */
     void sendLinkForChangePassword(User user);
+
+    /**
+     * Return number of users.
+     *
+     * @return long number of users
+     */
+    Long getNumberOfUsers();
 }
