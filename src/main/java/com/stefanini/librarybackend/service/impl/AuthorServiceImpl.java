@@ -43,7 +43,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public List<Author> getAllAuthors(int pageNumber, int pageSize, String sortBy, String sortOrder) {
+    public List<Author> getAllPaginatedAndSortedAuthors(int pageNumber, int pageSize, String sortBy, String sortOrder) {
         ValueChecker.verifyPagingAndSortingValues(pageNumber, pageSize, sortBy, sortOrder);
         return authorDAO.getAllSortedAndPaginated(pageNumber, pageSize, sortBy, sortOrder);
     }
@@ -60,6 +60,11 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public Long getNumberOfAuthors() {
         return authorDAO.getNumberOf();
+    }
+
+    @Override
+    public List<Author> getAllAuthors() {
+        return authorDAO.getAll();
     }
 
     private void setUpdatedAuthorData(Author updatedAuthor, Author author) {

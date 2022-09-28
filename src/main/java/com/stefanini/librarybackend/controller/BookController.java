@@ -7,7 +7,6 @@ import com.stefanini.librarybackend.service.impl.BookServiceImpl;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.file.Path;
 import java.util.List;
 
 @RestController

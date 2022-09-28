@@ -43,11 +43,15 @@ public interface AuthorService {
 
 
     /**
-     * Gets from database all authors.
+     * Gets paginated and sorted authors.
      *
-     * @return list of all authors from database
+     * @param pageNumber current page
+     * @param pageSize   how many authors can be on page
+     * @param sortBy     one of authors field
+     * @param sortOrder  asc or desc
+     * @return
      */
-    List<Author> getAllAuthors(int pageNumber, int pageSize, String sortBy, String sortOrder);
+    List<Author> getAllPaginatedAndSortedAuthors(int pageNumber, int pageSize, String sortBy, String sortOrder);
 
 
     /**
@@ -66,4 +70,11 @@ public interface AuthorService {
      * @return long number of authors
      */
     Long getNumberOfAuthors();
+
+    /**
+     * Gets all authors.
+     *
+     * @return list of all authors
+     */
+    List<Author> getAllAuthors();
 }

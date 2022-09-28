@@ -44,13 +44,18 @@ public class AuthorController {
     }
 
     @GetMapping("/authors/{pageNumber}/{pageSize}/{sortBy}/{sortOrder}")
-    public List<Author> getAllAuthors(
+    public List<Author> getAllPaginatedAndSortedAuthors(
             @PathVariable int pageNumber,
             @PathVariable int pageSize,
             @PathVariable String sortBy,
             @PathVariable String sortOrder
     ) {
-        return authorService.getAllAuthors(pageNumber, pageSize, sortBy, sortOrder);
+        return authorService.getAllPaginatedAndSortedAuthors(pageNumber, pageSize, sortBy, sortOrder);
+    }
+
+    @GetMapping("/all-authors")
+    public List<Author> getAllAuthors() {
+        return authorService.getAllAuthors();
     }
 
     @GetMapping("/numberOf")

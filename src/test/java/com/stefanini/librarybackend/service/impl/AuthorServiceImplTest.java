@@ -120,7 +120,7 @@ class AuthorServiceImplTest {
     }
 
     /**
-     * Unit test for {@link AuthorService#getAllAuthors(int, int, String, String) getAllAuthors} method
+     * Unit test for {@link AuthorService#getAllPaginatedAndSortedAuthors(int, int, String, String) getAllAuthors} method
      */
     @Test
     @Disabled
