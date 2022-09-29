@@ -16,6 +16,9 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
