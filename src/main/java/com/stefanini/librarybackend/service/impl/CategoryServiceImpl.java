@@ -7,6 +7,7 @@ import com.stefanini.librarybackend.dao.impl.CategoryDAOImpl;
 import com.stefanini.librarybackend.domain.Book;
 import com.stefanini.librarybackend.domain.Category;
 import com.stefanini.librarybackend.service.CategoryService;
+import com.stefanini.librarybackend.service.helper.ValueChecker;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

@@ -71,10 +71,11 @@ public class EmailConfirmationTokenServiceImpl implements EmailConfirmationToken
 
         ConfirmationToken confirmationToken = ConfirmationToken.createConfirmationToken(newToken, oldConfirmationToken.getUser());
 
+        log.info("Confirmation token status: " + confirmationToken.getStatus());
         emailConfirmationTokenDAO.create(confirmationToken);
         log.info("Email confirmation token saved in database");
 
-        String link = environment.getProperty("CORS_ALLOWED_ORIGINS") + "/email-confirmation/" + token;
+        String link = environment.getProperty("CORS_ALLOWED_ORIGINS") + "/email-confirmation/" + newToken;
         emailSenderService.sendMail(
                 confirmationToken.getUser().getEmail(),
                 "Activate your account by this link - " + link + "\n Link will expired in 15 minutes",

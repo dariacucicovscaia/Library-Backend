@@ -4,6 +4,8 @@ import com.stefanini.librarybackend.dao.BookDAO;
 import com.stefanini.librarybackend.domain.Book;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 

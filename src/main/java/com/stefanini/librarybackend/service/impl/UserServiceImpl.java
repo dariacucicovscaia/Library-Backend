@@ -8,6 +8,7 @@ import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
 import com.stefanini.librarybackend.email.EmailSenderService;
 import com.stefanini.librarybackend.service.UserService;
+import com.stefanini.librarybackend.service.helper.ValueChecker;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -71,8 +72,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> showAllUsers() {
-        return userDao.getAll();
+    public List<User> getAllUsers(int pageNumber, int pageSize, String sortBy, String sortOrder) {
+        ValueChecker.verifyPagingAndSortingValues(pageNumber, pageSize, sortBy, sortOrder);
+        return userDao.getAllSortedAndPaginated(pageNumber, pageSize, sortBy, sortOrder);
     }
 
     @Override
@@ -131,6 +133,11 @@ public class UserServiceImpl implements UserService {
         String subject = "Forgot password";
         log.info(message);
         emailSenderService.sendMail(user.getEmail(), message, subject);
+    }
+
+    @Override
+    public Long getNumberOfUsers() {
+        return userDao.getNumberOf();
     }
 
 }

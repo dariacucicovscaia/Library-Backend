@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.io.Serializable;
 import java.util.List;
 
@@ -26,6 +27,26 @@ public abstract class DAOAbstractImpl<T extends Serializable> implements IGeneri
     @Override
     public List<T> getAll() {
         return entityManager.createQuery("from " + clazz.getName()).getResultList();
+    }
+
+    @Override
+    public List<T> getAllSortedAndPaginated(int pageNumber, int pageSize, String sortBy, String sortOrder) {
+        TypedQuery<T> query = (TypedQuery<T>) entityManager.createQuery("select a from " + clazz.getName() + " a order by a." + sortBy + " " + sortOrder);
+
+        int from = 0;
+
+        if (pageNumber > 1) {
+            from = pageNumber * pageSize - pageSize;
+        }
+
+        return query.setFirstResult(from)
+                .setMaxResults(pageSize)
+                .getResultList();
+    }
+
+    @Override
+    public Long getNumberOf() {
+        return (Long) entityManager.createQuery("select count(*) from " + clazz.getName()).getSingleResult();
     }
 
     @Override

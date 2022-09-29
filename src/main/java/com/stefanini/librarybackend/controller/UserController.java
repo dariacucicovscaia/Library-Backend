@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.stefanini.librarybackend.helper.PasswordGenerator.generateRandomPassword;
-
 
 @RestController
 @Slf4j
@@ -76,10 +74,21 @@ public class UserController {
         return userService.deleteById(id);
     }
 
-    @GetMapping("/users")
+    @GetMapping("/users/{pageNumber}/{pageSize}/{sortBy}/{sortOrder}")
     @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
-    public List<User> getAllUsers() {
-        return userService.showAllUsers();
+    public List<User> getAllUsers(
+            @PathVariable int pageNumber,
+            @PathVariable int pageSize,
+            @PathVariable String sortBy,
+            @PathVariable String sortOrder
+    ) {
+        return userService.getAllUsers(pageNumber, pageSize, sortBy, sortOrder);
+    }
+
+    @GetMapping("/numberOf")
+    @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
+    public Long getNumberOfUsers() {
+        return userService.getNumberOfUsers();
     }
 
 

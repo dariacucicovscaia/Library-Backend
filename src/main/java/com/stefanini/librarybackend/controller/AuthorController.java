@@ -8,11 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * @author dcuciuc
- * @version 0.1
- * @since 0.1
- */
+
 @RestController
 @RequestMapping("/api/author")
 public class AuthorController {
@@ -47,8 +43,23 @@ public class AuthorController {
         return authorService.deleteAuthor(id);
     }
 
-    @GetMapping("/authors")
+    @GetMapping("/authors/{pageNumber}/{pageSize}/{sortBy}/{sortOrder}")
+    public List<Author> getAllPaginatedAndSortedAuthors(
+            @PathVariable int pageNumber,
+            @PathVariable int pageSize,
+            @PathVariable String sortBy,
+            @PathVariable String sortOrder
+    ) {
+        return authorService.getAllPaginatedAndSortedAuthors(pageNumber, pageSize, sortBy, sortOrder);
+    }
+
+    @GetMapping("/all-authors")
     public List<Author> getAllAuthors() {
         return authorService.getAllAuthors();
+    }
+
+    @GetMapping("/numberOf")
+    public Long getNumberOfAuthors() {
+        return authorService.getNumberOfAuthors();
     }
 }

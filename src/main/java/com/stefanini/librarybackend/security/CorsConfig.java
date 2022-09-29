@@ -7,12 +7,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-/**
- * This class represents cors configuration.
- * Configuration allows the front to use the api of this application.
- *
- * @author dcuiuc
- */
+
 @Configuration
 @EnableWebMvc
 public class CorsConfig extends WebMvcConfigurerAdapter implements WebMvcConfigurer {

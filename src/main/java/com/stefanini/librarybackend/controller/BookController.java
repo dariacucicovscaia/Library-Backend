@@ -37,9 +37,19 @@ public class BookController {
         bookService.deleteBook(id);
     }
 
-    @GetMapping("/books")
-    public List<Book> getAllBooks() {
-        return bookService.showAllBooks();
+    @GetMapping("/books/{pageNumber}/{pageSize}/{sortBy}/{sortOrder}")
+    public List<Book> getAllBooks(
+            @PathVariable int pageNumber,
+            @PathVariable int pageSize,
+            @PathVariable String sortBy,
+            @PathVariable String sortOrder
+    ) {
+        return bookService.getAllBooks(pageNumber, pageSize, sortBy, sortOrder);
+    }
+
+    @GetMapping("/numberOf")
+    public Long getNumberOfBooks() {
+        return bookService.getNumberOfBooks();
     }
 
     @PutMapping("/bookTheBook/{bookId}/{userId}")
@@ -80,6 +90,4 @@ public class BookController {
     public Book addBookWithExistingCategoryAndAuthor(@RequestBody Book book, @PathVariable int categoryId, @PathVariable int authorId) {
         return bookService.addBookWithExistingCategoryAndAuthor(book, categoryId, authorId);
     }
-
-
 }

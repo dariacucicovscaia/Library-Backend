@@ -8,6 +8,7 @@ import com.stefanini.librarybackend.dao.impl.AuthorDAOImpl;
 import com.stefanini.librarybackend.dao.impl.BookDAOImpl;
 import com.stefanini.librarybackend.domain.*;
 import com.stefanini.librarybackend.service.BookService;
+import com.stefanini.librarybackend.service.helper.ValueChecker;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,8 +39,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> showAllBooks() {
-        return bookDAOImpl.getAll();
+    public List<Book> getAllBooks(int pageNumber, int pageSize, String sortBy, String sortOrder) {
+        ValueChecker.verifyPagingAndSortingValues(pageNumber, pageSize, sortBy, sortOrder);
+        return bookDAOImpl.getAllSortedAndPaginated(pageNumber, pageSize, sortBy, sortOrder);
     }
 
     @Override
@@ -138,6 +140,11 @@ public class BookServiceImpl implements BookService {
         book.getCategories().add(categoryDAOImpl.getById(categoryId));
         book.getAuthors().add(authorDAO.getById(authorId));
         return bookDAOImpl.create(book);
+    }
+
+    @Override
+    public Long getNumberOfBooks() {
+        return bookDAOImpl.getNumberOf();
     }
 
     private void updateHistory(String actionName, Book book, User user) {
