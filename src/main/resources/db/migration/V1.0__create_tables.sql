@@ -129,22 +129,7 @@ VALUES  (NOW(), 'Murder on the Orient Express is a work of detective fiction by 
              "00005", 'AVAILABLE', 'One Italian Summer: A Novel'),
 
         (NOW(), 'From Colleen Hoover, the #1 New York Times bestselling author of It Ends with Us, aheart-wrenching love story that proves attraction at first sight can be messy.',
-             "00006", 'AVAILABLE', 'Ugly Love'),
-
-        (NOW(), 'Murder on the Orient Express is a work of detective fiction by English writer Agatha Christie featuring the Belgian detective Hercule Poirot.',
-             "00001", 'TAKEN', 'Orient Express'),
-        (NOW(), 'Death on the Nile is a work of detective fiction by English writer Agatha Christie published in the UK by the Collins Crime Club on 1 November 1937.',
-             "00002", 'BOOKED', 'Nile'),
-        (NOW(), 'Moby Dick is an 1851 novel by American writer Herman Melville.',
-             "00003", 'TAKEN', 'Kanry Dick') ,
-        (NOW(), 'A delight for readers of Whered You Go, Bernadette,this book features the singular voice of Elizabeth Zott, a scientist whose career takes a detour when she becomes the star of a beloved TV cooking show.',
-             "00004", 'AVAILABLE', 'Chemistry'),
-
-        (NOW(), 'After her mother dies, Katie decides to take the trip to Italy that they were suppressed to take together. The relationship between mothers and daughters is so complicated and this book reflects that.',
-             "00005", 'AVAILABLE', 'A Novel'),
-
-        (NOW(), 'From Colleen Hoover, the #1 New York Times bestselling author of It Ends with Us, aheart-wrenching love story that proves attraction at first sight can be messy.',
-             "00006", 'AVAILABLE', 'Ugly');
+             "00006", 'AVAILABLE', 'Ugly Love');
 
 INSERT INTO author (biography, birthDate, firstName, lastName)
 VALUES   ('Agatha Mary Clarissa Miller was born on 15 September 1890, into a wealthy upper middle class family in Torquay, Devon. She was the youngest of three children born to Frederick Alvah Miller, "a gentleman of substance", and his wife Clarissa Margaret "Clara" Miller, née Boehmer.',
