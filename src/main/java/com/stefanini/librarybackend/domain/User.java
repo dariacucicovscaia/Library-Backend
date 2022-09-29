@@ -45,7 +45,7 @@ public class User implements Serializable {
     private List<Book> book;
 
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     @JsonManagedReference(value = "user-history")
     private List<History> history;
 
