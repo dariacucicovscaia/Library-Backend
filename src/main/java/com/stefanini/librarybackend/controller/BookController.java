@@ -33,8 +33,8 @@ public class BookController {
 
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasAnyAuthority('LIBRARIAN', 'ADMIN')")
-    public void deleteBook(@PathVariable int id) {
-        bookService.deleteBook(id);
+    public int deleteBook(@PathVariable int id) {
+        return bookService.deleteBook(id);
     }
 
     @GetMapping("/books/{pageNumber}/{pageSize}/{sortBy}/{sortOrder}")
