@@ -57,7 +57,7 @@ public class JWTTokenServiceImpl implements JWTTokenService {
 
                 String access_token = JWT.create()
                         .withSubject(user.getEmail())
-                        .withExpiresAt(new Date(System.currentTimeMillis() + 1 * 60 * 1000))
+                        .withExpiresAt(new Date(System.currentTimeMillis() + 15 * 60 * 1000))
                         .withIssuer(request.getRequestURL().toString())
                         .withClaim("roles", user.getRoles().stream().map(Role::name).collect(Collectors.toList()))
                         .sign(algorithm);

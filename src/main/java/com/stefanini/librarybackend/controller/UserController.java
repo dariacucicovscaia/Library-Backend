@@ -119,7 +119,7 @@ public class UserController {
     }
 
     @PutMapping("/change-password/{id}")
-    @PreAuthorize("hasAnyAuthority('USER')")
+    @PreAuthorize("hasAnyAuthority('USER', 'LIBRARIAN', 'ADMIN')")
     public User updateUserPassword(@PathVariable int id, @RequestBody User user) {
         return userService.changePassword(id, user.getPassword());
     }
