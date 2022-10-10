@@ -8,7 +8,7 @@ import com.stefanini.librarybackend.dao.impl.AuthorDAOImpl;
 import com.stefanini.librarybackend.dao.impl.BookDAOImpl;
 import com.stefanini.librarybackend.domain.*;
 import com.stefanini.librarybackend.service.BookService;
-import com.stefanini.librarybackend.service.helper.ValueChecker;
+import com.stefanini.librarybackend.service.impl.helper.ValueChecker;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

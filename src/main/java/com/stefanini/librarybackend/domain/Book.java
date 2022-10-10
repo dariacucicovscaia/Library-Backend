@@ -20,10 +20,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-//@JsonIdentityInfo(
-//        generator = ObjectIdGenerators.PropertyGenerator.class,
-//        property = "id")
-//@JsonIdentityReference(alwaysAsId = true)
 public class Book implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,4 +1,4 @@
-package com.stefanini.librarybackend.service.helper;
+package com.stefanini.librarybackend.service.impl.helper;
 
 public class ValueChecker {
 

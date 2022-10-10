@@ -8,7 +8,7 @@ import com.stefanini.librarybackend.domain.User;
 import com.stefanini.librarybackend.domain.enums.Role;
 import com.stefanini.librarybackend.email.EmailSenderService;
 import com.stefanini.librarybackend.service.UserService;
-import com.stefanini.librarybackend.service.helper.ValueChecker;
+import com.stefanini.librarybackend.service.impl.helper.ValueChecker;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.password.PasswordEncoder;

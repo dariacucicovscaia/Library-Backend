@@ -44,11 +44,6 @@ public class EmailConfirmationTokenServiceImpl implements EmailConfirmationToken
         verifyToken(confirmationToken);
         log.info("Token status after verifyMethod: " + confirmationToken.getStatus());
 
-        if (confirmationToken.getStatus() == CONFIRMED) {
-            log.error("Token was already confirmed!");
-            return WAS_ALREADY_CONFIRMED;
-        }
-
         confirmationToken.setConfirmedAt(LocalDateTime.now());
         confirmationToken.setStatus(CONFIRMED);
         confirmationToken.getUser().setConfirmedByEmail(true);
