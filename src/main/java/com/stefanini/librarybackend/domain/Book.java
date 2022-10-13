@@ -58,7 +58,7 @@ public class Book implements Serializable {
     private List<Author> authors = new ArrayList<>();
 
 
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "books", cascade = CascadeType.ALL)
     @JsonManagedReference(value = "book-history")
     private List<History> history;
 

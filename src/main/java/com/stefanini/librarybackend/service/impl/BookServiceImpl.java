@@ -150,7 +150,7 @@ public class BookServiceImpl implements BookService {
     private void updateHistory(String actionName, Book book, User user) {
         History history = new History();
         history.setActionName(actionName);
-        history.setBook(book);
+        history.setBooks(book);
         history.setUser(user);
 
         List<History> bookHistoryList = book.getHistory();

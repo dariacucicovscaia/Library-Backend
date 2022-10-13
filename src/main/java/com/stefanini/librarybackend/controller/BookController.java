@@ -1,7 +1,6 @@
 package com.stefanini.librarybackend.controller;
 
 import com.stefanini.librarybackend.domain.Book;
-import com.stefanini.librarybackend.service.AuthorService;
 import com.stefanini.librarybackend.service.BookService;
 import com.stefanini.librarybackend.service.impl.BookServiceImpl;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,7 +14,7 @@ public class BookController {
 
     private final BookService bookService;
 
-    public BookController(BookServiceImpl bookServiceImpl, AuthorService authorService) {
+    public BookController(BookServiceImpl bookServiceImpl) {
         this.bookService = bookServiceImpl;
     }
 

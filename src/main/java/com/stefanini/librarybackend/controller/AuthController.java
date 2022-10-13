@@ -17,7 +17,7 @@ public class AuthController {
 
     private final AppUserServiceImpl appUserServiceImpl;
 
-    public AuthController(@Lazy AppUserServiceImpl appUserServiceImpl) {
+    public AuthController(AppUserServiceImpl appUserServiceImpl) {
         this.appUserServiceImpl = appUserServiceImpl;
     }
 

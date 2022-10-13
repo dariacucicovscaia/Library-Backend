@@ -35,7 +35,7 @@ public class History implements Serializable {
     @ManyToOne
     @JoinColumn(name = "book_id")
     @JsonBackReference(value = "book-history")
-    private Book book;
+    private Book books;
 
     History(int id, String actionName, Date date) {
         this.id = id;
